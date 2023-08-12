@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 [[ ! -f "/etc/IP" ]] && wget -qO- ipv4.icanhazip.com > /etc/IP
 cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
