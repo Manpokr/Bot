@@ -1,14 +1,6 @@
 #!/bin/bash
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-###########- COLOR CODE -##############
-colornow=$(cat /etc/yokkovpn/theme/color.conf)
-NC="\e[0m"
-export GREEN='\033[0;32m';
-RED="\033[0;31m" 
-COLOR1="$(cat /etc/yokkovpn/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
-COLBG1="$(cat /etc/yokkovpn/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"                    
-###########- END COLOR CODE -##########
 
 ipes=$(curl -sS ipv4.icanhazip.com)
 [[ ! -f /usr/bin/jq ]] && {
@@ -21,64 +13,6 @@ dircreate() {
     [[ ! -d /root/multi ]] && mkdir -p /root/multi && touch /root/multi/voucher && touch /root/multi/claimed && touch /root/multi/reseller && touch /root/multi/public && touch /root/multi/hist && echo "off" >/root/multi/public
     [[ ! -d /etc/.maAsiss ]] && mkdir -p /etc/.maAsiss
 }
-
-BURIQ () {
-    curl -sS https://raw.githubusercontent.com/bracoli/permission/main/ipmini > /root/tmp
-    data=( `cat /root/tmp | grep -E "^### " | awk '{print $2}'` )
-    for user in "${data[@]}"
-    do
-    exp=( `grep -E "^### $user" "/root/tmp" | awk '{print $3}'` )
-    d1=(`date -d "$exp" +%s`)
-    d2=(`date -d "$biji" +%s`)
-    exp2=$(( (d1 - d2) / 86400 ))
-    if [[ "$exp2" -le "0" ]]; then
-    echo $user > /etc/.$user.ini
-    else
-    rm -f /etc/.$user.ini > /dev/null 2>&1
-    fi
-    done
-    rm -f /root/tmp
-}
-
-MYIP=$(curl -sS ipv4.icanhazip.com)
-Name=$(curl -sS https://raw.githubusercontent.com/bracoli/permission/main/ipmini | grep $MYIP | awk '{print $2}')
-Isadmin=$(curl -sS https://raw.githubusercontent.com/bracoli/permission/main/ipmini | grep $MYIP | awk '{print $5}')
-echo $Name > /usr/local/etc/.$Name.ini
-CekOne=$(cat /usr/local/etc/.$Name.ini)
-
-Bloman () {
-if [ -f "/etc/.$Name.ini" ]; then
-CekTwo=$(cat /etc/.$Name.ini)
-    if [ "$CekOne" = "$CekTwo" ]; then
-        res="Expired"
-    fi
-else
-res="Permission Accepted..."
-fi
-}
-
-PERMISSION () {
-    MYIP=$(curl -sS ipv4.icanhazip.com)
-    IZIN=$(curl -sS https://raw.githubusercontent.com/bracoli/permission/main/ipmini | awk '{print $4}' | grep $MYIP)
-    if [ "$MYIP" = "$IZIN" ]; then
-    Bloman
-    else
-    res="Permission Denied!"
-    fi
-    BURIQ
-}
-
-x="ok"
-
-
-PERMISSION
-
-if [ "$res" = "Expired" ]; then
-Exp="\e[36mExpired\033[0m"
-rm -f /home/needupdate > /dev/null 2>&1
-else
-Exp=$(curl -sS https://raw.githubusercontent.com/bracoli/permission/main/ipmini | grep $MYIP | awk '{print $3}')
-fi
 
 function botonoff(){
 clear
@@ -100,7 +34,7 @@ echo "Admin_ID: $adm_ids" >>/root/ResBotAuth
 }
 echo -ne " BOT NAMME : "
 read bot_user
-[[ -z $bot_user ]] && bot_user="YokkoEddyStore"
+[[ -z $bot_user ]] && bot_user="testStore"
 echo ""
 echo -ne " LIMIT     : "
 read limit_pnl
@@ -114,7 +48,7 @@ EOF
 fun_bot1() {
 clear
 [[ ! -e "/etc/.maAsiss/.Shellbtsss" ]] && {
-wget -qO- https://raw.githubusercontent.com/YakkoXCode74/bot_panel/main/BotAPI.sh >/etc/.maAsiss/.Shellbtsss
+wget -qO- https://raw.githubusercontent.com/Manpokr/Bot/main/bot-api.sh >/etc/.maAsiss/.Shellbtsss
 }
 [[ "$(grep -wc "sam_bot" "/etc/rc.local")" = '0' ]] && {
 sed -i '$ i\screen -dmS sam_bot bbt' /etc/rc.local >/dev/null 2>&1
