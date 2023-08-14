@@ -66,62 +66,91 @@ function bot-on-of() {
  EOF
 
 # // Info Bot
-function bot1() {
+function bot-1() {
       clear
       [[ ! -e "/etc/.maAsiss/.Shellbtsss" ]] && {
-        wget -qO- https://raw.githubusercontent.com/CodeKambing1/multi/main/BOT_PANEL/BotAPI.sh >/etc/.maAsiss/.Shellbtsss
+        wget -qO- https://raw.githubusercontent.com/Manpokr/Bot/main/bot-api.sh >/etc/.maAsiss/.Shellbtsss
       }
-      [[ "$(grep -wc "sam_bot" "/etc/rc.local")" = '0' ]] && {
-        sed -i '$ i\screen -dmS sam_bot bbt' /etc/rc.local >/dev/null 2>&1
+      [[ "$(grep -wc "bot-tele" "/etc/rc.local")" = '0' ]] && {
+        sed -i '$ i\screen -dmS bot_tele run-bot' /etc/rc.local >/dev/null 2>&1
       }
     }
-    screen -dmS sam_bot bbt >/dev/null 2>&1
-    fun_bot1
-    [[ $(ps x | grep "sam_bot" | grep -v grep | wc -l) != '0' ]] && echo -e "\nBot successfully activated !" || echo -e "\nError1! Information not valid !"
-    sleep 2
-    menu
-  } || {
-    clear
-    echo -e "Info...\n"
-    fun_bot2() {
-      screen -r -S "sam_bot" -X quit >/dev/null 2>&1
-      [[ $(grep -wc "sam_bot" /etc/rc.local) != '0' ]] && {
-        sed -i '/sam_bot/d' /etc/rc.local
+    screen -dmS bot-tele run-bot >/dev/null 2>&1
+
+    bot-1
+    [[ $(ps x | grep "bot-tele" | grep -v grep | wc -l) != '0' ]] && 
+      clear
+      echo "";
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo -e "         ${RED}•••${NC} BOT STATUS ${RED}•••${NC}"
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo -e "${PS1} Bot Status Online !";
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo "";
+      echo -e -n "Press ( ${BLUE}Enter${NC} ) To Back Menu Bot"; read  menu
+      menu-bot
+ ||
+      clear
+      echo "";
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo -e "         ${RED}•••${NC} BOT STATUS ${RED}•••${NC}"
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo -e "${PS1} Information not valid !";
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo "";
+      echo -e -n "Press ( ${BLUE}Enter${NC} ) To Back Menu Bot"; read  menu
+      menu-bot
+      } || {
+
+function bot-2() {
+      clear
+      screen -r -S "bot-tele" -X quit >/dev/null 2>&1
+      [[ $(grep -wc "bot-tele" /etc/rc.local) != '0' ]] && {
+        sed -i '/bot-tele/d' /etc/rc.local
       }
-      rm -f /root/multi/bot.conf
+        rm -f /root/multi/bot.conf
       sleep 1
     }
-    fun_bot2
-    echo -e "\nBot Scvps Stopped!"
-    sleep 2
-    menu
+    bot-2
+      clear
+      echo "";
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo -e "         ${RED}•••${NC} BOT STATUS ${RED}•••${NC}"
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo -e "${PS1} Bot Status Offline !";
+      echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo "";
+      echo -e -n "Press ( ${BLUE}Enter${NC} ) To Back Menu Bot"; read  menu
+      menu-bot
   }
 }
 
-fun_instbot() {
-  echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo -e "         ⚠️ ATTENTION ⚠️"
-  echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo -e " • Go to @BotFather Create Your own Bot by Type : /newbot"
-  echo -e " • Go to @MissRose_bot And Get Your ID by Type : /id"
-  echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo -e "Note:
+function instbot() {
+      clear
+      echo -e "     ${LIGHT}----------------------------------------------
+                                 ⚠️ ATTENTION ⚠️
+       ${RED}•${NC} Go to @BotFather Create Your Own Bot By Type = /newbot
+       ${RED}•${NC} Go to @MissRose_bot And Get Your ID By Type = /id
+        
+        WELCOME TO MANTERNET VPN Script V2.0${LIGHT}
+     ----------------------------------------------${LIGHT}"
+     echo -e "Note:
 
-    y = to start bot panel
-    n = to cancel start bot panel
-    d = delete configuration file before
+    ( Y ) Start Bot
+    ( C ) Cancle Start Bot
+    ( D ) Delete Configuration File Before
     "
-  echo -ne "Do you want to continue ? [y/n/d]: "
+  echo -ne "Do You Want To Continue ? ( y/c/d ) = "
   read resposta
-  if [[ "$resposta" = 'd' ]]; then
+  if [[ "$resposta" = 'd' ]] || [[ "$resposta" = 'D' ]];  then
     rm -f /root/multi/bot.conf
     menu
   elif [[ "$resposta" = 'y' ]] || [[ "$resposta" = 'Y' ]]; then
-    fun_botOnOff
+    bot-on-off
   else
     echo -e "Returning..."
     sleep 1
     menu
   fi
 }
-[[ -f "/etc/.maAsiss/.Shellbtsss" ]] && fun_botOnOff || fun_instbot
+[[ -f "/etc/.maAsiss/.Shellbtsss" ]] && bot-on-off || instbot
