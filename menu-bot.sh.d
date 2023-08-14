@@ -1,47 +1,73 @@
 #!/bin/bash
-clear
-ipes=$(curl -sS ipv4.icanhazip.com)
+# (C) Copyright 2021-2022
+# ==================================================================
+# Name        : VPN Script Quick Installation Script
+# Base        : *****
+# Mod By      : Manternet
+# ==================================================================
 
+# // Export Color & Information
+export RED='\033[0;31m';
+export GREEN='\033[0;32m';
+export BLUE='\033[0;34m';
+export LIGHT='\033[0;37m';
+export CYAN='\033[0;36m';
+export NC='\033[0m';
+export BG1='\e[36;5;44m'
+export BG='\e[30;5;47m'
 
+# // Export Banner Status Information
+export ERROR="[${RED} ERROR ${NC}]";
+export INFO="[${CYAN} INFO ${NC}]";
+export PS1="${BG1} INFO ${NC}";
+export OKEY="[${GREEN} OKEY ${NC}]";
+
+# // Install Jq
 [[ ! -f /usr/bin/jq ]] && {
-  red "Downloading jq file!"
+  echo
+  echo -e "${ERROR} Downloading jq file!"
   wget -q --no-check-certificate "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" -O /usr/bin/jq
   chmod +x usr/bin/jq
 }
 
+# // Make Folder Bot
 dircreate() {
   [[ ! -d /root/multi ]] && mkdir -p /root/multi && touch /root/multi/voucher && touch /root/multi/claimed && touch /root/multi/reseller && touch /root/multi/public && touch /root/multi/hist && echo "off" >/root/multi/public
   [[ ! -d /etc/.maAsiss ]] && mkdir -p /etc/.maAsiss
 }
 
-fun_botOnOff() {
-  dircreate
-  [[ ! -f /root/multi/bot.conf ]] && {
-    echo -e "Techsolution11 Bot Panel Installer
-        "
-    [[ ! -f /root/ResBotAuth ]] && {
-      echo -ne "Input your Bot TOKEN : "
+# // Bot On Off
+function bot-on-of() {
+      dircreate
+      [[ ! -f /root/multi/bot.conf ]] && {
+         echo -e "Manternet Bot Panel Installer"
+      [[ ! -f /root/ResBotAuth ]] && {
+         echo -e "";
+         echo -ne "Input Your Bot Token ( TOKEN ) = "
       read bot_tkn
-      echo "Toket: $bot_tkn" >/root/ResBotAuth
-      echo -ne "Input your Admin ID : "
+         echo -e "";
+         echo "Toket: $bot_tkn" >/root/ResBotAuth
+         echo -ne "Input Your Admin id ( ID ) = "
       read adm_ids
-      echo "Admin_ID: $adm_ids" >>/root/ResBotAuth
+         echo "Admin_ID: $adm_ids" >>/root/ResBotAuth
     }
-    echo -ne "Bot Username, Dont use '@' [Ex: techsolution11_bot] : "
-    read bot_user
-    [[ -z $bot_user ]] && bot_user="techsolution11_bot"
-    echo ""
-    echo -ne "Limit Free Config [default:1] : "
-    read limit_pnl
-    [[ -z $limit_pnl ]] && limit_pnl="1"
-    echo ""
-    cat <<-EOF >/root/multi/bot.conf
-Botname: $bot_user
-Limit: $limit_pnl
-EOF
-    clear
-    echo -e "Info...\n"
-    fun_bot1() {
+         echo -e "";
+         echo -ne "Input Your Bot Username, Dont use '@' ( example_bot ) = "
+      read bot_user
+      [[ -z $bot_user ]] && bot_user="Internet302_bot"
+         echo -e "";
+         echo -ne "Set Limit Free Config ( default:1 ) ="
+      read limit_pnl
+      [[ -z $limit_pnl ]] && limit_pnl="1"
+ echo ""
+ cat <<-EOF >/root/multi/bot.conf
+  Botname: $bot_user
+  Limit: $limit_pnl
+ EOF
+
+# // Info Bot
+function bot1() {
+      clear
       [[ ! -e "/etc/.maAsiss/.Shellbtsss" ]] && {
         wget -qO- https://raw.githubusercontent.com/CodeKambing1/multi/main/BOT_PANEL/BotAPI.sh >/etc/.maAsiss/.Shellbtsss
       }
