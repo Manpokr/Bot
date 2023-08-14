@@ -510,29 +510,60 @@ input_addssh() {
         masaaktif=30
     fi
     masaaktif=$(sed -n '3 p' $file_user | cut -d' ' -f1)
-    domain=$(cat /root/domain)
-    IP=$(wget -qO- ipinfo.io/ip)
-    ssl="$(cat ~/log-install.txt | grep -w "Stunnel4" | cut -d: -f2 | sed 's/ //g')"
-    sqd="$(cat ~/log-install.txt | grep -w "Squid Proxy" | cut -d: -f2 | sed 's/ //g')"
-    ovpn="$(netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
-    ovpn2="$(netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
+    domain=$(cat /usr/local/etc/xray/domain)
+    NS_NYA=$(cat /usr/local/etc/xray/nsdomain)
+    IP_NYA=$(wget -qO- ipinfo.io/ip)
+    ssl=`cat ~/log-install.txt | grep -w "STUNNEL5" | cut -d: -f2`
+    ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    drop=`cat ~/log-install.txt | grep -w "DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wsnone=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET NONE" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wstls=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    ovpn=`netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn1=`netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn2=`cat ~/log-install.txt | grep -w "OPENVPN" | cut -d: -f2|sed 's/  //g' | cut -f1 | awk '{print $6}'`
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    PUB_KEY=$(cat /etc/slowdns/server.pub);
     useradd -e $(date -d "$masaaktif days" +"%Y-%m-%d") -s /bin/false -M $Login
     exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 OVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Thank You For Using Our Services\n"
-    msg+="SSH %26 OpenVPN Account Info\n"
-    msg+="Username       : $Login\n"
-    msg+="Password       : $Pass\n"
-    msg+="Expired On     : $exp\n"
-    msg+="Host           : ${domain}\n"
-    msg+="\n"
-    msg+="OpenVPN        : TCP $ovpn http://$IP:81/client-tcp-$ovpn.ovpn\n"
-    msg+="OpenVPN        : UDP $ovpn2 http://$IP:81/client-udp-$ovpn2.ovpn\n"
-    msg+="OpenVPN        : SSL 442 http://$IP:81/client-tcp-ssl.ovpn\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 SSHVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="MYIP           : ${IP_NYA}\n"
+    msg+="SUBDOMAIN      : ${domain}\n"
+    msg+="USERNAME       : ${Login}\n"
+    msg+="PASSWORD       : ${Pass}\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-
+    msg+="OPENSSH        : ${ssh}\n"
+    msg+="DROPBEAR       : ${drop}\n"
+    msg+="SSL-TLS        :${ssl}\n"
+    msg+="SSH UDP        : 1-65350\n"
+    msg+="OPENVPN TCP    : ${ovpn}\n"
+    msg+="OPENVPN UDP    : ${ovpn1}\n"
+    msg+="OPENVPN SSL    : ${ovpn2}\n"
+    msg+="SSH WS         : ${wsnone}\n"
+    msg+="SSH WS TLS     : ${wstls}\n"
+    msg+="OVPN WS        : ${wsnone}\n"
+    msg+="OVPN WS TLS    : ${wstls}\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="OPENVPN TCP = http://$IP:85/client-tcp.ovpn\n"
+    msg+="OPENVPN TCP = http://$IP:85/client-udp.ovpn\n"
+    msg+="OPENVPN TCP = http://$IP:85/client-ssl.ovpn\n"
+    msg+="━━━━━━━━━<b> SLOWDNS-WS-TLS </b>━━━━━━━━━━\n"
+    msg+="SLOW DNS PORT (PORT) = ${xtls1}\n"
+    msg+="NAME SERVER   (NS)   = ${NS_NYA}\n"
+    msg+="PUBLIC KEY    (KEY)  = ${PUB_KEY}\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="SSH UDP-CUSTOM LINK\n"
+    msg+=" ${domain}:1-65350@${Login}:${Pass}\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="PAYLOAD WS\n"
+    msg+=" GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="PAYLOAD WS TLS\n"
+    msh+=" GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="EXPIRED ON = $exp\n"
+    
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -612,11 +643,11 @@ req_ovpn() {
     msg+="Password       : $Pass\n"
     msg+="Expired On     : $exp\n"
     msg+="Host           : ${domain}\n"
-    msg+="\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="OpenVPN        : TCP $ovpn http://$IP:81/client-tcp-$ovpn.ovpn\n"
     msg+="OpenVPN        : UDP $ovpn2 http://$IP:81/client-udp-$ovpn2.ovpn\n"
     msg+="OpenVPN        : SSL 442 http://$IP:81/client-tcp-ssl.ovpn\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━<b>🔸 OVPN ACCOUNT 🔸 </b>━━━━━━━━━━\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
