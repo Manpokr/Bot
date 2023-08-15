@@ -7531,9 +7531,24 @@ getDays=$(grep -w "MAX_DAYS" "/etc/.maAsiss/public_mode/settings" | awk '{print 
 data=$(date '+%d/%m/%C%y' -d " +$getDays days")
 exp=$(echo "$data" | awk -F'/' '{print $2FS$1FS$3}' | xargs -i date -d'{}' +%Y-%m-%d)
 
+source /root/ip-detail.txt;
+ip_nya="$IP";
+
 domain=$(cat /usr/local/etc/xray/domain)
 nsdomain=$(cat /usr/local/etc/xray/nsdomain)
 pub_key=$(cat /etc/slowdns/server.pub);
+
+warp-nya() {
+if [ -r /usr/local/etc/warp/warp-reg ]; then
+    echo -e "VLESS WARP   = CLOUDFLARE IP";
+else
+    SKIP=true
+fi
+}
+
+limit=10
+echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
+limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
 
 none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
 xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -7561,7 +7576,7 @@ vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=no
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Remarks = $userna\n"
-env_msg+="Myip = $IPs\n"
+env_msg+="Myip = $ip_nya\n"
 env_msg+="Subdomain = $domain\n"
 env_msg+="Subdomain H2 = vlh2.$domain\n"
 env_msg+="Limit Quota = $limit_nya\n"
@@ -7569,6 +7584,7 @@ env_msg+="Port Tls = $xtls\n"
 env_msg+="Port None = $none\n"
 env_msg+="Grpc Type = Gun %26 Multi\n"
 env_msg+="User Id = <code>$uuid</code>\n"
+env_msg+="warp_nya\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Slowdns Port (PORT) = $xtls\n"
 env_msg+="Name Server  (NS)   = $nsdomain\n"
@@ -7586,7 +7602,7 @@ env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="VLESS GRPC TLS LINK\n"
 env_msg+="<code> $vlesslink3</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Expired On : $data \n"
+env_msg+="Expired On = $data \n"
 
 [[ "${callback_query_from_id[$id]}" != "$Admin_ID" ]] && {
         mkdir -p /etc/.maAsiss/public_mode/${callback_query_from_id}
