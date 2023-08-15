@@ -7573,7 +7573,7 @@ env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
     --text "$env_msg" \
     --parse_mode html 
-systemctl restart $raycheck > /dev/null 2>&1
+systemctl restart xray@vless.service > /dev/null 2>&1
 return 0
 
 }
