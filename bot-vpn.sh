@@ -7546,7 +7546,7 @@ vlesslink2="vless://${uuid}@${domain}:$none?path=/vlessws%26encryption=none%26ty
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-sg+="REMARKS = $userna\n"
+env_msg+="REMARKS = $userna\n"
 env_msg+="MYIP = <code>$ip<code>\n"
 env_msg+="SUBDOMAIN = $domain\n"
 env_msg+="SUBDOMAIN H2 = vlh2.$domain\n"
