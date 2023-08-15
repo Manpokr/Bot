@@ -736,7 +736,7 @@ create_vless() {
     else
         duration=3
     fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
+    uuid=$(uuidgen)
     exp=$(date -d +${duration}days +%Y-%m-%d)
     domain=$(cat /usr/local/etc/xray/domain)
     nsdomain=$(cat /usr/local/etc/xray/nsdomain)
