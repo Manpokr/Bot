@@ -3,23 +3,7 @@ dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Dat
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 #########################
 
-[[ ! -f "/etc/IP" ]] && wget -qO- ipv4.icanhazip.com > /etc/IP
-cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
-if [ "$cekray" = "XRAY" ]; then
-domen=`cat /usr/local/etc/xray/domain`
-raycheck='xray'
-else
-domen=`cat /usr/local/etc/v2ray/domain`
-raycheck='v2ray'
-fi
-
-PID=`ps -ef |grep -v grep | grep sshws |awk '{print $2}'`
-if [[ ! -z ${PID} ]]; then
-IPs="$domen"
-else
-IPs=$(cat /etc/IP)
-fi
-[[ ! -d /var/lib/scrz-prem ]] && exit 0
+#[[ ! -d /var/lib/scrz-prem ]] && exit 0
 [[ ! -f /etc/.maAsiss/res_token ]] && touch /etc/.maAsiss/res_token
 [[ ! -f /etc/.maAsiss/user_flood ]] && touch /etc/.maAsiss/user_flood
 [[ ! -f /etc/.maAsiss/log_res ]] && touch /etc/.maAsiss/log_res
