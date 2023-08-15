@@ -7525,7 +7525,7 @@ ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} --messag
 func_limit_publik ${callback_query_from_id}
 r0=$(tr -dc a-zA-Z </dev/urandom | head -c5)
 r1=$(tr -dc 0-9 </dev/urandom | head -c3)
-user=$(echo $r0$r1)
+userna=$(echo $r0$r1)
 passw=$r1
 getDays=$(grep -w "MAX_DAYS" "/etc/.maAsiss/public_mode/settings" | awk '{print $NF}')
 data=$(date '+%d/%m/%C%y' -d " +$getDays days")
@@ -7538,25 +7538,25 @@ none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed '
 xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
 none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
 xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
-uuid=$(uuidgen)
-sed -i '/#vless$/a\### '"$user $exp"'\
+uuid=$(cat /proc/sys/kernel/random/uuid)
+sed -i '/#vless$/a\### '"$userna $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-sed -i '/#vless$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
-sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+sed -i '/#vless$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vlesswarp
+sed -i '/#vlessgrpc$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vlessgrpc$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vlesswarp
 
-echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
-vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${user}"
-vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${user}"
-vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${user}"
-vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${user}"
+echo -e "VL $userna $exp" >> /usr/local/etc/xray/user.txt
+vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
+vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="REMARKS = $user\n"
+env_msg+="REMARKS = $userna\n"
 env_msg+="MYIP = <code>$ip<code>\n"
 env_msg+="SUBDOMAIN = $domain\n"
 env_msg+="SUBDOMAIN H2 = vlh2.$domain\n"
