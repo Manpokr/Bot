@@ -7531,46 +7531,60 @@ getDays=$(grep -w "MAX_DAYS" "/etc/.maAsiss/public_mode/settings" | awk '{print 
 data=$(date '+%d/%m/%C%y' -d " +$getDays days")
 exp=$(echo "$data" | awk -F'/' '{print $2FS$1FS$3}' | xargs -i date -d'{}' +%Y-%m-%d)
 
-domain=$(cat /etc/$raycheck/domain)
-tls="$(cat /root/log-install.txt | grep -w "Vless TLS" | cut -d: -f2|sed 's/ //g')"
-none="$(cat /root/log-install.txt | grep -w "Vless None TLS" | cut -d: -f2|sed 's/ //g')"
+domain=$(cat /usr/local/etc/xray/domain)
+nsdomain=$(cat /usr/local/etc/xray/nsdomain)
+pub_key=$(cat /etc/slowdns/server.pub);
 
-uuid=$(cat /proc/sys/kernel/random/uuid)
-sed -i '/#vlessWSTLS$/a\#& '"$userna $exp"'\
-},{"id": "'""$uuid""'","email": "'""$userna""'"' /etc/$raycheck/config.json
-sed -i '/#vlessWS$/a\#& '"$userna $exp"'\
-},{"id": "'""$uuid""'","email": "'""$userna""'"' /etc/$raycheck/config.json
+none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
+xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
 
-vlesslink1="vless://${uuid}@${domain}:$tls?path=/vlessws%26security=tls%26encryption=none%26type=ws#${userna}"
-vlesslink2="vless://${uuid}@${domain}:$none?path=/vlessws%26encryption=none%26type=ws#${userna}"
+uuid=$(uuidgen)
+
+sed -i '/#vless$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vless$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vlesswarp
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vlessgrpc$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vlesswarp
+
+echo -e "VL $userna $exp" >> /usr/local/etc/xray/user.txt;
+
+vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
+vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Remarks = $userna\n"
-env_msg+="Myip = $Ip\n"
+env_msg+="Myip = $IPs\n"
 env_msg+="Subdomain = $domain\n"
-env_msg+="Subdomain H2 = $domain\n"
-env_msg+="Limit Quota = $domain\n"
-env_msg+="Port Tls = $tls\n"
+env_msg+="Subdomain H2 = vlh2.$domain\n"
+env_msg+="Limit Quota = $limit_nya\n"
+env_msg+="Port Tls = $xtls\n"
 env_msg+="Port None = $none\n"
 env_msg+="Grpc Type = Gun %26 Multi\n"
 env_msg+="User Id = <code>$uuid</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Slowdns Port (PORT) = $none\n"
-env_msg+="Name Server  (NS)   = $none\n"
-env_msg+="Public Key   (KEY)  = $none\n"
+env_msg+="Slowdns Port (PORT) = $xtls\n"
+env_msg+="Name Server  (NS)   = $nsdomain\n"
+env_msg+="Public Key   (KEY)  = $pub_key\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Vless Ws Tls Link\n"
+env_msg+="VLESS WS TLS LINK\n"
 env_msg+="<code> $vlesslink1</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Vless Ws Link\n"
+env_msg+="VLESS WS LINK\n"
 env_msg+="<code> $vlesslink2</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Vless H2 Tls Link\n"
-env_msg+="<code> $vlesslink1</code>\n"
+env_msg+="VLESS H2 TLS LINK\n"
+env_msg+="<code> $vlesslink4</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Vless Grpc Tls Link\n"
-env_msg+="<code> $vlesslink1</code>\n"
+env_msg+="VLESS GRPC TLS LINK\n"
+env_msg+="<code> $vlesslink3</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Expired On : $data \n"
 
