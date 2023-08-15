@@ -372,59 +372,41 @@ menu_func_cb() {
 
 info_port() {
     [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]] || [[ "$(grep -wc ${callback_query_from_id} $User_Active)" != '0' ]] && {
-        portssh=$(grep -w "OpenSSH" /root/log-install.txt | awk '{print $NF}')
-        portsshws=$(grep -w "SSH Websocket" /root/log-install.txt | awk '{print $5,$6}')
-        portovpn=$(grep -w " OpenVPN" /root/log-install.txt | awk '{print $4,$5,$6,$7,$8,$9,$10}')
-        portssl=$(grep -w "Stunnel4" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
-        portdb=$(grep -w "Dropbear" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
-        portsqd=$(grep -w "Squid Proxy" /root/log-install.txt | awk '{print $5,$6}')
-        portudpgw=$(grep -w "Badvpn" /root/log-install.txt | awk '{print $4}')
-        portnginx=$(grep -w "Nginx" /root/log-install.txt | awk '{print $NF}')
-        portwstls=$(grep -w "Vmess TLS" /root/log-install.txt | awk '{print $NF}')
-        portws=$(grep -w "Vmess None TLS" /root/log-install.txt | awk '{print $NF}')
-        portvlesstls=$(grep -w "Vless TLS" /root/log-install.txt | awk '{print $NF}')
-        portvless=$(grep -w "Vless None TLS" /root/log-install.txt | awk '{print $NF}')
-        porttr=$(grep -w "Trojan " /root/log-install.txt | awk '{print $NF}')
-        porttrgo=$(grep -w "Trojan Go" /root/log-install.txt | awk '{print $NF}')
-        portwg=$(grep -w "Wireguard" /root/log-install.txt | awk '{print $NF}')
-        portsstp=$(grep -w "SSTP VPN" /root/log-install.txt | awk '{print $NF}')
-        portl2tp=$(grep -w "L2TP/IPSEC VPN" /root/log-install.txt | awk '{print $NF}')
-        portpptp=$(grep -w "PPTP VPN" /root/log-install.txt | awk '{print $NF}')
-        portsstls=$(grep -w "SS-OBFS TLS" /root/log-install.txt | awk '{print $NF}')
-        portss=$(grep -w "SS-OBFS HTTP" /root/log-install.txt | awk '{print $NF}')
-        portssR=$(grep -w "Shadowsocks-R" /root/log-install.txt | awk '{print $NF}')
-        OhpSSH=`cat /root/log-install.txt | grep -w "OHP SSH" | cut -d: -f2 | awk '{print $1}'`
-        OhpDB=`cat /root/log-install.txt | grep -w "OHP DBear" | cut -d: -f2 | awk '{print $1}'`
-        OhpOVPN=`cat /root/log-install.txt | grep -w "OHP OpenVPN" | cut -d: -f2 | awk '{print $1}'`
-        wsssl=`cat /root/log-install.txt | grep -w "SSH SSL Websocket" | cut -d: -f2 | awk '{print $1}'`
-                        
+
+	portssh=$(grep -w "OPENSSH" /root/log-install.txt | awk '{print $NF}')
+        portovpn=$(grep -w " OPENVPN" /root/log-install.txt | awk '{print $4,$5,$6,$7,$8,$9,$10}')
+        portssl=$(grep -w "STUNNEL5" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
+        portdb=$(grep -w "DROPBEAR" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
+        portudpgw=$(grep -w "BADVPN" /root/log-install.txt | awk '{print $4}')
+        portnginx=$(grep -w "NGINX" /root/log-install.txt | awk '{print $NF}')
+        portnone=$(grep -w "XRAY VLESS WS NTLS" /root/log-install.txt | awk '{print $NF}')
+	portxtls=$(grep -w "XRAY VLESS WS TLS" /root/log-install.txt | awk '{print $NF}')
+                                
         local env_msg
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="OpenSSH : $portssh\n"
-        env_msg+="SSH-WS : $portsshws\n"
-        env_msg+="SSH-WS-SSL : $wsssl\n"
-        env_msg+="OHP SSH : $OhpSSH\n"
-        env_msg+="OHP Dropbear : $OhpDB\n"
-        env_msg+="OHP OpenVPN : $OhpOVPN\n"
-        env_msg+="OpenVPN : $portovpn\n"
-        env_msg+="Stunnel : $portssl\n"
-        env_msg+="Dropbear : $portdb\n"
-        env_msg+="Squid Proxy : $portsqd\n"
-        env_msg+="Badvpn : $portudpgw\n"
-        env_msg+="Nginx : $portnginx\n"
-        env_msg+="Vmess TLS : $portwstls\n"
-        env_msg+="Vmess HTTP : $portws\n"
-        env_msg+="Vless TLS : $portvlesstls\n"
-        env_msg+="Vless HTTP : $portvless\n"
-        env_msg+="Trojan : $porttr\n"
-        env_msg+="Trojan-GO : $porttrgo\n"
-        env_msg+="Wireguard : $portwg\n"
-        env_msg+="SSTP VPN: $portsstp\n"
-        env_msg+="L2TP VPN : $portl2tp\n"
-        env_msg+="PPTP VPN : $portpptp\n"
-        env_msg+="SS-OBFS TLS : $portsstls\n"
-        env_msg+="SS-OBFS HTTP : $portss\n"
-        env_msg+="Shadowsocks-R : $portssR\n"
+        env_msg+="OPENSSH        = $portssh\n"
+	env_msg+="DROPBEAR       = $portdb\n"
+        env_msg+="STUNNEL5       = $portssl\n"
+        env_msg+="SSH UDP        = 1-65535\n"
+        env_msg+="OPENVPN        = $portovpn\n"
+	env_msg+="SSH-WS         = $portnone\n"
+        env_msg+="SSH-WS-SSL     = $portxtls\n"
+	env_msg+="OVPN-WS        = $portnone\n"
+        env_msg+="OVPN-WS-SSL    = $portxtls\n"
+        env_msg+="SLOW DNS PORT  = $portxtls\n"
+        env_msg+="BADVPN         = $portudpgw\n"
+        env_msg+="NGINX          = $portnginx\n"
+	env_msg+="VLESS TCP XTLS = $portxtls\n"
+        env_msg+="VMESS WS TLS   = $portxtls\n"
+        env_msg+="VMESS WS NONE  = $portnone\n"
+        env_msg+="VLESS WS TLS   = $portxtls\n"
+        env_msg+="VLESS WS NONE  = $portnone\n"
+        env_msg+="TROJAN WS TLS  = $portxtls\n"
+	env_msg+="TROJAN WS NONE = $portnone\n"
+        env_msg+="TROJAN-GO      = $portxtls\n"
+        env_msg+="SS WS TLS      = $portxtls\n"
+        env_msg+="SS WS NONE     = $portnone\n"
+        env_msg+="SS GRPC TLS    = $portxtls\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
