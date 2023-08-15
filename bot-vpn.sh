@@ -7298,21 +7298,15 @@ _if_public() {
        return 0
    }
 }
-ossl=`cat /root/log-install.txt | grep -w " OpenVPN" | cut -f2 -d: | awk '{print $6}'`
-opensh=`cat /root/log-install.txt | grep -w "OpenSSH" | cut -f2 -d: | awk '{print $1}'`
-db=`cat /root/log-install.txt | grep -w "Dropbear" | cut -f2 -d: | awk '{print $1,$2}'`
-ssl="$(cat /root/log-install.txt | grep -w "Stunnel4" | cut -d: -f2)"
-sqd="$(cat /root/log-install.txt | grep -w "Squid" | cut -d: -f2)"
-portovpn=$(grep -w " OpenVPN" /root/log-install.txt | awk '{print $5,$7,$9}')
-portsshws=`cat /root/log-install.txt | grep -w "SSH Websocket" | cut -d: -f2 | awk '{print $1}'`
-tls="$(cat /root/log-install.txt | grep -w "Vmess TLS" | cut -d: -f2|sed 's/ //g')"
-none="$(cat /root/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ //g')"
-trgo="$(cat /root/log-install.txt | grep -w "Trojan Go" | cut -d: -f2|sed 's/ //g')"
-tr="$(cat /root/log-install.txt | grep -w "Trojan " | cut -d: -f2|sed 's/ //g')"
-OhpSSH=`cat /root/log-install.txt | grep -w "OHP SSH" | cut -d: -f2 | awk '{print $1}'`
-OhpDB=`cat /root/log-install.txt | grep -w "OHP DBear" | cut -d: -f2 | awk '{print $1}'`
-OhpOVPN=`cat /root/log-install.txt | grep -w "OHP OpenVPN" | cut -d: -f2 | awk '{print $1}'`
-wsssl=`cat /root/log-install.txt | grep -w "SSH SSL Websocket" | cut -d: -f2 | awk '{print $1}'`
+ossl=`cat /root/log-install.txt | grep -w " OPENVPN" | cut -f2 -d: | awk '{print $6}'`
+portopensh=`cat /root/log-install.txt | grep -w "OPENSSH" | cut -f2 -d: | awk '{print $1}'`
+portdb=`cat /root/log-install.txt | grep -w "DROPBEAR" | cut -f2 -d: | awk '{print $1,$2}'`
+portssl="$(cat /root/log-install.txt | grep -w "STUNNEL5" | cut -d: -f2)"
+portovpn=$(grep -w " OPENVPN" /root/log-install.txt | awk '{print $5,$7,$9}')
+portudpgw="$(cat /root/log-install.txt | grep -w "BADVPN" | cut -d: -f2|sed 's/ //g')"
+portudpgw="$(cat /root/log-install.txt | grep -w "BADVPN" | cut -d: -f2|sed 's/ //g')"
+portxtls="$(cat /root/log-install.txt | grep -w "VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+portnone="$(cat /root/log-install.txt | grep -w "VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
 
 getLimits=$(grep -w "MAX_USERS" "/etc/.maAsiss/public_mode/settings" | awk '{print $NF}')
 dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
@@ -7322,21 +7316,28 @@ dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> <b>1 ID Tele = 1 Server VPN</b>\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-   env_msg+="•OpenSSH : $opensh\n"
-   env_msg+="•Dropbear : $db\n"
-   env_msg+="•SSH WS : $portsshws\n"
-   env_msg+="•SSH-WS-SSL : $wsssl\n"
-   env_msg+="•SSL/TLS : $ssl\n"
-   env_msg+="•OHP SSH : $OhpSSH\n"
-   env_msg+="•OHP Dropbear : $OhpDB\n"
-   env_msg+="•OHP OpenVPN : $OhpOVPN\n"
-   env_msg+="•Squid : $sqd\n"
-   env_msg+="•OpenVPN : $portovpn\n"
-   env_msg+="•UDPGW : 7100-7300\n"
-   env_msg+="•Trojan TLS : $tr\n"
-   env_msg+="•Trojan-Go WS TLS : $trgo\n"
-   env_msg+="•VMess/VLess WS TLS : $tls\n"
-   env_msg+="•VMess/VLess WS Non TLS : $none\n"
+   env_msg+="•OPENSSH        = $portopensh\n"
+   env_msg+="•DROPBEAR       = $portdb\n"
+   env_msg+="•SSL/TLS        = $portssl\n"
+   env_msg+="•SSH UDP        = 1-65535\n"
+   env_msg+="•OPENVPN        = $portovpn\n"
+   env_msg+="•SSH-WS         = $portnone\n"
+   env_msg+="•SSH-WS-SSL     = $portxtls\n"
+   env_msg+="•OVPN-WS        = $portnone\n"
+   env_msg+="•OVPN-WS-SSL    = $portxtls\n"
+   env_msg+="•SLOW DNS PORT  = $portxtls\n"
+   env_msg+="•UDPGW          = $portudpgw\n"
+   env_msg+="•VLESS TCP XTLS = $portxtls\n"
+   env_msg+="•VMESS WS TLS   = $portxtls\n"
+   env_msg+="•VMESS WS NONE  = $portnone\n"
+   env_msg+="•VLESS WS TLS   = $portxtls\n"
+   env_msg+="•VLESS WS NONE  = $portnone\n"
+   env_msg+="•TROJAN WS TLS  = $portxtls\n"
+   env_msg+="•TROJAN WS NONE = $portnone\n"
+   env_msg+="•TROJAN-GO      = $portxtls\n"
+   env_msg+="•SS WS TLS      = $portxtls\n"
+   env_msg+="•SS WS NONE     = $portnone\n"
+   env_msg+="•SS GRPC TLS    = $portxtls\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> Status = 👤 $dx / $getLimits Max \n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
@@ -7361,7 +7362,8 @@ data=$(date '+%d/%m/%C%y' -d " +$getDays days")
 exp=$(echo "$data" | awk -F'/' '{print $2FS$1FS$3}' | xargs -i date -d'{}' +%Y-%m-%d)
 
 if /usr/sbin/useradd -M -N -s /bin/false $userna -e $exp; then
-    (echo "${passw}";echo "${passw}") | passwd "${userna}"
+    (echo "${passw}";echo "${passw}") 
+    | passwd "${userna}"
 else
     ShellBot.sendMessage --chat_id ${callback_query_chat_id[$id]} \
             --text "⛔ ERROR CREATING USER" \
