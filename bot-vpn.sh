@@ -7546,12 +7546,13 @@ vlesslink2="vless://${uuid}@${domain}:$none?path=/vlessws%26encryption=none%26ty
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Remarks : $userna\n"
-env_msg+="Myip : $Ip\n"
-env_msg+="Subdomain : $domain\n"
+env_msg+="REMARKS = $userna\n"
+env_msg+="MYIP = $Ip\n"
+env_msg+="SUBDOMAIN = $domain\n"
+env_msg+="SUBDOMAIN H2 = $domain\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Port TLS : $tls\n"
-env_msg+="Port None TLS : $none\n"
+env_msg+="PORT TLS = $tls\n"
+env_msg+="PORT NONE = $none\n"
 env_msg+="ID : <code>$uuid</code>\n"
 env_msg+="Encryption : none\n"
 env_msg+="Network : websocket/ws\n"
