@@ -725,7 +725,7 @@ create_vless() {
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     req_voucher $file_user
     req_limit
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist\n" \
             --parse_mode html
@@ -738,35 +738,44 @@ create_vless() {
     fi
     uuid=$(cat /proc/sys/kernel/random/uuid)
     exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
-    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
-    none=8000
-    email=${user}
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    sed -i '/#xray$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$email""'"' /etc/scvpn/xray/vless-nontls.json
-    cat /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json
-    vlesslink1="vless://$uuid@$domain:$multi?encryption=none%26security=tls%26sni=%26type=ws%26host=%26path=/xrayws#$user"
-    vlesslink2="vless://$uuid@$domain:$none?encryption=none%26security=none%26sni=%26type=ws%26host=%26path=/xrayws#$user"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${vlesslink1}
-${vlesslink2}
-EOF
-    echo ${base64Result} >"/etc/scvpn/config-url/${uuid}"
-    systemctl restart xray.service
-    systemctl restart xray@n
+    domain=$(cat /usr/local/etc/xray/domain)
+    nsdomain=$(cat /usr/local/etc/xray/nsdomain)
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
+    sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+    sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+    sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+    sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=vless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${user}"
+    vlesslink2="vless://${uuid}@${domain}:${none1}?path=vless-none%26encryption=none%26type=ws%26sni=bug.com#${user}"
+    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${user}"
+    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=vless-h2%26sni=bug.com#${user}"
+
+    systemctl restart xray@vless.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="User : $user\n"
     msg+="<code>Expired : $exp</code>\n"
     msg+="\n"
-    msg+="Tls\n"
+    msg+="VLESS WS TLS\n"
     msg+="<code>$vlesslink1</code>\n"
     msg+="\n"
-    msg+="Ntls\n"
+    msg+="VLESS WS\n"
     msg+="<code>$vlesslink2</code>\n"
+    msg+="\n"
+    msg+="VLESS H2 TLS\n"
+    msg+="<code>$vlesslink4</code>\n"
+    msg+="\n"
+    msg+="VLESS GRPC TLS\n"
+    msg+="<code>$vlesslink3</code>\n"
     msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
