@@ -7546,9 +7546,9 @@ vlesslink2="vless://${uuid}@${domain}:$none?path=/vlessws%26encryption=none%26ty
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Address : $domain\n"
 env_msg+="Remarks : $userna\n"
-env_msg+="Expired On : $data \n"
+env_msg+="Myip : $Ip\n"
+env_msg+="Subdomain : $domain\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Port TLS : $tls\n"
 env_msg+="Port None TLS : $none\n"
@@ -7563,6 +7563,7 @@ env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Link None TLS : \n"
 env_msg+="<code>$vlesslink2</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="Expired On : $data \n"
 
 [[ "${callback_query_from_id[$id]}" != "$Admin_ID" ]] && {
         mkdir -p /etc/.maAsiss/public_mode/${callback_query_from_id}
