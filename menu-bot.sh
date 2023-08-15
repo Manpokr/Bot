@@ -1,112 +1,67 @@
 #!/bin/bash
-dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-###########- COLOR CODE -##############
-colornow=$(cat /etc/alexxa/theme/color.conf)
-NC="\e[0m"
-export GREEN='\033[0;32m';
-RED="\033[0;31m" 
-COLOR1="$(cat /etc/alexxa/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
-COLBG1="$(cat /etc/alexxa/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"  
-WH='\033[1;37m'                  
-###########- END COLOR CODE -##########
+# (C) Copyright 2021-2022
+# ==================================================================
+# Name        : VPN Script Quick Installation Script
+# Base        : *****
+# Mod By      : *****
+# ==================================================================
 
-ipes=$(curl -sS ipv4.icanhazip.com)
+# // Export Color & Information
+export RED='\033[0;31m';
+export GREEN='\033[0;32m';
+export BLUE='\033[0;34m';
+export LIGHT='\033[0;37m';
+export CYAN='\033[0;36m';
+export NC='\033[0m';
+export BG1='\e[36;5;44m'
+export BG='\e[30;5;47m'
+
+# // Export Banner Status Information
+export ERROR="[${RED} ERROR ${NC}]";
+export INFO="[${CYAN} INFO ${NC}]";
+export PS1="${BG1} INFO ${NC}";
+export OKEY="[${GREEN} OKEY ${NC}]";
+
+# // Install Kq
 [[ ! -f /usr/bin/jq ]] && {
     red "Mengunduh file jq!"
     wget -q --no-check-certificate "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" -O /usr/bin/jq
     chmod +x usr/bin/jq
 }
 
+# // Make Folder Bot
 dircreate() {
     [[ ! -d /root/multi ]] && mkdir -p /root/multi && touch /root/multi/voucher && touch /root/multi/claimed && touch /root/multi/reseller && touch /root/multi/public && touch /root/multi/hist && echo "off" >/root/multi/public
     [[ ! -d /etc/.maAsiss ]] && mkdir -p /etc/.maAsiss
 }
 
-BURIQ () {
-    curl -sS https://raw.githubusercontent.com/DryanZ/permission/aio/access  > /root/tmp
-    data=( `cat /root/tmp | grep -E "^### " | awk '{print $2}'` )
-    for user in "${data[@]}"
-    do
-    exp=( `grep -E "^### $user" "/root/tmp" | awk '{print $3}'` )
-    d1=(`date -d "$exp" +%s`)
-    d2=(`date -d "$biji" +%s`)
-    exp2=$(( (d1 - d2) / 86400 ))
-    if [[ "$exp2" -le "0" ]]; then
-    echo $user > /etc/.$user.ini
-    else
-    rm -f /etc/.$user.ini > /dev/null 2>&1
-    fi
-    done
-    rm -f /root/tmp
-}
-
-MYIP=$(curl -sS ipv4.icanhazip.com)
-Name=$(curl -sS https://raw.githubusercontent.com/DryanZ/permission/aio/access  | grep $MYIP | awk '{print $2}')
-Isadmin=$(curl -sS https://raw.githubusercontent.com/DryanZ/permission/aio/access  | grep $MYIP | awk '{print $5}')
-echo $Name > /usr/local/etc/.$Name.ini
-CekOne=$(cat /usr/local/etc/.$Name.ini)
-
-Bloman () {
-if [ -f "/etc/.$Name.ini" ]; then
-CekTwo=$(cat /etc/.$Name.ini)
-    if [ "$CekOne" = "$CekTwo" ]; then
-        res="Expired"
-    fi
-else
-res="Izin Diterima..."
-fi
-}
-
-PERMISSION () {
-    MYIP=$(curl -sS ipv4.icanhazip.com)
-    IZIN=$(curl -sS https://raw.githubusercontent.com/DryanZ/permission/aio/access  | awk '{print $4}' | grep $MYIP)
-    if [ "$MYIP" = "$IZIN" ]; then
-    Bloman
-    else
-    res="Izin Ditolak!"
-    fi
-    BURIQ
-}
-
-x="ok"
-
-
-PERMISSION
-
-if [ "$res" = "Expired" ]; then
-Exp="\e[36mExpired\033[0m"
-rm -f /home/needupdate > /dev/null 2>&1
-else
-Exp=$(curl -sS https://raw.githubusercontent.com/DryanZ/permission/aio/access  | grep $MYIP | awk '{print $3}')
-fi
-
 function botonoff(){
 clear
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e "$COLBG1                  • BOT PANEL •                   $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
+echo "";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "         ${RED}•••${NC} BOT PANEL ${RED}•••${NC}"
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 dircreate
 [[ ! -f /root/multi/bot.conf ]] && {
 echo -e "
 • Status ${GREEN}Installer${NC} And ${GREEN}Running!${NC}
 "
 [[ ! -f /root/ResBotAuth ]] && {
-echo -ne " API TOKEN : "
+   echo -ne " Input Your Bot Token = "
 read bot_tkn
-echo "Toket: $bot_tkn" >/root/ResBotAuth
-echo -ne " ID ADMIN  : "
+   echo "Toket: $bot_tkn" >/root/ResBotAuth
+   echo -ne " Input Your Admin Id = "
 read adm_ids
-echo "Admin_ID: $adm_ids" >>/root/ResBotAuth
+   echo "Admin_ID: $adm_ids" >>/root/ResBotAuth
 }
-echo -ne " NAMA BOT : "
+   echo -ne " Bot Username, Dont Use '@' ( example_bot ) = "
 read bot_user
-[[ -z $bot_user ]] && bot_user="DyanZ_Bot"
-echo ""
-echo -ne " LIMIT     : "
+[[ -z $bot_user ]] && bot_user="example_Bot"
+   echo ""
+   echo -ne " Limit Free Config ( default:1 ) = "
 read limit_pnl
 [[ -z $limit_pnl ]] && limit_pnl="1"
-echo ""
+echo -e "";
 cat <<-EOF >/root/multi/bot.conf
 Botname: $bot_user
 Limit: $limit_pnl
@@ -115,76 +70,78 @@ EOF
 fun_bot1() {
 clear
 [[ ! -e "/etc/.maAsiss/.Shellbtsss" ]] && {
-wget -qO- https://raw.githubusercontent.com/DryanZ/bot_panel/aio/BotAPI.sh >/etc/.maAsiss/.Shellbtsss
+   wget -qO- https://raw.githubusercontent.com/Manpokr/Bot/main/bot-api.sh >/etc/.maAsiss/.Shellbtsss
 }
-[[ "$(grep -wc "sam_bot" "/etc/rc.local")" = '0' ]] && {
-sed -i '$ i\screen -dmS sam_bot bbt' /etc/rc.local >/dev/null 2>&1
+[[ "$(grep -wc "run_bot" "/etc/rc.local")" = '0' ]] && {
+    sed -i '$ i\screen -dmS run_bot run' /etc/rc.local >/dev/null 2>&1
 }
 }
-screen -dmS sam_bot bbt >/dev/null 2>&1
+screen -dmS run_bot run >/dev/null 2>&1
 fun_bot1
-[[ $(ps x | grep "sam_bot" | grep -v grep | wc -l) != '0' ]] && {
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e "$COLBG1                  • BOT PANEL •                   $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-echo -e " [INFO]  Bot successfully activated !" 
-echo -e ""
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-read -n 1 -s -r -p " Press any key to back on menu"
+[[ $(ps x | grep "run_bot" | grep -v grep | wc -l) != '0' ]] && {
+echo "";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "         ${RED}•••${NC} BOT PANEL ${RED}•••${NC}"
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${PS1} Bot successfully activated !";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo "";
+echo -e -n "Press ( ${BLUE}Enter${NC} ) To Back Menu Bot"; read  menu
 menu-bot
 } || {
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e "$COLBG1                  • BOT PANEL •                   $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-echo -e " [INFO] Information not valid !"
-echo -e ""
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-read -n 1 -s -r -p " Tekan tombol apa saja untuk kembali ke menu"
+echo "";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "         ${RED}•••${NC} BOT PANEL ${RED}•••${NC}"
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${PS1} Information not valid !";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo "";
+echo -e -n "Press ( ${BLUE}Enter${NC} ) To Back Menu Bot"; read  menu
 menu-bot
 }
 } || {
 clear
 fun_bot2() {
-screen -r -S "sam_bot" -X quit >/dev/null 2>&1
-[[ $(grep -wc "sam_bot" /etc/rc.local) != '0' ]] && {
-sed -i '/sam_bot/d' /etc/rc.local
+screen -r -S "run_bot" -X quit >/dev/null 2>&1
+[[ $(grep -wc "run_bot" /etc/rc.local) != '0' ]] && {
+sed -i '/run_bot/d' /etc/rc.local
 }
 rm -f /root/multi/bot.conf
 sleep 1
 }
 fun_bot2
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e "$COLBG1                  • BOT PANEL •                   $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-echo -e " [INFO] Bot Stoped Successfully"
-echo -e ""
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-read -n 1 -s -r -p " Tekan tombol apa saja untuk kembali ke menu"
+echo "";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "         ${RED}•••${NC} BOT PANEL ${RED}•••${NC}"
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${PS1} Bot Stoped Successfully !";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo "";
+echo -e -n "Press ( ${BLUE}Enter${NC} ) To Back Menu Bot"; read  menu
 menu-bot
 }
 }
 clear
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e "$COLBG1                  • BOT PANEL •                   $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-echo -e " $COLOR1 [01]$NC • Start & Stop Bot"
-echo -e ""
-echo -e " $COLOR1 [00]$NC • Back To Main Menu"
-echo -e ""
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$NC"
-echo -e ""
-echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
-case $opt in
-01 | 1) clear ; botonoff ;;
-02 | 2) clear ; menu2 ;;
-03 | 3) clear ; menu3 ;;
-00 | 0) clear ; menu ;;
-*) clear ; menu-bot ;;
-esac
+echo "";
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "         ${RED}•••${NC} BOT PANEL ${RED}•••${NC}"
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "";
+echo -e "${LIGHT}  (${GREEN}01${LIGHT}) ${RED}•${LIGHT} START && STOP BOT";
+echo -e "${NC}"
+echo -e "${LIGHT}  (${RED}00${LIGHT}) ${RED}• BACK TO MENU${LIGHT}";
+echo -e "${NC}"
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo "";
+echo -e -n " ${LIGHT}Select menu (${GREEN} 0 - 1 ${LIGHT})${NC} = "; read x
+if [[ $x = 1 || $x = 01 ]]; then
+ clear
+ botonoff
+ elif [[ $x = 0 || $x = 00 ]]; then
+ clear
+ menu
+ else
+  echo -e " ${ERROR} Please Input The Correct Number"
+  sleep 1
+  menu-bot
+ fi
