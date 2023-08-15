@@ -7525,55 +7525,80 @@ ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} --messag
 func_limit_publik ${callback_query_from_id}
 r0=$(tr -dc a-zA-Z </dev/urandom | head -c5)
 r1=$(tr -dc 0-9 </dev/urandom | head -c3)
-userna=$(echo $r0$r1)
+user=$(echo $r0$r1)
 passw=$r1
 getDays=$(grep -w "MAX_DAYS" "/etc/.maAsiss/public_mode/settings" | awk '{print $NF}')
 data=$(date '+%d/%m/%C%y' -d " +$getDays days")
 exp=$(echo "$data" | awk -F'/' '{print $2FS$1FS$3}' | xargs -i date -d'{}' +%Y-%m-%d)
 
-domain=$(cat /etc/$raycheck/domain)
-tls="$(cat /root/log-install.txt | grep -w "Vless TLS" | cut -d: -f2|sed 's/ //g')"
-none="$(cat /root/log-install.txt | grep -w "Vless None TLS" | cut -d: -f2|sed 's/ //g')"
+domain=$(cat /usr/local/etc/xray/domain)
+pub_key=$(cat /etc/slowdns/server.pub);
+nsdomain=$(cat /usr/local/etc/xray/domain)
+none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
 
-uuid=$(cat /proc/sys/kernel/random/uuid)
-sed -i '/#vlessWSTLS$/a\#& '"$userna $exp"'\
-},{"id": "'""$uuid""'","email": "'""$userna""'"' /etc/$raycheck/config.json
-sed -i '/#vlessWS$/a\#& '"$userna $exp"'\
-},{"id": "'""$uuid""'","email": "'""$userna""'"' /etc/$raycheck/config.json
+uuid=$(uuidgen)
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+# VL WS TLS
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+# VL GRPC
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+# VL GRPC
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
 
-vlesslink1="vless://${uuid}@${domain}:$tls?path=/vlessws%26security=tls%26encryption=none%26type=ws#${userna}"
-vlesslink2="vless://${uuid}@${domain}:$none?path=/vlessws%26encryption=none%26type=ws#${userna}"
+echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt;
+vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${user}"
+vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${user}"
+vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${user}"
+vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${user}"
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Address : $domain\n"
-env_msg+="Remarks : $userna\n"
-env_msg+="Expired On : $data \n"
+env_msg+="REMARKS = $user\n"
+env_msg+="MYIP = <code>$ip<code>\n"
+env_msg+="SUBDOMAIN = $domain\n"
+env_msg+="SUBDOMAIN H2 = vlh2.$domain\n"
+env_msg+="LIMIT QUOTA = $limit_nya\n"
+env_msg+="PORT TLS = $xtls\n"
+env_msg+="PORT NONE = $none\n"
+env_msg+="GRPC TYPE = Gun & Multi\n"
+env_msg+="USER ID = <code>$uuid</code>\n"
+env_msg+="NETWORK = websocket/h2/grpc\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Port TLS : $tls\n"
-env_msg+="Port None TLS : $none\n"
-env_msg+="ID : <code>$uuid</code>\n"
-env_msg+="Encryption : none\n"
-env_msg+="Network : websocket/ws\n"
-env_msg+="Path : /vlessws\n"
+env_msg+="SLOWDNS PORT (PORT) = $xtls\n"
+env_msg+="NAME SERVER  (NS) = $nsdomain\n"
+env_msg+="PUBLIC KEY   (KEY) = $pub_key\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Link TLS : \n"
+env_msg+="VLESS WS TLS LINK\n"
 env_msg+="<code>$vlesslink1</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Link None TLS : \n"
+env_msg+="VLESS WS LINK\n"
 env_msg+="<code>$vlesslink2</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="VLESS H2 TLS LINK\n"
+env_msg+="<code>$vlesslink4</code>\n"
+env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="VLESS GRPC TLS LINK\n"
+env_msg+="<code>$vlesslink3</code>\n"
+env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="EXPIRED ON = $data \n"
 
 [[ "${callback_query_from_id[$id]}" != "$Admin_ID" ]] && {
         mkdir -p /etc/.maAsiss/public_mode/${callback_query_from_id}
-        echo "$userna:$uuid:$data" >/etc/.maAsiss/public_mode/${callback_query_from_id}/$userna
-        echo "$userna:$uuid $getDays Days VLESS | ${callback_query_from_first_name}" >> /root/log-public
+        echo "$user:$uuid:$data" >/etc/.maAsiss/public_mode/${callback_query_from_id}/$userna
+        echo "$user:$uuid $getDays Days VLESS | ${callback_query_from_first_name}" >> /root/log-public
 }
 
 ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
     --text "$env_msg" \
     --parse_mode html 
-systemctl restart $raycheck > /dev/null 2>&1
+systemctl restart xray@vless.service > /dev/null 2>&1
 return 0
 
 }
