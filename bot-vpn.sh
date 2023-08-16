@@ -3193,8 +3193,8 @@ return 0
 
 list_member_vless() {
    if [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]]; then
-      _result=$(grep -E "^#& " "/etc/$raycheck/config.json" | cut -d ' ' -f 2 | column -t | sort | uniq | wc -l)
-      _results=$(grep -E "^#& " "/etc/$raycheck/config.json" | cut -d ' ' -f 2 | column -t | sort | uniq )
+      _result=$(grep -E "^#& " "/usr/local/etc/xray/vless.json" | cut -d ' ' -f 2 | column -t | sort | uniq | wc -l)
+      _results=$(grep -E "^#& " "/usr/local/etc/xray/vless.json" | cut -d ' ' -f 2 | column -t | sort | uniq )
    elif [[ "${callback_query_from_id[$id]}" != "$Admin_ID" ]]; then
       _result=$(ls /etc/.maAsiss/db_reseller/${callback_query_from_id}/user_vless | wc -l)
       _results=$(ls /etc/.maAsiss/db_reseller/${callback_query_from_id}/user_vless )
@@ -3236,14 +3236,14 @@ del_vless() {
 func_del_vless() {
     userna=$1
     [[ "${message_from_id[$id]}" = "$Admin_ID" ]] && {
-        exp=$(grep -wE "^#& $userna" "/etc/$raycheck/config.json" | cut -d ' ' -f 3 | sort | uniq)
-        sed -i "/^#& $userna $exp/,/^},{/d" /etc/$raycheck/config.json
+        exp=$(grep -wE "^### $userna" "/usr/local/etc/xray/vless.json" | cut -d ' ' -f 3 | sort | uniq)
+        sed -i "/^### $userna $exp/,/^},{/d" /usr/local/etc/xray/vless.json
         datata=$(find /etc/.maAsiss/ -name $userna)
         for accc in "${datata[@]}"
         do
         rm $accc
         done
-        systemctl restart $raycheck > /dev/null 2>&1
+        systemctl restart xray@vless > /dev/null 2>&1
     } || {
         [[ ! -e /etc/.maAsiss/db_reseller/${message_from_id}/user_vless/$userna ]] && {
             ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3266,7 +3266,7 @@ func_del_vless() {
 check_login_vless(){
 if [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]]; then
 echo -n > /tmp/other.txt
-data=( `cat /etc/$raycheck/config.json | grep '^#&' | cut -d ' ' -f 2 | sort | uniq`);
+data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
 
 echo -e "━━━━━━━━━━━━━━━━━━━━━" > /tmp/vmess-login
 echo -e "         🟢 VLess User Login 🟢  " >> /tmp/vmess-login
@@ -3279,11 +3279,11 @@ akun="tidakada"
 fi
 
 echo -n > /tmp/ipvmess.txt
-data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep $raycheck | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
+data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep xray | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
 
-jum=$(cat /var/log/$raycheck/access.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
+jum=$(cat /var/log/xray/access.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >> /tmp/ipvmess.txt
 else
