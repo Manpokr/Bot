@@ -5171,7 +5171,7 @@ vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=no
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="<code>Remarks      = $userna\n"
+env_msg+="Remarks      = $userna\n"
 env_msg+="Myip = $ip_nya\n"
 env_msg+="Subdomain = $domain\n"
 env_msg+="Subdomain H2 = vlh2.$domain\n"
