@@ -4646,12 +4646,17 @@ admin_server() {
 
 #======= MAIN MENU =========
 see_sys() {
-        systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
+        systemctl is-active --quiet stunnel4 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
         systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
-        systemctl is-active --quiet xray && stsray="Running 🟢" || stsray="Not Running 🔴"
+        systemctl is-active --quiet $raycheck && stsray="Running 🟢" || stsray="Not Running 🔴"
         systemctl is-active --quiet trojan-go && ststrgo="Running 🟢" || ststrgo="Not Running 🔴"
-        systemctl is-active --quiet ss && stsss="Running 🟢" || stsss="Not Running 🔴"
-        
+        systemctl is-active --quiet wg-quick@wg0 && stswg="Running 🟢" || stswg="Not Running 🔴"
+        systemctl is-active --quiet shadowsocks-libev && stsss="Running 🟢" || stsss="Not Running 🔴"
+        systemctl is-active --quiet ssrmu && stsssr="Running 🟢" || stsssr="Not Running 🔴"
+        systemctl is-active --quiet accel-ppp && stssstp="Running 🟢" || stssstp="Not Running 🔴"
+        systemctl is-active --quiet pptpd && stspptp="Running 🟢" || stspptp="Not Running 🔴"
+        systemctl is-active --quiet xl2tpd && stsl2tp="Running 🟢" || stsl2tp="Not Running 🔴"
+
         local env_msg
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
         env_msg+="<b> WELCOME TO BOT $nameStore</b>\n"
@@ -4663,7 +4668,12 @@ see_sys() {
         env_msg+="VLess        : $stsray\n"
         env_msg+="Trojan       : $stsray\n"
         env_msg+="Trojan-Go    : $ststrgo\n"
+        env_msg+="Wireguard    : $stswg\n"
+        env_msg+="SSTP         : $stssstp\n"
+        env_msg+="PPTP         : $stspptp\n"
+        env_msg+="L2TP         : $stsl2tp\n"
         env_msg+="Shadowsocks  : $stsss\n"
+        env_msg+="Shadowsocks-R: $stsssr</code>\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]] || [[ "$(grep -wc ${callback_query_from_id} $User_Active)" != '0' ]] && {
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
