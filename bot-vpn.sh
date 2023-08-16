@@ -7546,9 +7546,13 @@ else
 fi
 }
 
-limit=$10
-echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
-limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+limit=10
+if [[ $limit -gt 0 ]]; then
+   echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
+   export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+else
+   export limit_nya="Unlimited"
+fi
 
 none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
 xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -7584,7 +7588,7 @@ env_msg+="Port Tls = $xtls\n"
 env_msg+="Port None = $none\n"
 env_msg+="Grpc Type = Gun %26 Multi\n"
 env_msg+="User Id = <code>$uuid</code>\n"
-env_msg+=warp_nya
+warp_nya
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Slowdns Port (PORT) = $xtls\n"
 env_msg+="Name Server  (NS)   = $nsdomain\n"
