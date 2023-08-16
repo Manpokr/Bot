@@ -5134,7 +5134,7 @@ pub_key=$(cat /etc/slowdns/server.pub)
 
 warp-nya() {
 if [ -r /usr/local/etc/warp/warp-reg ]; then
-    env_msg+="Vless Warp = Cloudflare Ip\n"
+    env_msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
 else
     SKIP=true
 fi
@@ -5174,14 +5174,14 @@ vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=no
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="<code>Remarks      = $userna\n"
-env_msg+="Myip = $ip_nya\n"
-env_msg+="Subdomain = $domain\n"
+env_msg+="Myip         = $ip_nya\n"
+env_msg+="Subdomain    = $domain\n"
 env_msg+="Subdomain H2 = vlh2.$domain\n"
-env_msg+="Limit Quota = $limit_nya\n"
-env_msg+="Port Tls = $xtls\n"
-env_msg+="Port None = $none\n"
-env_msg+="Grpc Type = Gun %26 Multi</code>\n"
-env_msg+="User Id = <code>$uuid</code>\n"
+env_msg+="Limit Quota  = $limit_nya\n"
+env_msg+="Port Tls     = $xtls\n"
+env_msg+="Port None    = $none\n"
+env_msg+="Grpc Type    = Gun %26 Multi</code>\n"
+env_msg+="User Id      = <code>$uuid</code>\n"
 warp-nya
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="<code>Slowdns Port (PORT) = $xtls\n"
