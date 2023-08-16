@@ -1,7 +1,6 @@
 #!/bin/bash
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-#########################
 
 #[[ ! -d /var/lib/scrz-prem ]] && exit 0
 [[ ! -f /etc/.maAsiss/res_token ]] && touch /etc/.maAsiss/res_token
@@ -12,12 +11,12 @@ biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 [[ ! -f /etc/.maAsiss/.cache/StatusDisable ]] && {
 touch /etc/.maAsiss/.cache/StatusDisable
 cat <<-EOF >/etc/.maAsiss/.cache/StatusDisable
-SSH : [ON]
-VMESS : [ON]
-VLESS : [ON]
-TROJAN : [ON]
-TROJAN-GO : [ON]
-SHADOWSOCK: [ON]
+SSH : (ON)
+VMESS : (ON)
+VLESS : (ON)
+TROJAN : (ON)
+TROJAN-GO : (ON)
+SHADOWSOCK: (ON)
 EOF
 }
 
@@ -176,11 +175,14 @@ WKT=`curl -sS ip-api.com | grep -w "timezone" | awk '{print $3}' | cut -d'"' -f2
 IPVPS=`curl -sS ip-api.com | grep -w "query" | awk '{print $3}' | cut -d'"' -f2 | tee -a /etc/afak.conf`
 
     local msg
-    msg="<b>Server Information</b>\n\n"
-    msg+="<code>ISP  : $ISP\n"
-    msg+="CITY : $CITY\n"
-    msg+="TIME : $WKT\n"
-    msg+="IP.  : $IPVPS</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<b> SERVER INFORMATION </b>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>ISP  = $ISP\n"
+    msg+="CITY = $CITY\n"
+    msg+="TIME = $WKT\n"
+    msg+="IPVPS  = $IPVPS</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -206,16 +208,16 @@ fcm=$(grep -w ${message_chat_id[$id]} $User_Token | awk '{print $NF}')
 }
 
 local msg
-msg="===========================\n"
+msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 msg+="Welcome <b>${message_from_first_name[$id]}</b>\n\n"
-msg+="To access the menu [ /menu ]\n"
-msg+="To see server information [ /info ]\n"
-msg+="for free account [ /free ]\n\n"
-msg+="===========================\n"
+msg+="To Access The Menu ( /menu )\n"
+msg+="To See Server Information ( /info )\n"
+msg+="For Free Account ( /free )\n\n"
+msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 [[ "${message_from_id[$id]}" != "$Admin_ID" ]] && {
 msg+="<b>Acces Token:</b>\n"
 msg+="<code>$fcm</code>\n"
-msg+="===========================\n"
+msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 } 
 ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
      --text "$(echo -e $msg)" \
@@ -257,8 +259,8 @@ hargass=$(grep -w "Price Shadowsocks :" /etc/.maAsiss/price | awk '{print $NF}')
         env_msg+="Wireguard      : $hargawg\n"
         env_msg+="Shadowsocks    : $hargass\n"
 	env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="🤵 Admin Panel : $admin_bot_panel 🤵\n"
-        env_msg+="💡 Limit Trial : $_limTotal users 💡\n"
+        env_msg+="🧍 Admin Panel : $admin_bot_panel 🧍\n"
+        env_msg+="🆓 Limit Trial : $_limTotal users 🆓\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         env_msg+="💰 Current Saldo : $_SaldoTotal 💰\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
