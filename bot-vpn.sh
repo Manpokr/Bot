@@ -250,19 +250,19 @@ hargass=$(grep -w "Price Shadowsocks :" /etc/.maAsiss/price | awk '{print $NF}')
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
         env_msg+="<b> WELCOME TO BOT $nameStore</b>\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="💲Price List :💲\n"
-        env_msg+="<code>SSH            : $hargassh\n"
-        env_msg+="VMess          : $hargavmess\n"
-        env_msg+="VLess          : $hargavless\n"
-        env_msg+="Trojan         : $hargatrojan\n"
-        env_msg+="Trojan-Go      : $hargatrgo\n"
-        env_msg+="Wireguard      : $hargawg\n"
-        env_msg+="Shadowsocks    : $hargass\n"
+        env_msg+="💲Price List =💲\n"
+        env_msg+="<code>SSH            = $hargassh\n"
+        env_msg+="VMess          = $hargavmess\n"
+        env_msg+="VLess          = $hargavless\n"
+        env_msg+="Trojan         = $hargatrojan\n"
+        env_msg+="Trojan-Go      = $hargatrgo\n"
+        env_msg+="Wireguard      = $hargawg\n"
+        env_msg+="Shadowsocks-22 = $hargass\n"
 	env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="🧍 Admin Panel : $admin_bot_panel 🧍\n"
-        env_msg+="🆓 Limit Trial : $_limTotal users 🆓\n"
+        env_msg+="🧍 Admin Panel = $admin_bot_panel 🧍\n"
+        env_msg+="🆓 Limit Trial = $_limTotal users 🆓\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="💰 Current Saldo : $_SaldoTotal 💰\n"
+        env_msg+="💰 Current balance = $_SaldoTotal 💰\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} --text "$env_msg" \
             --reply_markup "$menu_re_main_updater1" \
@@ -300,7 +300,7 @@ menu_func_cb() {
    inf=$(cat /etc/.maAsiss/update-info)
    local env_msg
    env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
-   env_msg+="🏷 Information for reseller :\n\n"
+   env_msg+="🏷 Information For Reseller :\n\n"
    env_msg+="$inf\n\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 }
@@ -319,42 +319,43 @@ menu_func_cb() {
 
 info_port() {
     [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]] || [[ "$(grep -wc ${callback_query_from_id} $User_Active)" != '0' ]] && {
-        portssh=$(grep -w "OpenSSH" /root/log-install.txt | awk '{print $NF}')
-        portsshws=$(grep -w "SSH Websocket" /root/log-install.txt | awk '{print $5,$6}')
-        portovpn=$(grep -w " OpenVPN" /root/log-install.txt | awk '{print $4,$5,$6,$7,$8,$9,$10}')
-        portssl=$(grep -w "Stunnel4" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
-        portdb=$(grep -w "Dropbear" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
-        portsqd=$(grep -w "Squid Proxy" /root/log-install.txt | awk '{print $5,$6}')
-        portudpgw=$(grep -w "Badvpn" /root/log-install.txt | awk '{print $4}')
-        portnginx=$(grep -w "Nginx" /root/log-install.txt | awk '{print $NF}')
-        portwstls=$(grep -w "Vmess TLS" /root/log-install.txt | awk '{print $NF}')
-        portws=$(grep -w "Vmess None TLS" /root/log-install.txt | awk '{print $NF}')
-        portvlesstls=$(grep -w "Vless TLS" /root/log-install.txt | awk '{print $NF}')
-        portvless=$(grep -w "Vless None TLS" /root/log-install.txt | awk '{print $NF}')
-        porttr=$(grep -w "Trojan " /root/log-install.txt | awk '{print $NF}')
-        porttrgo=$(grep -w "Trojan Go" /root/log-install.txt | awk '{print $NF}')
-        portsstls=$(grep -w "SS-OBFS TLS" /root/log-install.txt | awk '{print $NF}')
-        portss=$(grep -w "SS-OBFS HTTP" /root/log-install.txt | awk '{print $NF}')
-        wsssl=`cat /root/log-install.txt | grep -w "SSH SSL Websocket" | cut -d: -f2 | awk '{print $1}'`
+        portssh=$(grep -w "OPENSSH" /root/log-install.txt | awk '{print $NF}')
+        portsshws=$(grep -w "SSH WS NONE" /root/log-install.txt | awk '{print $5,$6}')
+        portovpn=$(grep -w " OPENVPN" /root/log-install.txt | awk '{print $4,$5,$6,$7,$8,$9,$10}')
+        portssl=$(grep -w "STUNNEL5" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
+        portdb=$(grep -w "DROPBEAR" /root/log-install.txt | awk '{print $4,$5,$6,$7}')
+        portudpgw=$(grep -w "BADVPN" /root/log-install.txt | awk '{print $4}')
+        portnginx=$(grep -w "NGINX" /root/log-install.txt | awk '{print $NF}')
+        portwstls=$(grep -w "VLESS WS TLS" /root/log-install.txt | awk '{print $NF}')
+        portws=$(grep -w "VLESS WS NTLS" /root/log-install.txt | awk '{print $NF}')
+        wsssl=`cat /root/log-install.txt | grep -w "SSH WS TLS" | cut -d: -f2 | awk '{print $1}'`
                         
         local env_msg
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="OpenSSH : $portssh\n"
-        env_msg+="SSH-WS : $portsshws\n"
-        env_msg+="SSH-WS-SSL : $wsssl\n"
-        env_msg+="OpenVPN : $portovpn\n"
-        env_msg+="Stunnel : $portssl\n"
-        env_msg+="Dropbear : $portdb\n"
-        env_msg+="Badvpn : $portudpgw\n"
-        env_msg+="Nginx : $portnginx\n"
-        env_msg+="Vmess TLS : $portwstls\n"
-        env_msg+="Vmess HTTP : $portws\n"
-        env_msg+="Vless TLS : $portvlesstls\n"
-        env_msg+="Vless HTTP : $portvless\n"
-        env_msg+="Trojan : $porttr\n"
-        env_msg+="Trojan-GO : $porttrgo\n"
-        env_msg+="SS-OBFS TLS : $portsstls\n"
-        env_msg+="SS-OBFS HTTP : $portss\n"
+        env_msg+="<code>Openssh        = $portssh\n"
+        env_msg+="Dropbear = $portdb\n"
+	env_msg+="Stunnel5 = $portssl\n"
+        env_msg+="Openvpn = $portovpn\n"
+	env_msg+="Badvpn = $portudpgw\n"
+        env_msg+="Ssh-ws = $portsshws\n"
+        env_msg+="Ssh-ws-ssl = $wsssl\n"
+        env_msg+="Ovpn-ws = $portsshws\n"
+        env_msg+="Ovpn-ws-ssl = $wsssl\n"
+        env_msg+="Nginx = $portnginx\n"
+	env_msg+="Xray Tcp Tls/http = $portwstls\n"
+	env_msg+="Vless Ws Tls = $portwstls\n"
+        env_msg+="Vless Ws None = $portws\n"
+	env_msg+="Vless Grpc Tls = $portwstls\n"
+        env_msg+="Vmess Ws Tls = $portwstls\n"
+        env_msg+="Vmess Ws None = $portws\n"
+	env_msg+="Vmess Grpc Tls = $portwstls\n"
+        env_msg+="Trojan Ws Tls = $portwstls\n"
+        env_msg+="Trojan ws none = $portws\n"
+	env_msg+="Trojan Grpc Tls = $portwstls\n"
+        env_msg+="Trojan-go = $portwstls\n"
+        env_msg+="Shadowsock22 Ws Tls = $portsstls\n"
+        env_msg+="Shadowsock22 Ws None = $portws\n"
+	env_msg+="Shadowsock22 Grpc Tls = $portws\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -380,13 +381,13 @@ hargass=$(grep -w "Price Shadowsocks :" /etc/.maAsiss/price | awk '{print $NF}')
 [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]] || [[ "$(grep -wc ${callback_query_from_id} $User_Active)" != '0' ]] && {
         local env_msg
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="💲Price List :💲\n"
-        env_msg+="<code>SSH            : $hargassh\n"
-        env_msg+="VMess          : $hargavmess\n"
-        env_msg+="VLess          : $hargavless\n"
-        env_msg+="Trojan         : $hargatrojan\n"
-        env_msg+="Trojan-Go      : $hargatrgo\n"
-        env_msg+="Shadowsocks    : $hargass\n"
+        env_msg+="💲Price List =💲\n"
+        env_msg+="<code>SSH            = $hargassh\n"
+        env_msg+="VMess          = $hargavmess\n"
+        env_msg+="VLess          = $hargavless\n"
+        env_msg+="Trojan         = $hargatrojan\n"
+        env_msg+="Trojan-Go      = $hargatrgo\n"
+        env_msg+="Shadowsocks22  = $hargass\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -422,22 +423,24 @@ admin_service_see() {
 
 menu_reserv() {
         stsSSH=$(grep -w "SSH" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
-        stsVMESS=$(grep -w "VMESS" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
+        stsXTLS=$(grep -w "XTLS :" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
+	stsVMESS=$(grep -w "VMESS" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
         stsVLESS=$(grep -w "VLESS" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
         stsTROJAN=$(grep -w "TROJAN :" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
-        stsTROJANGO=$(grep -w "TROJAN-GO" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
+	stsTROJANGO=$(grep -w "TROJAN-GO" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
         stsSS=$(grep -w "SHADOWSOCK:" /etc/.maAsiss/.cache/StatusDisable | awk '{print $NF}')
         local env_msg
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
         env_msg+="<b> WELCOME TO BOT $nameStore</b>\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="🟢 Status Order : \n\n"
-        env_msg+="<code>SSH            : $stsSSH\n"
-        env_msg+="VMess          : $stsVMESS\n"
-        env_msg+="VLess          : $stsVLESS\n"
-        env_msg+="Trojan         : $stsTROJAN\n"
-        env_msg+="Trojan-Go      : $stsTROJANGO\n"
-        env_msg+="Shadowsocks    : $stsSS\n"
+        env_msg+="🟢 Status Order = \n\n"
+        env_msg+="<code>SSH            = $stsSSH\n"
+	env_msg+="Xray Tcp       = $stsXTLS\n"
+        env_msg+="VMess          = $stsVMESS\n"
+        env_msg+="VLess          = $stsVLESS\n"
+        env_msg+="Trojan         = $stsTROJAN\n"
+        env_msg+="Trojan-Go      = $stsTROJANGO\n"
+        env_msg+="Shadowsocks    = $stsSS\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 
 [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]] || [[ "$(grep -wc ${callback_query_from_id} $User_Active)" != '0' ]] && {
@@ -492,7 +495,7 @@ how_to_order() {
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
         env_msg+="<b> WELCOME TO BOT $nameStore</b>\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="💡 How to use : [code] \n\n"
+        env_msg+="💡 How to use : (code) \n\n"
         env_msg+="<code>SSH            : ssh\n"
         env_msg+="VMess          : vmess\n"
         env_msg+="VLess          : vless\n"
@@ -557,7 +560,7 @@ res_opener() {
    inf=$(cat /etc/.maAsiss/update-info)
    local env_msg
    env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
-   env_msg+="🏷 Information for reseller :\n\n"
+   env_msg+="🏷 Information For Reseller :\n\n"
    env_msg+="$inf\n\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 }
@@ -4658,6 +4661,7 @@ see_sys() {
         systemctl is-active --quiet nginx && stsnginx="Running 🟢" || stsnginx="Not Running 🔴"
         systemctl is-active --quiet haproxy && stshap="Running 🟢" || stshap="Not Running 🔴"
 	systemctl is-active --quiet server-sldns && stsdns="Running 🟢" || stsdns="Not Running 🔴"
+        systemctl is-active --quiet ws-epro && stsepro="Running 🟢" || stsepro="Not Running 🔴"
 
 	systemctl is-active --quiet xray && stsray="Running 🟢" || stsray="Not Running 🔴"
         systemctl is-active --quiet xray@none && stsnone="Running 🟢" || stsnone="Not Running 🔴"
@@ -4667,39 +4671,33 @@ see_sys() {
         systemctl is-active --quiet xray@ss && stsss="Running 🟢" || stsss="Not Running 🔴"
         
 	systemctl is-active --quiet trojan-go && ststrgo="Running 🟢" || ststrgo="Not Running 🔴"
-        systemctl is-active --quiet wg-quick@wg0 && stswg="Running 🟢" || stswg="Not Running 🔴"
-        systemctl is-active --quiet shadowsocks-libev && stsss="Running 🟢" || stsss="Not Running 🔴"
-        systemctl is-active --quiet ssrmu && stsssr="Running 🟢" || stsssr="Not Running 🔴"
-        systemctl is-active --quiet accel-ppp && stssstp="Running 🟢" || stssstp="Not Running 🔴"
-        systemctl is-active --quiet pptpd && stspptp="Running 🟢" || stspptp="Not Running 🔴"
-        systemctl is-active --quiet xl2tpd && stsl2tp="Running 🟢" || stsl2tp="Not Running 🔴"
-
+                
         local env_msg
         env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
         env_msg+="<b> WELCOME TO BOT $nameStore</b>\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="🟢 Status Service = \n\n"
-        env_msg+="<code>Dropbear     = $stsdb\n"
-	env_msg+="openssh           = $stsssh\n"
-        env_msg+="stunnel5          = $stsstn\n"
-	env_msg+="openvpn           = $stsovpn\n"
-        env_msg+="crons             = $stscron\n"
-	env_msg+="vnstat            = $stsvnstat\n"
-        env_msg+="fail²ban          = $stsban\n"
-	env_msg+="nginx             = $stsnginx\n"
-        env_msg+="haproxy           = $stshap\n"
-	env_msg+="slowdns           = $stsdns\n"
-        env_msg+="xray tcp tls      = $stsray\n"
-	env_msg+="xray none tls     = $stsnone\n"
-        env_msg+="xray vless        = $stsvless\n"
-	env_msg+="xray vmess        = $stsvmess\n"
-	env_msg+="xray shadowsock22 = $stsss\n"
-        env_msg+="xray trojan       = $ststrojan\n"
-        env_msg+="trojan-go         = $ststrgo\n"
-        env_msg+="ssh ws tls        = $stsepro\n"
-        env_msg+="ssh ws none       = $stsepro\n"
-        env_msg+="ovpn ws tls       = $stsepro\n"
-        env_msg+="ovpn ws none.     =$stsepro</code>\n"
+        env_msg+="Status Service = 🟢🔴\n\n"
+        env_msg+="<code>Dropbear          = $stsdb\n"
+	env_msg+="Openssh           = $stsssh\n"
+        env_msg+="Stunnel5          = $stsstn\n"
+	env_msg+="Openvpn           = $stsovpn\n"
+        env_msg+="Crons             = $stscron\n"
+	env_msg+="Vnstat            = $stsvnstat\n"
+        env_msg+="Fail²ban          = $stsban\n"
+	env_msg+="Nginx             = $stsnginx\n"
+        env_msg+="Haproxy           = $stshap\n"
+	env_msg+="Slowdns           = $stsdns\n"
+        env_msg+="Xray Tcp Xtls     = $stsray\n"
+	env_msg+="Xray None Tls     = $stsnone\n"
+        env_msg+="Xray Vless        = $stsvless\n"
+	env_msg+="Xray Vmess        = $stsvmess\n"
+	env_msg+="Xray Shadowsock22 = $stsss\n"
+        env_msg+="Xray Trojan       = $ststrojan\n"
+        env_msg+="Trojan-go         = $ststrgo\n"
+        env_msg+="Ssh Ws Tls        = $stsepro\n"
+        env_msg+="Ssh Ws None       = $stsepro\n"
+        env_msg+="Ovpn Ws Tls       = $stsepro\n"
+        env_msg+="Ovpn Ws None      = $stsepro</code>\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]] || [[ "$(grep -wc ${callback_query_from_id} $User_Active)" != '0' ]] && {
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -4911,7 +4909,7 @@ portdb=`cat /root/log-install.txt | grep -w "DROPBEAR" | cut -f2 -d: | awk '{pri
 portssl="$(cat /root/log-install.txt | grep -w "STUNNEL5" | cut -d: -f2)"
 portovpn=$(grep -w " OPENVPN" /root/log-install.txt | awk '{print $5,$7,$9}')
 portudpgw="$(cat /root/log-install.txt | grep -w "BADVPN" | cut -d: -f2|sed 's/ //g')"
-portudpgw="$(cat /root/log-install.txt | grep -w "BADVPN" | cut -d: -f2|sed 's/ //g')"
+portnginx="$(cat /root/log-install.txt | grep -w "NGINX" | cut -d: -f2|sed 's/ //g')"
 portxtls="$(cat /root/log-install.txt | grep -w "VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
 portnone="$(cat /root/log-install.txt | grep -w "VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
 
@@ -4923,28 +4921,29 @@ dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> <b>1 ID Tele = 1 Server VPN</b>\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-   env_msg+="•OPENSSH        = $portopensh\n"
-   env_msg+="•DROPBEAR       = $portdb\n"
-   env_msg+="•SSL/TLS        = $portssl\n"
-   env_msg+="•SSH UDP        = 1-65535\n"
-   env_msg+="•OPENVPN        = $portovpn\n"
-   env_msg+="•SSH-WS         = $portnone\n"
-   env_msg+="•SSH-WS-SSL     = $portxtls\n"
-   env_msg+="•OVPN-WS        = $portnone\n"
-   env_msg+="•OVPN-WS-SSL    = $portxtls\n"
-   env_msg+="•SLOW DNS PORT  = $portxtls\n"
-   env_msg+="•UDPGW          = $portudpgw\n"
-   env_msg+="•VLESS TCP XTLS = $portxtls\n"
-   env_msg+="•VMESS WS TLS   = $portxtls\n"
-   env_msg+="•VMESS WS NONE  = $portnone\n"
-   env_msg+="•VLESS WS TLS   = $portxtls\n"
-   env_msg+="•VLESS WS NONE  = $portnone\n"
-   env_msg+="•TROJAN WS TLS  = $portxtls\n"
-   env_msg+="•TROJAN WS NONE = $portnone\n"
-   env_msg+="•TROJAN-GO      = $portxtls\n"
-   env_msg+="•SS WS TLS      = $portxtls\n"
-   env_msg+="•SS WS NONE     = $portnone\n"
-   env_msg+="•SS GRPC TLS    = $portxtls\n"
+   env_msg+="<error>•Openssh       = $portopensh\n"
+   env_msg+="•Dropbear       = $portdb\n"
+   env_msg+="•Ssl/tls        = $portssl\n"
+   env_msg+="•Ssh Udp        = 1-65535\n"
+   env_msg+="•Openvpn        = $portovpn\n"
+   env_msg+="•Ssh-ws         = $portnone\n"
+   env_msg+="•Ssh-ws-ssl     = $portxtls\n"
+   env_msg+="•Ovpn-ws        = $portnone\n"
+   env_msg+="•Ovpn-ws-ssl    = $portxtls\n"
+   env_msg+="•Slow Dns Port  = $portxtls\n"
+   env_msg+="•Nginx          = $portnginx\n"
+   env_msg+="•Udpgw          = $portudpgw\n"
+   env_msg+="•Vless Tcp Xtls = $portxtls\n"
+   env_msg+="•Xray Grpc Tls  = $portxtls\n"
+   env_msg+="•Vless Ws Tls   = $portxtls\n"
+   env_msg+="•Vless Ws None  = $portnone\n"
+   env_msg+="•Vmess Ws Tls   = $portxtls\n"
+   env_msg+="•Vmess Ws None  = $portnone\n"
+   env_msg+="•Trojan Ws Tls  = $portxtls\n"
+   env_msg+="•Trojan Ws None = $portnone\n"
+   env_msg+="•Trojan-go      = $portxtls\n"
+   env_msg+="•Ss Ws Tls      = $portxtls\n"
+   env_msg+="•Ss Ws None     = $portnone\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> Status = 👤 $dx / $getLimits Max \n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
@@ -5141,8 +5140,8 @@ else
 fi
 }
 
-limit=$5
-if [[ $limit -gt $limit ]]; then
+limit='10'
+if [[ $limit -gt 0 ]]; then
    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
    export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
 else
@@ -5174,7 +5173,7 @@ vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=no
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Remarks = $userna\n"
+env_msg+="<code>Remarks      = $userna\n"
 env_msg+="Myip = $ip_nya\n"
 env_msg+="Subdomain = $domain\n"
 env_msg+="Subdomain H2 = vlh2.$domain\n"
