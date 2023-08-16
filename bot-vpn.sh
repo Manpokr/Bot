@@ -7540,17 +7540,18 @@ pub_key=$(cat /etc/slowdns/server.pub);
 
 #warp-nya() {
 if [ -r /usr/local/etc/warp/warp-reg ]; then
-    warp-nya="VLESS WARP   = CLOUDFLARE IP";
+    warp="VLESS WARP   = CLOUDFLARE IP";
 else
     SKIP=true
 fi
 #}
 
-if [[ "10" -gt 0 ]]; then
-   echo -e "$[10 * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
-   export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+limit=$(echo 10)
+if [[ $limit -gt 0 ]]; then
+   echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
+   limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
 else
-   export limit_nya="Unlimited"
+   limit_nya="Unlimited"
 fi
 
 none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
@@ -7587,7 +7588,7 @@ env_msg+="Port Tls = $xtls\n"
 env_msg+="Port None = $none\n"
 env_msg+="Grpc Type = Gun %26 Multi\n"
 env_msg+="User Id = <code>$uuid</code>\n"
-env_msg+="$warp-nya\n━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="$warp\n━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="Slowdns Port (PORT) = $xtls\n"
 env_msg+="Name Server  (NS)   = $nsdomain\n"
 env_msg+="Public Key   (KEY)  = $pub_key\n"
