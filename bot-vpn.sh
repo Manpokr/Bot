@@ -4921,7 +4921,7 @@ dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> <b>1 ID Tele = 1 Server VPN</b>\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-   env_msg+="<error>•Openssh       = $portopensh\n"
+   env_msg+="<code>•Openssh       = $portopensh\n"
    env_msg+="•Dropbear       = $portdb\n"
    env_msg+="•Ssl/tls        = $portssl\n"
    env_msg+="•Ssh Udp        = 1-65535\n"
