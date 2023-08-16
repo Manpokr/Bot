@@ -7546,7 +7546,7 @@ else
 fi
 }
 
-limit=5
+limit=$5
 if [[ $limit -gt $limit ]]; then
    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
    export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
