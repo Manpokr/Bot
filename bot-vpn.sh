@@ -3077,10 +3077,31 @@ func_add_vless_trial() {
 mkdir -p /etc/.maAsiss/info-user-vless
     userna=$(echo Trial`</dev/urandom tr -dc A-Z0-9 | head -c4`)
     t_time=$1
-    domain=$(cat /etc/$raycheck/domain)
-    tls="$(cat /root/log-install.txt | grep -w "Vless TLS" | cut -d: -f2|sed 's/ //g')"
-    none="$(cat /root/log-install.txt | grep -w "Vless None TLS" | cut -d: -f2|sed 's/ //g')"
+    source /root/ip-detail.txt
+    ip_nya="$IP"
+    domain=$(cat /usr/local/etc/xray/domain)
+    nsdomain=$(cat /usr/local/etc/xray/nsdomain)
+    pub_key=$(cat /etc/slowdns/server.pub)
 
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    warp-nya() {
+    if [ -r /usr/local/etc/warp/warp-reg ]; then
+       env_msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+    else
+       SKIP=true
+    fi
+    }
+
+    limit='10'
+    if [[ $limit -gt 0 ]]; then
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
     exp=`date -d "2 days" +"%Y-%m-%d"`
     tuserdate=$(date '+%C%y/%m/%d' -d " +2 days")
     [[ "${message_from_id[$id]}" != "$Admin_ID" ]] && {
@@ -3095,11 +3116,15 @@ mkdir -p /etc/.maAsiss/info-user-vless
     }
     
 echo "$userna:$exp" >/etc/.maAsiss/info-user-vless/$userna
-uuid=$(cat /proc/sys/kernel/random/uuid)
-sed -i '/#vlessWSTLS$/a\#& '"$userna $exp"'\
-},{"id": "'""$uuid""'","email": "'""$userna""'"' /etc/$raycheck/config.json
-sed -i '/#vlessWS$/a\#& '"$userna $exp"'\
-},{"id": "'""$uuid""'","email": "'""$userna""'"' /etc/$raycheck/config.json
+uuid=$(uuidgen)
+sed -i '/#vless$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vless$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vlesswarp
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vlessgrpc$/a\### '"$userna $exp"'\
+},{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vlesswarp
   
 [[ "${message_from_id[$id]}" != "$Admin_ID" ]] && {
     echo "$userna:$exp" >/etc/.maAsiss/db_reseller/${message_from_id}/user_vless/$userna
@@ -3111,9 +3136,9 @@ dates=`date`
 cat <<-EOF >/etc/.maAsiss/$userna.sh
 #!/bin/bash
 # USER TRIAL VLESS by ${message_from_id} $dates
-exp=\$(grep -wE "^#& $userna" "/etc/$raycheck/config.json" | cut -d ' ' -f 3 | sort | uniq)
-sed -i "/^#& $userna $exp/,/^},{/d" /etc/$raycheck/config.json
-systemctl restart $raycheck > /dev/null 2>&1
+exp=\$(grep -wE "^### $userna" "/usr/local/etc/xray/vless.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^### $userna $exp/,/^},{/d" /usr/local/etc/xray/vless.json
+systemctl restart xray@vless > /dev/null 2>&1
 rm /etc/.maAsiss/db_reseller/${message_from_id}/user_vless/$userna
 rm /etc/.maAsiss/info-user-vless/$userna
 [[ -e $dir_teste ]] && rm $dir_teste
@@ -3125,28 +3150,38 @@ chmod +x /etc/.maAsiss/$userna.sh
 echo "/etc/.maAsiss/$userna.sh" | at now + $t_time hour >/dev/null 2>&1
 [[ "$t_time" == '1' ]] && hrs="hour" || hrs="hours"          
 
-vlesslink1="vless://${uuid}@${domain}:$tls?path=/vlessws%26security=tls%26encryption=none%26type=ws#${userna}"
-vlesslink2="vless://${uuid}@${domain}:$none?path=/vlessws%26encryption=none%26type=ws#${userna}"
+echo -e "VL $userna $t_time" >> /usr/local/etc/xray/user.txt
 
 local env_msg
-env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>        🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Address : $domain\n"
-env_msg+="Remarks : $userna\n"
-env_msg+="Expired On : $t_time $hrs ⏳ \n"
+env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="<code>Remarks      = $userna\n"
+env_msg+="Myip         = $ip_nya\n"
+env_msg+="Subdomain    = $domain\n"
+env_msg+="Subdomain H2 = vlh2.$domain\n"
+env_msg+="Limit Quota  = $limit_nya\n"
+env_msg+="Port Tls     = $xtls\n"
+env_msg+="Port None    = $none\n"
+env_msg+="Grpc Type    = Gun %26 Multi</code>\n"
+env_msg+="<code>User Id      = $uuid</code>\n"
+warp-nya
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Port TLS : $tls\n"
-env_msg+="Port None TLS : $none\n"
-env_msg+="ID : <code>$uuid</code>\n"
-env_msg+="Encryption : none\n"
-env_msg+="Network : websocket/ws\n"
-env_msg+="Path : /vlessws\n"
+env_msg+="<code>Slowdns Port (PORT) = $xtls\n"
+env_msg+="Name Server  (NS)   = $nsdomain\n"
+env_msg+="Public Key   (KEY)  = $pub_key</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Link TLS : \n"
-env_msg+="<code>$vlesslink1</code>\n"
+env_msg+="VLESS WS TLS LINK\n"
+env_msg+="<code> $vlesslink1</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Link None TLS : \n"
-env_msg+="<code>$vlesslink2</code>\n"
+env_msg+="VLESS WS LINK\n"
+env_msg+="<code> $vlesslink2</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="VLESS H2 TLS LINK\n"
+env_msg+="<code> $vlesslink4</code>\n"
+env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="VLESS GRPC TLS LINK\n"
+env_msg+="<code> $vlesslink3</code>\n"
+env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+env_msg+="Expired On   = $t_time $hrs ⏳ \n"
 
 ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
     --text "$env_msg" \
@@ -4904,14 +4939,15 @@ _if_public() {
    }
 }
 ossl=`cat /root/log-install.txt | grep -w " OPENVPN" | cut -f2 -d: | awk '{print $6}'`
-portopensh=`cat /root/log-install.txt | grep -w "OPENSSH" | cut -f2 -d: | awk '{print $1}'`
-portdb=`cat /root/log-install.txt | grep -w "DROPBEAR" | cut -f2 -d: | awk '{print $1,$2}'`
+portopensh=`cat /root/log-install.txt | grep -w "OPENSSH" | cut -f2 -d: | awk '{print $1,$2,$3}'`
+portdb=`cat /root/log-install.txt | grep -w "DROPBEAR" | cut -f2 -d: | awk '{print $1,$2,$3}'`
 portssl="$(cat /root/log-install.txt | grep -w "STUNNEL5" | cut -d: -f2)"
-portovpn=$(grep -w " OPENVPN" /root/log-install.txt | awk '{print $5,$7,$9}')
+portovpn=$(grep -w " OPENVPN" /root/log-install.txt | awk '{print $4,$5,$6,$7,$8,$9}')
 portudpgw="$(cat /root/log-install.txt | grep -w "BADVPN" | cut -d: -f2|sed 's/ //g')"
 portnginx="$(cat /root/log-install.txt | grep -w "NGINX" | cut -d: -f2|sed 's/ //g')"
-portxtls="$(cat /root/log-install.txt | grep -w "VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
-portnone="$(cat /root/log-install.txt | grep -w "VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
+portnone="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+portxtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+portxtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
 
 getLimits=$(grep -w "MAX_USERS" "/etc/.maAsiss/public_mode/settings" | awk '{print $NF}')
 dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
@@ -4921,7 +4957,7 @@ dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> <b>1 ID Tele = 1 Server VPN</b>\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-   env_msg+="<code>•Openssh        = $portopensh, 22\n"
+   env_msg+="<code>•Openssh        = $portopensh 22\n"
    env_msg+="•Dropbear       = $portdb\n"
    env_msg+="•Ssl/tls        =$portssl\n"
    env_msg+="•Ssh Udp        = 1-65535\n"
@@ -4930,7 +4966,7 @@ dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
    env_msg+="•Ssh-ws-ssl     = $portxtls\n"
    env_msg+="•Ovpn-ws        = $portnone\n"
    env_msg+="•Ovpn-ws-ssl    = $portxtls\n"
-   env_msg+="•Slow Dns Port  = $portxtls\n"
+   env_msg+="•Slow Dns Port  = $portxtls1\n"
    env_msg+="•Nginx          = $portnginx\n"
    env_msg+="•Udpgw          = $portudpgw\n"
    env_msg+="•Vless Tcp Xtls = $portxtls\n"
@@ -5200,7 +5236,7 @@ env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="VLESS GRPC TLS LINK\n"
 env_msg+="<code> $vlesslink3</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Expired On   = $data \n"
+env_msg+="Expired On   = $data \n"i
 
 [[ "${callback_query_from_id[$id]}" != "$Admin_ID" ]] && {
         mkdir -p /etc/.maAsiss/public_mode/${callback_query_from_id}
