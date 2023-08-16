@@ -6095,13 +6095,11 @@ while :; do
                         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
                             --text "Func Error Do Nothing" \
                             --reply_markup "$(ShellBot.ForceReply)"
-                    fi
-                    ;;
-
-
-                        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-                            --text "Func Error Do Nothing" \
-                            --reply_markup "$(ShellBot.ForceReply)"
+  #                  fi
+  #                  ;;
+ #                       ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+#                            --text "Func Error Do Nothing" \
+   #                         --reply_markup "$(ShellBot.ForceReply)"
                     fi
                     ;;
                 '👤 CREATE USER Trojan-GO 👤\n\nUsername:')
