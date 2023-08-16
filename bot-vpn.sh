@@ -4921,7 +4921,7 @@ dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> <b>1 ID Tele = 1 Server VPN</b>\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-   env_msg+="•Openssh        = $portopensh\n"
+   env_msg+="<code>•Openssh        = $portopensh\n"
    env_msg+="•Dropbear       = $portdb\n"
    env_msg+="•Ssl/tls        = $portssl\n"
    env_msg+="•Ssh Udp        = 1-65535\n"
@@ -4943,7 +4943,7 @@ dx=$(ls /etc/.maAsiss/public_mode --ignore='settings' | wc -l)
    env_msg+="•Trojan Ws None = $portnone\n"
    env_msg+="•Trojan-go      = $portxtls\n"
    env_msg+="•Ss Ws Tls      = $portxtls\n"
-   env_msg+="•Ss Ws None     = $portnone\n"
+   env_msg+="•Ss Ws None     = $portnone</code>\n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
    env_msg+="•> Status = 👤 $dx / $getLimits Max \n"
    env_msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
@@ -5140,7 +5140,7 @@ else
 fi
 }
 
-limit='5'
+limit='10'
 if [[ $limit -gt 0 ]]; then
    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
    export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -5173,20 +5173,20 @@ vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=no
 
 local env_msg
 env_msg="━━━━━━━━━━━━━━━━━━━━━\n<b>     🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Remarks      = $userna\n"
+env_msg+="<code>Remarks      = $userna\n"
 env_msg+="Myip = $ip_nya\n"
 env_msg+="Subdomain = $domain\n"
 env_msg+="Subdomain H2 = vlh2.$domain\n"
 env_msg+="Limit Quota = $limit_nya\n"
 env_msg+="Port Tls = $xtls\n"
 env_msg+="Port None = $none\n"
-env_msg+="Grpc Type = Gun %26 Multi\n"
+env_msg+="Grpc Type = Gun %26 Multi</code>\n"
 env_msg+="User Id = <code>$uuid</code>\n"
 warp-nya
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-env_msg+="Slowdns Port (PORT) = $xtls\n"
+env_msg+="<code>Slowdns Port (PORT) = $xtls\n"
 env_msg+="Name Server  (NS)   = $nsdomain\n"
-env_msg+="Public Key   (KEY)  = $pub_key\n"
+env_msg+="Public Key   (KEY)  = $pub_key</code>\n"
 env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 env_msg+="VLESS WS TLS LINK\n"
 env_msg+="<code> $vlesslink1</code>\n"
