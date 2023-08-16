@@ -5123,12 +5123,12 @@ getDays=$(grep -w "MAX_DAYS" "/etc/.maAsiss/public_mode/settings" | awk '{print 
 data=$(date '+%d/%m/%C%y' -d " +$getDays days")
 exp=$(echo "$data" | awk -F'/' '{print $2FS$1FS$3}' | xargs -i date -d'{}' +%Y-%m-%d)
 
-source /root/ip-detail.txt;
-ip_nya="$IP";
+source /root/ip-detail.txt
+ip_nya="$IP"
 
 domain=$(cat /usr/local/etc/xray/domain)
 nsdomain=$(cat /usr/local/etc/xray/nsdomain)
-pub_key=$(cat /etc/slowdns/server.pub);
+pub_key=$(cat /etc/slowdns/server.pub)
 
 warp-nya() {
 if [ -r /usr/local/etc/warp/warp-reg ]; then
@@ -5138,7 +5138,7 @@ else
 fi
 }
 
-limit=$1
+limit='5'
 if [[ $limit -gt 0 ]]; then
    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
    export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -5162,7 +5162,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 sed -i '/#vlessgrpc$/a\### '"$userna $exp"'\
 },{"id": "'""$uuid""'","email": "'""$userna""'"' /usr/local/etc/xray/vlesswarp
 
-echo -e "VL $userna $exp" >> /usr/local/etc/xray/user.txt;
+echo -e "VL $userna $exp" >> /usr/local/etc/xray/user.txt
 
 vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
 vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
