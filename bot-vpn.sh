@@ -975,7 +975,6 @@ ext_conf() {
 }
 
 see_sys() {
-        if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
         systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
         systemctl is-active --quiet cron && stscron="Running 🟢" || stscron="Not Running 🔴"
@@ -1024,15 +1023,12 @@ see_sys() {
         env_msg+="Ovpn Ws Tls       = $stsepro\n"
         env_msg+="Ovpn Ws None      = $stsepro</code>\n"
         env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Done Restart All Service" \
-            --parse_mode html
-    else
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "❌Access Deny❌\n" \
-            --parse_mode html
-    fi
-    }
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard9" \
+        --parse_mode html
+}
 
 start_req() {
     file_user=$1
