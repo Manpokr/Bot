@@ -13,14 +13,14 @@ msg_welcome() {
     oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome MASTER\n"
+        msg="Welcome To Bot VPN\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard1" \
             --parse_mode html
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller\n\n"
+        msg="Welcome Reseller VPN\n\n"
         msg+="Your Id : <code>${message_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -38,7 +38,7 @@ backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome MASTER\n"
+        msg="Welcome To Bot VPN\n"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
             --text "$msg" \
@@ -46,8 +46,8 @@ backReq() {
             --parse_mode html
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller\n\n"
-        msg+="Your Id : <code>${callback_query_from_id}</code>\n"
+        msg="Welcome To Bot Reseller VPN\n\n"
+        msg+="Your Id = <code>${callback_query_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -99,11 +99,22 @@ menuSsh() {
 menuXray() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu SSH\n"
+    msg+="Menu Xray\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
         --reply_markup "$keyboard2" \
+        --parse_mode html
+}
+
+menuTrgo() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="Menu Trojan-go\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard8" \
         --parse_mode html
 }
 
@@ -124,11 +135,11 @@ publicReq() {
         echo "on" >/root/multi/public
         echo "" >/root/multi/claimed
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "✅ Public Mode Is On, Limit Is $limituser ✅"
+            --text "✅ Public mode is already on, Limit Is $limituser ✅"
     else
         echo "off" >/root/multi/public
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "❌ Public Mode Is OFf,Limit Is $limituser ❌"
+            --text "⛔ Public mode is currently off ⛔""
     fi
 }
 
@@ -261,8 +272,8 @@ req_free() {
 }
 
 req_del() {
-    cat /etc/scvpn/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /etc/scvpn/xray/user.txt | awk '{print $1}' | sort | uniq)
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -272,8 +283,8 @@ req_del() {
 }
 
 req_ext() {
-    cat /etc/scvpn/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /etc/scvpn/xray/user.txt | awk '{print $1}' | sort | uniq)
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -285,7 +296,7 @@ req_ext() {
 
 req_limit() {
     limituser=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
-    total=$(wc -l /etc/scvpn/xray/user.txt | cut -d' ' -f1)
+    total=$(wc -l /usr/local/etc/xray/user.txt | cut -d' ' -f1)
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     ori=$(grep ${message_from_id} multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
@@ -433,7 +444,7 @@ reseller_balance() {
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         if (($ori < $res_price)); then
             ShellBot.sendMessage --chat_id ${message_from_id[$id]} \
-                --text "BAKI TIDAK MENCUKUPI\n\nYOUR BALANCE : RM $ori\n" \
+                --text "BAKI TIDAK MENCUKUPI\n\nYOUR BALANCE = RM $ori\n" \
                 --reply_markup "$keyboard5" \
                 --parse_mode html
             exit 1
@@ -449,19 +460,19 @@ reseller_balance() {
 
 add_ssh() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Create User(ssh) :" \
+        --text "Create User(ssh) =" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 del_ssh() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Delete User(ssh) :" \
+        --text "Delete User(ssh) =" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 ext_ssh() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Extend User(ssh) :" \
+        --text "Extend User(ssh) =" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -510,28 +521,74 @@ input_addssh() {
         masaaktif=30
     fi
     masaaktif=$(sed -n '3 p' $file_user | cut -d' ' -f1)
-    domain=$(cat /root/domain)
-    IP=$(wget -qO- ipinfo.io/ip)
-    ssl="$(cat ~/log-install.txt | grep -w "Stunnel4" | cut -d: -f2 | sed 's/ //g')"
-    sqd="$(cat ~/log-install.txt | grep -w "Squid Proxy" | cut -d: -f2 | sed 's/ //g')"
-    ovpn="$(netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
-    ovpn2="$(netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
+    domain=$(cat /usr/local/etc/xray/domain)
+    nsdomain=$(cat /usr/local/etc/xray/nsdomain)
+    myip=$(wget -qO- ipinfo.io/ip)
+    ssl=`cat ~/log-install.txt | grep -w "STUNNEL4" | cut -d: -f2`
+    ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    drop=`cat ~/log-install.txt | grep -w "DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wsnone=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET NONE" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wstls=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    ovpn=`netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn1=`netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn2=`cat ~/log-install.txt | grep -w "OPENVPN" | cut -d: -f2|sed 's/  //g' | cut -f1 | awk '{print $6}'`
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    pub_key=$(cat /etc/slowdns/server.pub);
+    udp-nya() {
+    if [ -r /usr/local/etc/udp/ ]; then
+         msg+="Username       : $Login\n"
+         msg+="<code>Ssh Udp        = 1-65350\n"
+         msg+="Openvpn Tcp    = ${ovpn}</code>\n"
+         export UDP="
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SSH UDP-CUSTOM LINK
+ ${domain}:1-65350@${Login}:${Pass}
+"
+else
+    msg+="<code>Openvpn Tcp    = ${ovpn}\n"
+    msg+="Openvpn Udp    = ${ovpn1}</code>\n"
+    export link="
+OPENVPN UDP = http://${IP_NYA}:85/client-udp.ovpn";
+fi
+ }
+    echo -e "SSH $Login $exp1" >> /usr/local/etc/ssh/user.txt;
     useradd -e $(date -d "$masaaktif days" +"%Y-%m-%d") -s /bin/false -M $Login
     exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
+
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 OVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Thank You For Using Our Services\n"
-    msg+="SSH %26 OpenVPN Account Info\n"
+    msg+="Myip           = $ip_nya\n"
+    msg+="Subdomain      = $domain\n"
     msg+="Username       : $Login\n"
     msg+="Password       : $Pass\n"
-    msg+="Expired On     : $exp\n"
-    msg+="Host           : ${domain}\n"
-    msg+="\n"
-    msg+="OpenVPN        : TCP $ovpn http://$IP:81/client-tcp-$ovpn.ovpn\n"
-    msg+="OpenVPN        : UDP $ovpn2 http://$IP:81/client-udp-$ovpn2.ovpn\n"
-    msg+="OpenVPN        : SSL 442 http://$IP:81/client-tcp-ssl.ovpn\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Openssh        = $ssh\n"
+    msg+="Dropbear       = $drop\n"
+    msg+="Ssl-tls        =$ssl\n"
+    udp-nya
+    msg+="Openvpn Ssl    = $ovpn2\n"
+    msg+="Ssh Ws None    = $wsnone\n"
+    msg+="Ssh Ws Tls     = $wstls\n"
+    msg+="Ovpn Ws None   = $wsnone\n"
+    msg+="Ovpn Ws Tls    = $wstls\n"
+    msg+="Badvpn         = 7100-7900</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Openvpn Tcp    = http://${ip_nya}:85/client-tcp.ovpn\n$link"
+   # msg+="Openvpn Udp    = http://${ip_nya}:85/client-udp.ovpn\n"
+    msg+="Openvpn Ssl    = http://${ip_nya}:85/client-ssl.ovpn</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server   (NS)   = $ns_nya\n"
+    msg+="Public Key    (KEY)  = $pub_key</code>\n$udp"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>PAYLOAD WS NONE LINK\n"
+    msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>PAYLOAD WS TLS LINK\n"
+    msg+="<code> GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n";
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On     = $exp\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
