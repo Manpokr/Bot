@@ -114,7 +114,18 @@ menuTrgo() {
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard2" \
+        --reply_markup "$keyboard8" \
+        --parse_mode html
+}
+
+menusts() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Xray Core ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard9" \
         --parse_mode html
 }
 
@@ -1085,7 +1096,7 @@ menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Menu SSH ❇️' --callback_data '_menussh'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '💱 Menu Xray 💱' --callback_data '_menuxray'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🔛 Menu Trojan-Go 🔛' --callback_data '_menutrgo'
-#ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '💲 Reseller 💲' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🔰 Voucher Generator 🔰' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '⚠️ Public Mode ⚠️' --callback_data '_publicMode'
@@ -1093,7 +1104,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🆓 Limit Free 
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
 ShellBot.regHandleFunction --function menuTrgo --callback_data _menutrgo
-#ShellBot.regHandleFunction --function see_sys --callback_data _stsserv
+ShellBot.regHandleFunction --function see_sys --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
