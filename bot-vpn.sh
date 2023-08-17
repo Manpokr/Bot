@@ -88,7 +88,7 @@ claimVoucher() {
 menuSsh() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu SSH\n"
+    msg+="⏭️ Menu Ssh-VPN ⏮️\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -99,7 +99,7 @@ menuSsh() {
 menuXray() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu SSH\n"
+    msg+="⏭️ Menu Xray Core ⏮️\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -110,7 +110,7 @@ menuXray() {
 menuTrgo() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu Trojan-Go\n"
+    msg+="⏭️ Menu Trojan-GO ⏮️\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -963,6 +963,65 @@ ext_conf() {
     fi
 }
 
+see_sys() {
+        systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
+        systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
+        systemctl is-active --quiet cron && stscron="Running 🟢" || stscron="Not Running 🔴"
+        systemctl is-active --quiet ssh && stsssh="Running 🟢" || stssah="Not Running 🔴"
+        systemctl is-active --quiet openvpn && stsovpn="Running 🟢" || stsovpn="Not Running 🔴"
+        systemctl is-active --quiet vnstat && stsvnstat="Running 🟢" || stsvnstat="Not Running 🔴"
+        systemctl is-active --quiet fail2ban && stsban="Running 🟢" || stsban="Not Running 🔴"
+        systemctl is-active --quiet nginx && stsnginx="Running 🟢" || stsnginx="Not Running 🔴"
+        systemctl is-active --quiet haproxy && stshap="Running 🟢" || stshap="Not Running 🔴"
+	systemctl is-active --quiet server-sldns && stsdns="Running 🟢" || stsdns="Not Running 🔴"
+        systemctl is-active --quiet ws-epro && stsepro="Running 🟢" || stsepro="Not Running 🔴"
+
+	systemctl is-active --quiet xray && stsray="Running 🟢" || stsray="Not Running 🔴"
+        systemctl is-active --quiet xray@none && stsnone="Running 🟢" || stsnone="Not Running 🔴"
+        systemctl is-active --quiet xray@vless && stsvless="Running 🟢" || stsvless="Not Running 🔴"
+        systemctl is-active --quiet xray@vmess && stsvmess="Running 🟢" || stsvmess="Not Running 🔴"
+        systemctl is-active --quiet xray@trojan && ststrojan="Running 🟢" || ststrojan="Not Running 🔴"
+        systemctl is-active --quiet xray@ss && stsss="Running 🟢" || stsss="Not Running 🔴"
+        
+	systemctl is-active --quiet trojan-go && ststrgo="Running 🟢" || ststrgo="Not Running 🔴"
+                
+        local env_msg
+        env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        env_msg+="<b> WELCOME TO BOT $nameStore</b>\n"
+        env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        env_msg+="Status Service = 🟢🔴\n\n"
+        env_msg+="<code>Dropbear          = $stsdb\n"
+	env_msg+="Openssh           = $stsssh\n"
+        env_msg+="Stunnel5          = $stsstn\n"
+	env_msg+="Openvpn           = $stsovpn\n"
+        env_msg+="Crons             = $stscron\n"
+	env_msg+="Vnstat            = $stsvnstat\n"
+        env_msg+="Fail²ban          = $stsban\n"
+	env_msg+="Nginx             = $stsnginx\n"
+        env_msg+="Haproxy           = $stshap\n"
+	env_msg+="Slowdns           = $stsdns\n"
+        env_msg+="Xray Tcp Xtls     = $stsray\n"
+	env_msg+="Xray None Tls     = $stsnone\n"
+        env_msg+="Xray Vless        = $stsvless\n"
+	env_msg+="Xray Vmess        = $stsvmess\n"
+	env_msg+="Xray Shadowsock22 = $stsss\n"
+        env_msg+="Xray Trojan       = $ststrojan\n"
+        env_msg+="Trojan-go         = $ststrgo\n"
+        env_msg+="Ssh Ws Tls        = $stsepro\n"
+        env_msg+="Ssh Ws None       = $stsepro\n"
+        env_msg+="Ovpn Ws Tls       = $stsepro\n"
+        env_msg+="Ovpn Ws None      = $stsepro</code>\n"
+        env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+[[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]] || [[ "$(grep -wc ${callback_query_from_id} $User_Active)" != '0' ]] && {
+        ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+            --message_id ${callback_query_message_message_id[$id]} \
+            --text "$env_msg" \
+            --parse_mode html \
+            --reply_markup "$(ShellBot.InlineKeyboardMarkup --button 'back_menu_admin')"
+        return 0
+    }
+}
+
 start_req() {
     file_user=$1
     config=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
@@ -1023,16 +1082,18 @@ restartReq() {
 
 unset menu1
 menu1=''
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Trojan-Go •️' --callback_data '_menutrgo'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Reseller •️' --callback_data '_resellerMenu'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Voucher Generator •️' --callback_data '_voucherGenerator'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode •️' --callback_data '_publicMode'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Limit Free •️' --callback_data '_freelimit'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Menu SSH ❇️' --callback_data '_menussh'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '💱 Menu Xray 💱' --callback_data '_menuxray'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🔛 Menu Trojan-Go 🔛' --callback_data '_menutrgo'
+ShellBot.InlineKeyboardButton --button 'menu' --line 2 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '💲 Reseller 💲' --callback_data '_resellerMenu'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🔰 Voucher Generator 🔰' --callback_data '_voucherGenerator'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '⚠️ Public Mode ⚠️' --callback_data '_publicMode'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🆓 Limit Free 🆓' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
 ShellBot.regHandleFunction --function menuTrgo --callback_data _menutrgo
+ShellBot.regHandleFunction --function see_sys --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
