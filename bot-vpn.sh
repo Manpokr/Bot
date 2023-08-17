@@ -118,17 +118,6 @@ menuTrgo() {
         --parse_mode html
 }
 
-menusts() {
-    local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="⏭️ Menu Xray Core ⏮️\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard9" \
-        --parse_mode html
-}
-
 menuRes() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
@@ -1023,11 +1012,11 @@ seesys() {
         msg+="Ovpn Ws Tls       = $stsepro\n"
         msg+="Ovpn Ws None      = $stsepro</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --message_id ${callback_query_message_message_id[$id]} \
-	    --text "$msg" \
-            --reply_markup "$keyboard1" \
-            --parse_mode html
+	ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard1" \
+        --parse_mode html
    }        
 start_req() {
     file_user=$1
