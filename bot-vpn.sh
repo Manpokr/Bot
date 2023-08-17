@@ -974,7 +974,7 @@ ext_conf() {
     fi
 }
 
-see_sys() {
+seesys() {
         systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
         systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
         systemctl is-active --quiet cron && stscron="Running 🟢" || stscron="Not Running 🔴"
@@ -996,38 +996,43 @@ see_sys() {
         
 	systemctl is-active --quiet trojan-go && ststrgo="Running 🟢" || ststrgo="Not Running 🔴"
                 
-        local env_msg
-        env_msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="<b> WELCOME TO BOT $nameStore</b>\n"
-        env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        env_msg+="Status Service = 🟢🔴\n\n"
-        env_msg+="<code>Dropbear          = $stsdb\n"
-	env_msg+="Openssh           = $stsssh\n"
-        env_msg+="Stunnel5          = $stsstn\n"
-	env_msg+="Openvpn           = $stsovpn\n"
-        env_msg+="Crons             = $stscron\n"
-	env_msg+="Vnstat            = $stsvnstat\n"
-        env_msg+="Fail²ban          = $stsban\n"
-	env_msg+="Nginx             = $stsnginx\n"
-        env_msg+="Haproxy           = $stshap\n"
-	env_msg+="Slowdns           = $stsdns\n"
-        env_msg+="Xray Tcp Xtls     = $stsray\n"
-	env_msg+="Xray None Tls     = $stsnone\n"
-        env_msg+="Xray Vless        = $stsvless\n"
-	env_msg+="Xray Vmess        = $stsvmess\n"
-	env_msg+="Xray Shadowsock22 = $stsss\n"
-        env_msg+="Xray Trojan       = $ststrojan\n"
-        env_msg+="Trojan-go         = $ststrgo\n"
-        env_msg+="Ssh Ws Tls        = $stsepro\n"
-        env_msg+="Ssh Ws None       = $stsepro\n"
-        env_msg+="Ovpn Ws Tls       = $stsepro\n"
-        env_msg+="Ovpn Ws None      = $stsepro</code>\n"
-        env_msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard9" \
-        --parse_mode html
+        local msg
+        msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> WELCOME TO BOT </b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="Status Service = 🟢🔴\n\n"
+        msg+="<code>Dropbear          = $stsdb\n"
+	msg+="Openssh           = $stsssh\n"
+        msg+="Stunnel5          = $stsstn\n"
+	msg+="Openvpn           = $stsovpn\n"
+        msg+="Crons             = $stscron\n"
+	msg+="Vnstat            = $stsvnstat\n"
+        msg+="Fail²ban          = $stsban\n"
+	msg+="Nginx             = $stsnginx\n"
+        msg+="Haproxy           = $stshap\n"
+	msg+="Slowdns           = $stsdns\n"
+        msg+="Xray Tcp Xtls     = $stsray\n"
+	msg+="Xray None Tls     = $stsnone\n"
+        msg+="Xray Vless        = $stsvless\n"
+	msg+="Xray Vmess        = $stsvmess\n"
+	msg+="Xray Shadowsock22 = $stsss\n"
+        msg+="Xray Trojan       = $ststrojan\n"
+        msg+="Trojan-go         = $ststrgo\n"
+        msg+="Ssh Ws Tls        = $stsepro\n"
+        msg+="Ssh Ws None       = $stsepro\n"
+        msg+="Ovpn Ws Tls       = $stsepro\n"
+        msg+="Ovpn Ws None      = $stsepro</code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+     --text "$msg" \
+     --reply_markup "$keyboard9" \
+     --parse_mode html
+     
+#    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+ #       --message_id ${callback_query_message_message_id[$id]} \
+   #     --text "$msg" \
+  #      --reply_markup "$keyboard9" \
+ #       --parse_mode html
 }
 
 start_req() {
@@ -1101,7 +1106,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🆓 Limit Free 
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
 ShellBot.regHandleFunction --function menuTrgo --callback_data _menutrgo
-ShellBot.regHandleFunction --function see_sys --callback_data _stsserv
+ShellBot.regHandleFunction --function seesys --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
