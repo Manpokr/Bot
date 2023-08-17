@@ -107,7 +107,7 @@ menuXray() {
         --parse_mode html
 }
 
-menutrgo) {
+menutrgo() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
     msg+="Menu Trojan-go\n"
