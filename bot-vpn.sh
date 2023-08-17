@@ -1015,7 +1015,7 @@ seesys() {
 	ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard6" \
+        --reply_markup "$menu_re_main1" \
         --parse_mode html
    }        
 start_req() {
@@ -1193,6 +1193,19 @@ ShellBot.regHandleFunction --function link_voucher --callback_data _vouchertroja
 ShellBot.regHandleFunction --function link_voucher --callback_data _voucherovpn
 unset keyboard8
 keyboard8="$(ShellBot.InlineKeyboardMarkup -b 'menu8')"
+
+unset menu_re_main
+menu_re_main=''
+#ShellBot.InlineKeyboardButton --button 'menu_re_main' --line 1 --text '⚖️ Open Service ⚖️️' --callback_data '_pps_serv'
+ShellBot.InlineKeyboardButton --button 'menu_re_main' --line 2 --text '🟢 Status Service 🟢️' --callback_data '_sts_serv'
+#ShellBot.InlineKeyboardButton --button 'menu_re_main' --line 3 --text '📚 Info Port 📚' --callback_data '_pports'
+#ShellBot.InlineKeyboardButton --button 'menu_re_main' --line 4 --text '📁 Close Menu 📁' --callback_data 'closesss'
+#ShellBot.regHandleFunction --function menu_reserv --callback_data _pps_serv
+ShellBot.regHandleFunction --function seesys --callback_data _sts_serv
+#ShellBot.regHandleFunction --function info_port --callback_data _pports
+#ShellBot.regHandleFunction --function res_closer --callback_data closesss
+unset menu_re_main1
+menu_re_main1="$(ShellBot.InlineKeyboardMarkup -b 'menu_re_main')"
 
 while :; do
     ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 35
