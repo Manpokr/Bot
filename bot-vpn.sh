@@ -1015,7 +1015,7 @@ seesys() {
 	ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard1" \
+        --reply_markup "$keyboard6" \
         --parse_mode html
    }        
 start_req() {
@@ -1150,8 +1150,10 @@ unset menu5
 menu5=''
 ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu SSH •️' --callback_data '_menussh5'
 ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray5'
+ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu Trjan-go •️' --callback_data '_menutrgo5'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh5
 ShellBot.regHandleFunction --function menuXray --callback_data _menuxray5
+ShellBot.regHandleFunction --function menuTrgo --callback_data _menutrgo5
 unset keyboard5
 keyboard5="$(ShellBot.InlineKeyboardMarkup -b 'menu5')"
 
