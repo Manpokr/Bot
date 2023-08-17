@@ -107,7 +107,7 @@ menuXray() {
         --parse_mode html
 }
 
-menuTrgo() {
+menutrgo) {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
     msg+="Menu Trojan-go\n"
@@ -1082,7 +1082,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode 
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Limit Free •️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
-ShellBot.regHandleFunction --function menutrojan --callback_data _menutrojan
+ShellBot.regHandleFunction --function menutrgo --callback_data _menutrojan
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
