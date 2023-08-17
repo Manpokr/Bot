@@ -1052,10 +1052,14 @@ input_voucher() {
 
 restartReq() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
-        systemctl restart stunnel4
+        systemctl restart stunnel5
         systemctl restart xray.service
-        systemctl restart xray@n
-        systemctl restart xray.service
+        systemctl restart xray@none.service
+        systemctl restart xray@vless.service
+        systemctl restart xray@vmess.service
+        systemctl restart xray@trojan.service
+        systemctl restart xray@ss.service
+        systemctl restart trojan-go.service
         systemctl restart dropbear
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "Done Restart All Service" \
@@ -1071,12 +1075,14 @@ unset menu1
 menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Trojan-go •️' --callback_data '_menutrojan'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Reseller •️' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Voucher Generator •️' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode •️' --callback_data '_publicMode'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Limit Free •️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
+ShellBot.regHandleFunction --function menutrojan --callback_data _menutrojan
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
