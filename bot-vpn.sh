@@ -1024,10 +1024,11 @@ seesys() {
         msg+="Ovpn Ws None      = $stsepro</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$msg" \
+            --message_id ${callback_query_message_message_id[$id]} \
+	    --text "$msg" \
+            --reply_markup "$keyboard1" \
             --parse_mode html
-   }.       --reply_markup "$(ShellBot.InlineKeyboardMarkup --button 'menu1')"
-
+   }        
 start_req() {
     file_user=$1
     config=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
