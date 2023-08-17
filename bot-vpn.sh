@@ -107,17 +107,6 @@ menuXray() {
         --parse_mode html
 }
 
-menutrgo() {
-    local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu Trojan-go\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard8" \
-        --parse_mode html
-}
-
 menuRes() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
