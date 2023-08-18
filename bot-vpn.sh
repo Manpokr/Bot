@@ -1374,12 +1374,6 @@ while :; do
                             --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
-	          
-			user_already_exist ${message_text[$id]}
-                    echo "Name: ${message_text[$id]}" >$CAD_ARQ
-                    ShellBot.sendMessage --chat_id ${message_from_id[$id]} \
-                        --text 'Vless Validity in days: ' \
-                        --reply_markup "$(ShellBot.ForceReply)"
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
