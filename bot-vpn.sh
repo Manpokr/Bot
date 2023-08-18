@@ -114,7 +114,7 @@ menuTrgo() {
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard8" \
+        --reply_markup "$keyboard10" \
         --parse_mode html
 }
 
@@ -1199,7 +1199,7 @@ menu9=''
 ShellBot.InlineKeyboardButton --button 'menu9' --line 2 --text ' 🔙 Back 🔙 ' --callback_data '_backReqq'
 ShellBot.regHandleFunction --function backReq --callback_data _backReqq
 unset keyboard9
-keyboard7="$(ShellBot.InlineKeyboardMarkup -b 'menu9')"
+keyboard9="$(ShellBot.InlineKeyboardMarkup -b 'menu9')"
 
 
 while :; do
