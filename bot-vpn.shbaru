@@ -1046,125 +1046,6 @@ EOF
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
-
-
-renew_tr() {
-file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "$user" /etc/scvpn/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist\n" \
-            --parse_mode html
-        exit 1
-    fi
-    uuid="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $2}')"
-    exp="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $3}')"
-    cat /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/conf/vmess-nontls.json
-    cat /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/vless-nontls.json
-    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    sed -i "/\b$user\b/d" /etc/scvpn/xray/user.txt
-    rm /etc/scvpn/config-user/${user} >/dev/null 2>&1
-    rm /etc/scvpn/config-url/${uuid} >/dev/null 2>&1
-    systemctl restart xray.service
-    systemctl restart xray@n
-    systemctl restart xray.service
-
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Delete ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-}
-
-cek_tr() {
-file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "$user" /etc/scvpn/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist\n" \
-            --parse_mode html
-        exit 1
-    fi
-    uuid="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $2}')"
-    exp="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $3}')"
-    cat /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/conf/vmess-nontls.json
-    cat /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/vless-nontls.json
-    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    sed -i "/\b$user\b/d" /etc/scvpn/xray/user.txt
-    rm /etc/scvpn/config-user/${user} >/dev/null 2>&1
-    rm /etc/scvpn/config-url/${uuid} >/dev/null 2>&1
-    systemctl restart xray.service
-    systemctl restart xray@n
-    systemctl restart xray.service
-
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Delete ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-}
-
-trial_tr() {
-file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "$user" /etc/scvpn/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist\n" \
-            --parse_mode html
-        exit 1
-    fi
-    uuid="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $2}')"
-    exp="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $3}')"
-    cat /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/conf/vmess-nontls.json
-    cat /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/vless-nontls.json
-    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    sed -i "/\b$user\b/d" /etc/scvpn/xray/user.txt
-    rm /etc/scvpn/config-user/${user} >/dev/null 2>&1
-    rm /etc/scvpn/config-url/${uuid} >/dev/null 2>&1
-    systemctl restart xray.service
-    systemctl restart xray@n
-    systemctl restart xray.service
-
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Delete ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-}
-
 seesys() {
         systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
         systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
@@ -1536,7 +1417,7 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Vless (USER EXPIRED) :')
+                'Vless ( User Expired ) =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1617,35 +1498,7 @@ while :; do
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
-                            --parse_mode html
-	                                fi
-                    ;;
-                'Trojan-Go (USER EXPIRED) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
-                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
-                    else
-                        exp=30
-                    fi
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
-                            --parse_mode html
-                        exit 1
-                    else
-                        echo "$vouch $exp" >>/root/multi/voucher
-                        local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
-                        msg+="Click Link To Confirm Trojan-Go Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
+                            --parse_mode html                            
                     fi
                     ;;
                 'Vmess(free) :')
@@ -1672,12 +1525,6 @@ while :; do
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_trojan $CAD_ARQ
 		    ;;
-                'Trojan-Go (free) =')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_trojan $CAD_ARQ
-                    ;;
                 'Del User :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_conf $CAD_ARQ
