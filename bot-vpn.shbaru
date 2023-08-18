@@ -1288,16 +1288,16 @@ unset menu10
 menu10=''
 ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Add TrojanGo •️' --callback_data '_addtrgo'
 #ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Delete TrojanGo •️' --callback_data '_deltrgo'
-ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Renew TrojanGo •️' --callback_data '_renewtrgo'
-ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Check TrojanGo •️' --callback_data '_checktrgo'
-ShellBot.InlineKeyboardButton --button 'menu10' --line 3 --text '• Trial TrojanGo •️' --callback_data '_trialtrgo'
-ShellBot.InlineKeyboardButton --button 'menu10' --line 4 --text '🔙 Back 🔙' --callback_data '_back9'
+#ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Renew TrojanGo •️' --callback_data '_renewtrgo'
+#ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Check TrojanGo •️' --callback_data '_checktrgo'
+#ShellBot.InlineKeyboardButton --button 'menu10' --line 3 --text '• Trial TrojanGo •️' --callback_data '_trialtrgo'
+#ShellBot.InlineKeyboardButton --button 'menu10' --line 4 --text '🔙 Back 🔙' --callback_data '_back9'
 ShellBot.regHandleFunction --function add_tr --callback_data _addtrgo
 #ShellBot.regHandleFunction --function del_tr --callback_data _deltrgo
-ShellBot.regHandleFunction --function renew_tr --callback_data _renewtrgo
-ShellBot.regHandleFunction --function cek_tr --callback_data _checktrgo
-ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrgo
-ShellBot.regHandleFunction --function backReq --callback_data _back9
+#ShellBot.regHandleFunction --function renew_tr --callback_data _renewtrgo
+#ShellBot.regHandleFunction --function cek_tr --callback_data _checktrgo
+#ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrgo
+#ShellBot.regHandleFunction --function backReq --callback_data _back9
 unset keyboard10
 keyboard10="$(ShellBot.InlineKeyboardMarkup -b 'menu10')"
 
