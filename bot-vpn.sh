@@ -577,7 +577,7 @@ input_extssh() {
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
-    else
+    else 
         local msg
         msg="Username Doesnt Exist\n"
 
@@ -633,7 +633,7 @@ create_vmess() {
     req_voucher $file_user
     req_limit
 
-    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist\n" \
             --parse_mode html
