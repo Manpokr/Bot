@@ -1020,6 +1020,21 @@ EOF
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
+del_tr() {
+
+}
+
+renew_tr() {
+
+}
+
+cek_tr() {
+
+}
+
+trial_tr() {
+}
+
 seesys() {
         systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
         systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
@@ -1261,16 +1276,16 @@ keyboard9="$(ShellBot.InlineKeyboardMarkup -b 'menu9')"
 unset menu10
 menu10=''
 ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Add TrojanGo •️' --callback_data '_addtrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Delete TrojanGo •️' --callback_data '_deltrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Renew TrojanGo •️' --callback_data '_renewtrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Check TrojanGo •️' --callback_data '_checktrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 3 --text '• Trial TrojanGo •️' --callback_data '_trialtrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 4 --text '🔙 Back 🔙' --callback_data '_back9'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Delete TrojanGo •️' --callback_data '_deltrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Renew TrojanGo •️' --callback_data '_renewtrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Check TrojanGo •️' --callback_data '_checktrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 3 --text '• Trial TrojanGo •️' --callback_data '_trialtrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 4 --text '🔙 Back 🔙' --callback_data '_back9'
 ShellBot.regHandleFunction --function add_tr --callback_data _addtrgo
-#ShellBot.regHandleFunction --function del_tr --callback_data _deltrgo
-#ShellBot.regHandleFunction --function renew_tr --callback_data _renewtrgo
-#ShellBot.regHandleFunction --function cek_tr --callback_data _checktrgo
-#ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrgo
+ShellBot.regHandleFunction --function del_tr --callback_data _deltrgo
+ShellBot.regHandleFunction --function renew_tr --callback_data _renewtrgo
+ShellBot.regHandleFunction --function cek_tr --callback_data _checktrgo
+ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrgo
 ShellBot.regHandleFunction --function backReq --callback_data _back9
 unset keyboard10
 keyboard10="$(ShellBot.InlineKeyboardMarkup -b 'menu10')"
@@ -1473,6 +1488,34 @@ while :; do
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
                             --parse_mode html
+	                                fi
+                    ;;
+                'Trojan-Go (USER EXPIRED) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    reseller_balance
+                    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                    else
+                        exp=30
+                    fi
+                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist\n" \
+                            --parse_mode html
+                        exit 1
+                    else
+                        echo "$vouch $exp" >>/root/multi/voucher
+                        local msg
+                        msg="User : $user\n"
+                        msg+="<code>Expired : $exp</code>\n\n"
+                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
+                        msg+="Click Link To Confirm Trojan-Go Acc\n"
+
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "$msg" \
+                            --parse_mode html
                     fi
                     ;;
                 'Vmess(free) :')
@@ -1487,13 +1530,19 @@ while :; do
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vless $CAD_ARQ
                     ;;
-                'Xtls(free) :')
+                'Xtls (free) =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_xtls $CAD_ARQ
                     ;;
-                'Trojan(free) :')
+                'Trojan (free) =')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
+                    create_trojan $CAD_ARQ
+		    ;;
+                'Trojan-Go (free) =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
