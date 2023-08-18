@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 source /etc/.maAsiss/.Shellbtsss
@@ -1256,7 +1257,7 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Vless (USER EXPIRED) =')
+                'Vless ( User Expired ) =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1266,9 +1267,9 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
+                    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
+                            --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
                     else
