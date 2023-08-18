@@ -742,7 +742,7 @@ create_vless() {
 
     req_voucher $file_user
     req_limit
-    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist\n" \
             --parse_mode html
@@ -778,8 +778,8 @@ create_vless() {
     
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="Remarks      = $user\n"
-    msg+="<code>Myip         = $ip_nya\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
     msg+="Limit Quota  = ${limit_nya}\n"
@@ -789,9 +789,9 @@ create_vless() {
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
-    msg+="Public Key   (KEY)  = ${pub_key}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS TLS LINK\n"
     msg+="<code> $vlesslink1</code>\n"
@@ -1354,9 +1354,9 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
+                    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
+                            --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
                     else
