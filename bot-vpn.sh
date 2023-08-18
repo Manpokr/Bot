@@ -159,7 +159,7 @@ req_voucher() {
         fi
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Already Claimed\n" \
+            --text "Already Claimed ⛔\n" \
             --parse_mode html
         exit 1
     fi
@@ -170,7 +170,7 @@ req_url() {
 
     if [[ ${callback_query_data[$id]} == _addvmess ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vmess ( USER EXPIRED ) =" \
+            --text "Vmess ( User Expired ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
@@ -178,15 +178,15 @@ req_url() {
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Xtls ( USER EXPIRED ) =" \
+            --text "Xtls ( User Expired ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan ( USER EXPIRED ) =" \
+            --text "Trojan ( User Expired ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Ssh-VPN ( USER EXPIRED ) =" \
+            --text "Ssh-VPN ( User Expired ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 }
@@ -744,7 +744,7 @@ create_vless() {
     req_limit
     if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist\n" \
+            --text "User Already Exist ⛔\n" \
             --parse_mode html
         exit 1
     fi
@@ -752,6 +752,21 @@ create_vless() {
         duration=$expadmin
     else
         duration=3
+    fi
+    warp-nya() {
+      if [ -r /usr/local/etc/warp/warp-reg ]; then
+         env_msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+    else
+         SKIP=true
+    fi
+    }
+    
+    limit='10'
+    if [[ $limit -gt 0 ]]; then
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
     fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
@@ -1359,6 +1374,12 @@ while :; do
                             --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
+	           else
+			user_already_exist ${message_text[$id]}
+                    echo "Name: ${message_text[$id]}" >$CAD_ARQ
+                    ShellBot.sendMessage --chat_id ${message_from_id[$id]} \
+                        --text 'Vless Validity in days: ' \
+                        --reply_markup "$(ShellBot.ForceReply)"
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
