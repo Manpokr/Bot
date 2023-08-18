@@ -633,7 +633,7 @@ create_vmess() {
     req_voucher $file_user
     req_limit
 
-    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist\n" \
             --parse_mode html
@@ -684,20 +684,12 @@ EOF
 }
 EOF
     echo -e "${user}\t${uuid}\t${exp}" >>/usr/local/etc/xray/user.txt
-    cat /usr/local/etc/xray/conf/05_VMess_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json
     sed -i '/#xray$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$email""'"' /etc/scvpn/xray/conf/vmess-nontls.json
     vmess_base641=$(base64 -w 0 <<<$vmess_json1)
     vmess_base642=$(base64 -w 0 <<<$vmess_json2)
-    vmesslink1="vmess://$(base64 -w 0 /etc/scvpn/xray/$user-tls.json)"
-    vmesslink2="vmess://$(base64 -w 0 /etc/scvpn/xray/$user-none.json)"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${vmesslink1}
-${vmesslink2}
-EOF
-    base64Result=$(base64 -w 0 /etc/scvpn/config-user/${user})
-    echo ${base64Result} >"/etc/scvpn/config-url/${uuid}"
+    vmesslink1="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-tls.json)"
+    vmesslink2="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-none.json)"
     systemctl restart xray.service
 
     local msg
