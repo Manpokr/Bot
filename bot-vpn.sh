@@ -121,7 +121,7 @@ menuTrgo() {
 menuRes() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu Reseller\n"
+    msg+="⏭️ Menu Reseller ⏮️\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -1194,7 +1194,6 @@ ShellBot.regHandleFunction --function link_voucher --callback_data _voucherovpn
 unset keyboard8
 keyboard8="$(ShellBot.InlineKeyboardMarkup -b 'menu8')"
 
-
 unset menu9
 menu9=''
 ShellBot.InlineKeyboardButton --button 'menu9' --line 1 --text '🔙 Back 🔙' --callback_data '_back7'
@@ -1202,7 +1201,22 @@ ShellBot.regHandleFunction --function backReq --callback_data _back7
 unset keyboard9
 keyboard9="$(ShellBot.InlineKeyboardMarkup -b 'menu9')"
 
-
+unset menu10
+menu10=''
+ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Add TrojanGo •️' --callback_data '_addtrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Delete TrojanGo •️' --callback_data '_deltrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Renew TrojanGo •️' --callback_data '_renewtrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Check TrojanGo •️' --callback_data '_checktrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 3 --text '• Trial TrojanGo •️' --callback_data '_trialtrgo'
+ShellBot.InlineKeyboardButton --button 'menu10' --line 4 --text '🔙 Back 🔙' --callback_data '_back8'
+ShellBot.regHandleFunction --function add_tr --callback_data _addtrgo
+ShellBot.regHandleFunction --function del_tr --callback_data _deltrgo
+ShellBot.regHandleFunction --function renew_tr --callback_data _renewtrgo
+ShellBot.regHandleFunction --function cek_tr --callback_data _checktrgo
+ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrgo
+ShellBot.regHandleFunction --function backReq --callback_data _back8
+unset keyboard10
+keyboard10="$(ShellBot.InlineKeyboardMarkup -b 'menu10')"
 
 while :; do
     ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 35
