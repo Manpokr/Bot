@@ -1020,44 +1020,7 @@ EOF
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
-del_tr() {
-file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "$user" /etc/scvpn/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist\n" \
-            --parse_mode html
-        exit 1
-    fi
-    uuid="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $2}')"
-    exp="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $3}')"
-    cat /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/conf/vmess-nontls.json
-    cat /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/vless-nontls.json
-    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    sed -i "/\b$user\b/d" /etc/scvpn/xray/user.txt
-    rm /etc/scvpn/config-user/${user} >/dev/null 2>&1
-    rm /etc/scvpn/config-url/${uuid} >/dev/null 2>&1
-    systemctl restart xray.service
-    systemctl restart xray@n
-    systemctl restart xray.service
 
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Delete ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-}
 
 renew_tr() {
 file_user=$1
@@ -1417,13 +1380,13 @@ keyboard9="$(ShellBot.InlineKeyboardMarkup -b 'menu9')"
 unset menu10
 menu10=''
 ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Add TrojanGo •️' --callback_data '_addtrgo'
-ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Delete TrojanGo •️' --callback_data '_deltrgo'
+#ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Delete TrojanGo •️' --callback_data '_deltrgo'
 ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Renew TrojanGo •️' --callback_data '_renewtrgo'
 ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Check TrojanGo •️' --callback_data '_checktrgo'
 ShellBot.InlineKeyboardButton --button 'menu10' --line 3 --text '• Trial TrojanGo •️' --callback_data '_trialtrgo'
 ShellBot.InlineKeyboardButton --button 'menu10' --line 4 --text '🔙 Back 🔙' --callback_data '_back9'
 ShellBot.regHandleFunction --function add_tr --callback_data _addtrgo
-ShellBot.regHandleFunction --function del_tr --callback_data _deltrgo
+#ShellBot.regHandleFunction --function del_tr --callback_data _deltrgo
 ShellBot.regHandleFunction --function renew_tr --callback_data _renewtrgo
 ShellBot.regHandleFunction --function cek_tr --callback_data _checktrgo
 ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrgo
