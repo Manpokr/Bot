@@ -188,11 +188,6 @@ req_url() {
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "Ssh-VPN ( USER EXPIRED ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
-    elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan-G ( USER EXPIRED ) =" \
-            --reply_markup "$(ShellBot.ForceReply)"
-
     fi
 }
 
@@ -272,11 +267,6 @@ req_free() {
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "Trojan ( free ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
-    elif [[ ${callback_query_data[$id]} == _freetrojango ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan-Go ( free ) =" \
-            --reply_markup "$(ShellBot.ForceReply)"
-
     fi
 
 }
@@ -998,54 +988,8 @@ ext_conf() {
             --text "$msg" \
             --parse_mode html
     fi
-}
-
-add_tr() {
-    file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-    req_voucher $file_user
-    req_limit
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist\n" \
-            --parse_mode html
-        exit 1
-    fi
-    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        duration=$expadmin
-    else
-        duration=3
-    fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
-    exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
-    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
-    email=${user}
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"password": "'${uuid}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    tro="trojan://$uuid@$domain:$multi?sni=#$user"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${tro}
-EOF
-    systemctl restart xray
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n"
-    msg+="Trojan\n"
-    msg+="<code>$tro</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucher
-}
-
+ }
+ 
 seesys() {
         systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
         systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
@@ -1284,23 +1228,6 @@ ShellBot.regHandleFunction --function backReq --callback_data _back7
 unset keyboard9
 keyboard9="$(ShellBot.InlineKeyboardMarkup -b 'menu9')"
 
-unset menu10
-menu10=''
-ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Add TrojanGo •️' --callback_data '_addtrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 1 --text '• Delete TrojanGo •️' --callback_data '_deltrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Renew TrojanGo •️' --callback_data '_renewtrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 2 --text '• Check TrojanGo •️' --callback_data '_checktrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 3 --text '• Trial TrojanGo •️' --callback_data '_trialtrgo'
-#ShellBot.InlineKeyboardButton --button 'menu10' --line 4 --text '🔙 Back 🔙' --callback_data '_back9'
-ShellBot.regHandleFunction --function add_tr --callback_data _addtrgo
-#ShellBot.regHandleFunction --function del_tr --callback_data _deltrgo
-#ShellBot.regHandleFunction --function renew_tr --callback_data _renewtrgo
-#ShellBot.regHandleFunction --function cek_tr --callback_data _checktrgo
-#ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrgo
-#ShellBot.regHandleFunction --function backReq --callback_data _back9
-unset keyboard10
-keyboard10="$(ShellBot.InlineKeyboardMarkup -b 'menu10')"
-
 while :; do
     ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 35
     for id in $(ShellBot.ListUpdates); do
@@ -1399,7 +1326,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
@@ -1427,7 +1354,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
@@ -1455,7 +1382,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
@@ -1483,7 +1410,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
