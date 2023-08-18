@@ -780,10 +780,14 @@ create_vless() {
 
     echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
     
+    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
+    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
     systemctl restart xray@vless.service
-
+    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="Remarks      = $user\n"
     msg+="<code>Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
