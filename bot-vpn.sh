@@ -174,7 +174,7 @@ req_url() {
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vless ( USER EXPIRED ) =" \
+            --text "Vless ( User Expired ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
