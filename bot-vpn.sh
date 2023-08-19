@@ -85,29 +85,6 @@ claimVoucher() {
         --parse_mode html
 }
 
-
-menu_ser() {
-    local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="⏭️ Menu Service ⏮️\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard9" \
-        --parse_mode html
-}
-
-menuTrgo() {
-    local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="⏭️ Menu Trojan-GO ⏮️\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard9" \
-        --parse_mode html
-}
-
 menuRes() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
@@ -649,7 +626,7 @@ menu_vless() {
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboardvl" \
+        --reply_markup "$keyboard2" \
         --parse_mode html
 }
 
@@ -930,6 +907,61 @@ trial_vless() {
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
+menu_vmess() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Trojan-GO ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard9" \
+        --parse_mode html
+}
+
+menu-trojan() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Trojan-GO ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard9" \
+        --parse_mode html
+}
+
+menu-ss() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Trojan-GO ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard9" \
+        --parse_mode html
+}
+
+menu-trgo() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Trojan-GO ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard9" \
+        --parse_mode html
+}
+menu_ser() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Service ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboardser" \
+        --parse_mode html
+}
+
+
 seesys() {
         systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
         systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
@@ -1045,9 +1077,9 @@ restartReq() {
 
 unset menu1
 menu1=''
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Menu SSH ❇️' --callback_data '_menussh'
+#ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Menu SSH ❇️' --callback_data '_menussh'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuser'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🔛 Menu Trojan-Go 🔛' --callback_data '_menutrgo'
+#ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🔛 Menu Trojan-Go 🔛' --callback_data '_menutrgo'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '💲 Reseller 💲' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🔰 Voucher Generator 🔰' --callback_data '_voucherGenerator'
@@ -1064,24 +1096,24 @@ ShellBot.regHandleFunction --function freelimitReq --callback_data _freelimit
 unset keyboard1
 keyboard1="$(ShellBot.InlineKeyboardMarkup -b 'menu1')"
 
-unset menuvl
-menuvl=''
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 1 --text '• Menu Ssh-VPN •️' --callback_data '_menussh'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 2 --text '• Menu Vless •️' --callback_data '_menuvless'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 3 --text '• Menu Vmess •️' --callback_data '_menuvmess'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 4 --text '• Menu Trojan •️' --callback_data '_menutrojan'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 5 --text '• Menu Shadowsock •️' --callback_data '_menuss'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 6 --text '• Trojan-Go•️' --callback_data '_menutrgo'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 7 --text '🔙 Back 🔙' --callback_data '_back2'
-ShellBot.regHandleFunction --function renew_ssh --callback_data _menussh
+unset menuser
+menuser=''
+ShellBot.InlineKeyboardButton --button 'menuser' --line 1 --text '• Menu Ssh-VPN •️' --callback_data '_menussh'
+ShellBot.InlineKeyboardButton --button 'menuser' --line 2 --text '• Menu Vless •️' --callback_data '_menuvless'
+ShellBot.InlineKeyboardButton --button 'menuser' --line 3 --text '• Menu Vmess •️' --callback_data '_menuvmess'
+ShellBot.InlineKeyboardButton --button 'menuser' --line 4 --text '• Menu Trojan •️' --callback_data '_menutrojan'
+ShellBot.InlineKeyboardButton --button 'menuser' --line 5 --text '• Menu Shadowsock •️' --callback_data '_menuss'
+ShellBot.InlineKeyboardButton --button 'menuser' --line 6 --text '• Trojan-Go•️' --callback_data '_menutrgo'
+ShellBot.InlineKeyboardButton --button 'menuser' --line 7 --text '🔙 Back 🔙' --callback_data '_back2'
+ShellBot.regHandleFunction --function menu_ssh --callback_data _menussh
 ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless
-ShellBot.regHandleFunction --function del_vless --callback_data _menuvmess
-ShellBot.regHandleFunction --function renew_vless --callback_data _menutrojan
-ShellBot.regHandleFunction --function del_vless --callback_data _menuss
-ShellBot.regHandleFunction --function renew_vless --callback_data _menutrgo
+ShellBot.regHandleFunction --function menu_vmess --callback_data _menuvmess
+ShellBot.regHandleFunction --function menu_trojan --callback_data _menutrojan
+ShellBot.regHandleFunction --function menu-ss --callback_data _menuss
+ShellBot.regHandleFunction --function menu-trgo --callback_data _menutrgo
 ShellBot.regHandleFunction --function backReq --callback_data _back2
-unset keyboardvl
-keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
+unset keyboardser
+keyboardser="$(ShellBot.InlineKeyboardMarkup -b 'menuser')"
 
 
 unset menu2
@@ -1089,14 +1121,14 @@ menu2=''
 ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• create Vless •️' --callback_data '_addvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Delete Vless •️' --callback_data '_delvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '• Renew Vless •️' --callback_data '_renewvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 5 --text '• Check Vless •️' --callback_data '_cekvless'
+#ShellBot.InlineKeyboardButton --button 'menu2' --line 5 --text '• Check Vless •️' --callback_data '_cekvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 6 --text '• Trial Vless •️' --callback_data '_trialvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 7 --text '🔙 Back 🔙' --callback_data '_back2'
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function del_vless --callback_data _delvless
 ShellBot.regHandleFunction --function renew_vless --callback_data _renewvless
-ShellBot.regHandleFunction --function del_vless --callback_data _cekvless
-ShellBot.regHandleFunction --function renew_vless --callback_data _trialvless
+#ShellBot.regHandleFunction --function del_vless --callback_data _cekvless
+ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
 ShellBot.regHandleFunction --function backReq --callback_data _back2
 unset keyboard2
 keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
