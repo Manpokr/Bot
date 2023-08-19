@@ -675,7 +675,7 @@ create_vless() {
     fi
     warp-nya() {
       if [ -r /usr/local/etc/warp/warp-reg ]; then
-         env_msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
     else
          SKIP=true
     fi
@@ -744,38 +744,13 @@ create_vless() {
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucher="Port Tls     = ${xtls}\n"
-    msg+="Port None    = ${none}\n"
-    msg+="Grpc Type    = Gun %26 Multi\n"
-    msg+="User Id      = ${uuid}</code>\n"
-    warp-nya
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
-    msg+="Name Server  (NS)   = ${ns_nya}\n"
-    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS TLS LINK\n"
-    msg+="<code> $vlesslink1</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS LINK\n"
-    msg+="<code> $vlesslink2</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS H2 TLS LINK\n"
-    msg+="<code> $vlesslink4</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS GRPC TLS LINK\n"
-    msg+="<code> $vlesslink3</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
+
 }
 
 del_vless() {
-user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ⛔\n" \
@@ -784,102 +759,25 @@ user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     fi
     user="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $2}')"
     exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
+    
     sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
-    sed -i "/^### $file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
-    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
-    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-
-    req_voucher $file_user
-    req_limit
-    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist ⛔\n" \
-            --parse_mode html
-        exit 1
-    fi
-    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        duration=$expadmin
-    else
-        duration=3
-    fi
-    warp-nya() {
-      if [ -r /usr/local/etc/warp/warp-reg ]; then
-         env_msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
-    else
-         SKIP=true
-    fi
-    }
-    
-    limit='10'
-    if [[ $limit -gt 0 ]]; then
-       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
-    else
-       export limit_nya="Unlimited"
-    fi
-    domain=$(cat /usr/local/etc/xray/domain);
-    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
-    pub_key=$(cat /etc/slowdns/server.pub);
-    uuid=$(uuidgen);
-    exp=$(date -d +${duration}days +%Y-%m-%d)
-    
-    sed -i '/#vless$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-     sed -i '/#vless$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
-     sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-      sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
-
-    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
-    
-    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
-    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
-    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
-    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vless.json
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
+    rm -f /etc/manternet/limit/vless/quota/$user
+    rm -f /etc/manternet/limit/vless/ip/$user
+    rm -f /etc/manternet/vless/$user
+    rm -f /etc/manternet/cache/vless/$user
     systemctl restart xray@vless.service
-    
+      
     local msg
-    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>Remarks      = $user\n"
-    msg+="Myip         = $ip_nya\n"
-    msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port Tls     = ${xtls}\n"
-    msg+="Port None    = ${none}\n"
-    msg+="Grpc Type    = Gun %26 Multi\n"
-    msg+="User Id      = ${uuid}</code>\n"
-    warp-nya
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
-    msg+="Name Server  (NS)   = ${ns_nya}\n"
-    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS TLS LINK\n"
-    msg+="<code> $vlesslink1</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS LINK\n"
-    msg+="<code> $vlesslink2</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS H2 TLS LINK\n"
-    msg+="<code> $vlesslink4</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS GRPC TLS LINK\n"
-    msg+="<code> $vlesslink3</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
+    msg="<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp )</code>\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-        sed -i "/$coupon/d" /root/multi/voucher
+            --text "$msg" \
+            --parse_mode html
+        
 }
 
 renew_vless() {
@@ -1022,7 +920,7 @@ trial_vless() {
     fi
     warp-nya() {
       if [ -r /usr/local/etc/warp/warp-reg ]; then
-         env_msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
     else
          SKIP=true
     fi
