@@ -268,9 +268,9 @@ req_free() {
 
 req_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $2}' | column -t | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $2,$3}' | column -t | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "n<b>  🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "<b>      🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Delete User =" \
@@ -279,9 +279,9 @@ req_del() {
 
 req_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $2}' | column -t | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $2,$3}' | column -t | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "<b>. 🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "<b>     🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Extend User =" \
@@ -1299,12 +1299,12 @@ while :; do
                         --text "Extend Expired(ssh) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Extend Expired(ssh) :')
+                'Extend Expired (ssh) =')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     input_extssh $CAD_ARQ
                     ;;
-                'OVPN (USER EXPIRED) :')
+                'OVPN (User Expired) =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
