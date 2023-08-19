@@ -172,7 +172,7 @@ req_url() {
      #   ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
       #      --text "Vmess ( User Expired ) =" \
    #         --reply_markup "$(ShellBot.ForceReply)"
-    elif [[ ${callback_query_data[$id]} == _addvless ]]; then
+    if [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "Vless ( User Expired ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
@@ -207,7 +207,7 @@ link_voucher() {
     #    ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
        #     --text "$msg" \
        #     --parse_mode html
-    elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
+    if [[ ${callback_query_data[$id]} == _vouchervless ]]; then
         local msg
         msg="User = $user\n"
         msg+="<code>Expired = $exp</code>\n\n"
@@ -255,7 +255,7 @@ req_free() {
   #      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
    #         --text "Vmess ( free ) =" \
        #     --reply_markup "$(ShellBot.ForceReply)"
-    elif [[ ${callback_query_data[$id]} == _freevless ]]; then
+    if [[ ${callback_query_data[$id]} == _freevless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "Vless ( free ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
