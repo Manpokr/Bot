@@ -85,6 +85,18 @@ claimVoucher() {
         --parse_mode html
 }
 
+
+menu_ser() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Service ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard9" \
+        --parse_mode html
+}
+
 menuTrgo() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
@@ -1034,7 +1046,7 @@ restartReq() {
 unset menu1
 menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Menu SSH ❇️' --callback_data '_menussh'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuxray'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuser'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🔛 Menu Trojan-Go 🔛' --callback_data '_menutrgo'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '💲 Reseller 💲' --callback_data '_resellerMenu'
@@ -1042,7 +1054,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🔰 Voucher Gen
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '⚠️ Public Mode ⚠️' --callback_data '_publicMode'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🆓 Limit Free 🆓' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
-ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
+ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function menuTrgo --callback_data _menutrgo
 ShellBot.regHandleFunction --function seesys --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
