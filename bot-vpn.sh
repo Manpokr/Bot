@@ -1099,7 +1099,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 Status Serv
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '💲 Reseller 💲' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🔰 Voucher Generator 🔰' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '⚠️ Public Mode ⚠️' --callback_data '_publicMode'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🆓 Limit Free 🆓' --callback_data '_freelimit'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🆓 Limit Free 🆓' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function seesys --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
