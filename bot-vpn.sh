@@ -718,7 +718,14 @@ create_vless() {
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
     msg+="Limit Quota  = ${limit_nya}\n"
-    msg+Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="User Id      = ${uuid}</code>\n"
+    warp-nya
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS TLS LINK\n"
     msg+="<code> $vlesslink1</code>\n"
@@ -839,7 +846,7 @@ user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     systemctl restart xray@vless.service
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -872,24 +879,7 @@ user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucheruser $exp/,/^},{/d" /usr/local/etc/xray/vless.json
-    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
-    rm -f /etc/manternet/limit/vless/quota/$user
-    rm -f /etc/manternet/limit/vless/ip/$user
-    rm -f /etc/manternet/vless/$user
-    rm -f /etc/manternet/cache/vless/$user
-
-    systemctl restart xray@vless.service
-
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Delete ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
+        sed -i "/$coupon/d" /root/multi/voucher
 }
 
 renew_vless() {
@@ -1069,13 +1059,21 @@ trial_vless() {
     systemctl restart xray@vless.service
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
     msg+="Limit Quota  = ${limit_nya}\n"
-    msg+Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="User Id      = ${uuid}</code>\n"
+    warp-nya
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS TLS LINK\n"
     msg+="<code> $vlesslink1</code>\n"
