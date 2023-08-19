@@ -1074,8 +1074,8 @@ ShellBot.regHandleFunction --function req_url --callback_data _addvmess
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function req_url --callback_data _addxtls
 ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
-ShellBot.regHandleFunction --function req_del --callback_data _delconf
-ShellBot.regHandleFunction --function req_ext --callback_data _extconf
+ShellBot.regHandleFunction --function del_vless --callback_data _delconf
+ShellBot.regHandleFunction --function renew_vless --callback_data _extconf
 ShellBot.regHandleFunction --function backReq --callback_data _back2
 unset keyboard2
 keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
@@ -1253,34 +1253,6 @@ while :; do
                         --text "$msg" \
                         --parse_mode html
                     ;;
-                'Vmess (USER EXPIRED) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
-                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
-                    else
-                        exp=30
-                    fi
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
-                            --parse_mode html
-                        exit 1
-                    else
-                        echo "$vouch $exp" >>/root/multi/voucher
-                        local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
-                        msg+="Click Link To Confirm Vmess Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
-                    fi
-                    ;;
                 'Vless ( User Expired ) =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
@@ -1306,70 +1278,8 @@ while :; do
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
-                            --parse_mode html
-                    fi
-                    ;;
-                'Xtls (USER EXPIRED) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
-                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
-                    else
-                        exp=30
-                    fi
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
-                            --parse_mode html
-                        exit 1
-                    else
-                        echo "$vouch $exp" >>/root/multi/voucher
-                        local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
-                        msg+="Click Link To Confirm Xtls Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
-                    fi
-                    ;;
-                'Trojan (USER EXPIRED) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
-                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
-                    else
-                        exp=30
-                    fi
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
-                            --parse_mode html
-                        exit 1
-                    else
-                        echo "$vouch $exp" >>/root/multi/voucher
-                        local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
-                        msg+="Click Link To Confirm Trojan Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
                             --parse_mode html                            
                     fi
-                    ;;
-                'Vmess(free) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_vmess $CAD_ARQ
                     ;;
                 'Vless(free) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
@@ -1377,26 +1287,14 @@ while :; do
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vless $CAD_ARQ
                     ;;
-                'Xtls (free) =')
+                'Del Vless User :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-                    userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_xtls $CAD_ARQ
+                    del_vless $CAD_ARQ
                     ;;
-                'Trojan (free) =')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_trojan $CAD_ARQ
-		    ;;
-                'Del User :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    del_conf $CAD_ARQ
-                    ;;
-                'Extend User :')
+                'Renew Vless User =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Extend Day :" \
+                        --text "Extend Day =" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
                 'Extend Day :')
