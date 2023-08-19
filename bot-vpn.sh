@@ -1073,8 +1073,8 @@ ShellBot.InlineKeyboardButton --button 'menuvl' --line 4 --text '• Menu Trojan
 ShellBot.InlineKeyboardButton --button 'menuvl' --line 5 --text '• Menu Shadowsock •️' --callback_data '_menuss'
 ShellBot.InlineKeyboardButton --button 'menuvl' --line 6 --text '• Trojan-Go•️' --callback_data '_menutrgo'
 ShellBot.InlineKeyboardButton --button 'menuvl' --line 7 --text '🔙 Back 🔙' --callback_data '_back2'
-ShellBot.regHandleFunction --function menu_vless --callback_data _menussh
-ShellBot.regHandleFunction --function req_url --callback_data _menuvless
+ShellBot.regHandleFunction --function renew_ssh --callback_data _menussh
+ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless
 ShellBot.regHandleFunction --function del_vless --callback_data _menuvmess
 ShellBot.regHandleFunction --function renew_vless --callback_data _menutrojan
 ShellBot.regHandleFunction --function del_vless --callback_data _menuss
