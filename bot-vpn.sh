@@ -266,7 +266,7 @@ req_free() {
 
 }
 
-del_vs() {
+req_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1,$2,$3}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
@@ -277,7 +277,7 @@ del_vs() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-renew_ss() {
+req_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1,$2,$3}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
@@ -1138,8 +1138,8 @@ ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Vless' --c
 ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Vless' --callback_data '_trialvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
-ShellBot.regHandleFunction --function del_vless --callback_data _delvless
-ShellBot.regHandleFunction --function renew_vless --callback_data _renewvless
+ShellBot.regHandleFunction --function req_del --callback_data _delvless
+ShellBot.regHandleFunction --function req_ext --callback_data _renewvless
 #ShellBot.regHandleFunction --function del_vless --callback_data _cekvless
 ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
 ShellBot.regHandleFunction --function back_ser --callback_data _back2
