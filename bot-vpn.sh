@@ -862,24 +862,11 @@ rm -rf /tmp/ipvless.txt
 done
 rm -rf /tmp/ipvless.txt
 rm -rf /tmp/other.txt
-msg=$(cat /tmp/vmess-login)
-cekk=$(cat /tmp/vmess-login | wc -l)
-if [ "$cekk" = "0" ] || [ "$cekk" = "6" ]; then
-ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-                --text "⛔ No Users Online ⛔" \
-                --parse_mode html
-rm /tmp/vmess-login
-return 0
-else
 ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
 ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
          --text "$msg" \
          --parse_mode html
-rm /tmp/vmess-login
-return 0
-fi
-}
 }
 
 trial_vless() {
