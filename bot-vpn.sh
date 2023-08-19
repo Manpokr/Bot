@@ -820,53 +820,6 @@ renew_vless() {
     fi
  }
 
- check_vless() {
-      file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ⛔\n" \
-            --parse_mode html
-        exit 1
-    else
-      echo -n > /tmp/other.txt
-      data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);      
-      echo -e "━━━━━━━━━━━━━━━━━━━━━" > /tmp/vless-login
-      echo -e "         🟢 VLess User Login 🟢  " >> /tmp/vless-login
-      echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
-      for akun in "${data[@]}"
-      do
-      echo -n > /tmp/ipvless.txt
-      data2=( `cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
-      for ip in "${data2[@]}"
-      do
-      jum=$(cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | grep -w $akun | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -F $ip | sed 's/2402//g' | sort | uniq)
-if [[ "$jum" = "$ip" ]]; then
-echo "$jum" >> /tmp/ipvless.txt
-else
-echo "$ip" >> /tmp/other.txt
-fi
-jum2=$(cat /tmp/ipvless.txt)
-sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
-done
-jum=$(cat /tmp/ipvless.txt)
-if [[ "$jum" = "$akun" ]]; then
-echo > /dev/null
-else
-jum2=$(cat /tmp/ipvless.txt | nl -s " • " )
-echo -e "  User = $akun" >> /tmp/vmess-login
-echo -e "$jum2" >> /tmp/vmess-login
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vmess-login
-fi
-rm -rf /tmp/ipvless.txt
-done
-rm -rf /tmp/ipvless.txt
-rm -rf /tmp/other.txt
-ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucher
-#}
 
 trial_vless() {
     file_user=$1
