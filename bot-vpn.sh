@@ -879,12 +879,6 @@ ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
 rm /tmp/vmess-login
 return 0
 fi
-else
-ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-                --text "⛔ ACCESS DENIED ⛔" \
-                --parse_mode html
-return 0
-fi
 }
 
 trial_vless() {
