@@ -880,6 +880,7 @@ rm /tmp/vmess-login
 return 0
 fi
 }
+}
 
 trial_vless() {
     file_user=$1
