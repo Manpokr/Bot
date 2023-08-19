@@ -862,11 +862,10 @@ rm -rf /tmp/ipvless.txt
 done
 rm -rf /tmp/ipvless.txt
 rm -rf /tmp/other.txt
-ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-              --message_id ${callback_query_message_message_id[$id]}
 ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-         --text "$msg" \
-         --parse_mode html
+        --text "$msg" \
+        --parse_mode html
+    sed -i "/$coupon/d" /root/multi/voucher
 }
 
 trial_vless() {
