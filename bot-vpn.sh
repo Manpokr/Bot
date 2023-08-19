@@ -866,7 +866,7 @@ ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
-}
+#}
 
 trial_vless() {
     file_user=$1
