@@ -1043,7 +1043,7 @@ restartReq() {
 unset menu1
 menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Menu SSH ❇️' --callback_data '_menussh'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '💱 Menu Xray 💱' --callback_data '_menuxray'
+#ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '💱 Menu Xray 💱' --callback_data '_menuxray'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🔛 Menu Trojan-Go 🔛' --callback_data '_menutrgo'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '💲 Reseller 💲' --callback_data '_resellerMenu'
@@ -1051,7 +1051,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🔰 Voucher Gen
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '⚠️ Public Mode ⚠️' --callback_data '_publicMode'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🆓 Limit Free 🆓' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
-ShellBot.regHandleFunction --function menu_vless --callback_data _menuxray
+#ShellBot.regHandleFunction --function menu_vless --callback_data _menuxray
 ShellBot.regHandleFunction --function menuTrgo --callback_data _menutrgo
 ShellBot.regHandleFunction --function seesys --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
@@ -1063,19 +1063,19 @@ keyboard1="$(ShellBot.InlineKeyboardMarkup -b 'menu1')"
 
 unset menu2
 menu2=''
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Vmess •️' --callback_data '_addvmess'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Vless •️' --callback_data '_addvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Xtls •️' --callback_data '_addxtls'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Trojan •️' --callback_data '_addtrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Delete User •️' --callback_data '_delconf'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Extend User •️' --callback_data '_extconf'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Menu Vless •️' --callback_data '_menuvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• create Vless •️' --callback_data '_addvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Delete Vless •️' --callback_data '_delvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Renew Vless •️' --callback_data '_renewvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Check Vless •️' --callback_data '_cekvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Trial Vless •️' --callback_data '_trialvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
-ShellBot.regHandleFunction --function req_url --callback_data _addvmess
+ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
-ShellBot.regHandleFunction --function req_url --callback_data _addxtls
-ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
-ShellBot.regHandleFunction --function del_vless --callback_data _delconf
-ShellBot.regHandleFunction --function renew_vless --callback_data _extconf
+ShellBot.regHandleFunction --function del_vless --callback_data _delvless
+ShellBot.regHandleFunction --function renew_vless --callback_data _renewvless
+ShellBot.regHandleFunction --function del_vless --callback_data _cekvless
+ShellBot.regHandleFunction --function renew_vless --callback_data _trialvless
 ShellBot.regHandleFunction --function backReq --callback_data _back2
 unset keyboard2
 keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
