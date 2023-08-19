@@ -1085,9 +1085,9 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '💲 Reseller �
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🔰 Voucher Generator 🔰' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '⚠️ Public Mode ⚠️' --callback_data '_publicMode'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🆓 Limit Free 🆓' --callback_data '_freelimit'
-ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
+#ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
-ShellBot.regHandleFunction --function menuTrgo --callback_data _menutrgo
+#ShellBot.regHandleFunction --function menu_trgo --callback_data _menutrgo
 ShellBot.regHandleFunction --function seesys --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
