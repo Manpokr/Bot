@@ -266,9 +266,9 @@ req_free() {
 
 }
 
-req_del() {
+del_vs() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1}' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1,$2,$3}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -277,9 +277,9 @@ req_del() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-req_ext() {
+renew_ss() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1}' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $1,$2,$3}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -1353,13 +1353,13 @@ while :; do
                             --parse_mode html                            
                     fi
                     ;;
-                'Vless(free) :')
+                'Vless (free) =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vless $CAD_ARQ
                     ;;
-                'Del Vless User :')
+                'Delete Vless User =')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_vless $CAD_ARQ
                     ;;
@@ -1369,10 +1369,10 @@ while :; do
                         --text "Extend Day =" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Extend Day :')
+                'Extend Day =')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
-                    ext_conf $CAD_ARQ
+                    renew_vless $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
