@@ -85,28 +85,6 @@ claimVoucher() {
         --parse_mode html
 }
 
-menuSsh() {
-    local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="⏭️ Menu Ssh-VPN ⏮️\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard4" \
-        --parse_mode html
-}
-
-menuXray() {
-    local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="⏭️ Menu Xray Core ⏮️\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard2" \
-        --parse_mode html
-}
-
 menuTrgo() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
@@ -458,6 +436,19 @@ reseller_balance() {
     fi
 }
 
+###############-SSH-VPN-INFO-############
+
+menuSsh() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Ssh-VPN ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard4" \
+        --parse_mode html
+}
+
 add_ssh() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Create User ( ssh ) =" \
@@ -646,7 +637,7 @@ menu_vless() {
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard2" \
+        --reply_markup "$keyboardvl" \
         --parse_mode html
 }
 
@@ -1061,16 +1052,34 @@ ShellBot.regHandleFunction --function freelimitReq --callback_data _freelimit
 unset keyboard1
 keyboard1="$(ShellBot.InlineKeyboardMarkup -b 'menu1')"
 
+unset menuvl
+menuvl=''
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 1 --text '• Menu Ssh-VPN •️' --callback_data '_menussh'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 2 --text '• Menu Vless •️' --callback_data '_menuvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 3 --text '• Menu Vmess •️' --callback_data '_menuvmess'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 4 --text '• Menu Trojan •️' --callback_data '_menutrojan'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 5 --text '• Menu Shadowsock •️' --callback_data '_menuss'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 6 --text '• Trojan-Go•️' --callback_data '_menutrgo'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 7 --text '🔙 Back 🔙' --callback_data '_back2'
+ShellBot.regHandleFunction --function menu_vless --callback_data _menussh
+ShellBot.regHandleFunction --function req_url --callback_data _menuvless
+ShellBot.regHandleFunction --function del_vless --callback_data _menuvmess
+ShellBot.regHandleFunction --function renew_vless --callback_data _menutrojan
+ShellBot.regHandleFunction --function del_vless --callback_data _menuss
+ShellBot.regHandleFunction --function renew_vless --callback_data _menutrgo
+ShellBot.regHandleFunction --function backReq --callback_data _back2
+unset keyboardvl
+keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
+
+
 unset menu2
 menu2=''
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Menu Vless •️' --callback_data '_menuvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• create Vless •️' --callback_data '_addvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Delete Vless •️' --callback_data '_delvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Renew Vless •️' --callback_data '_renewvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Check Vless •️' --callback_data '_cekvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Trial Vless •️' --callback_data '_trialvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
-ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• create Vless •️' --callback_data '_addvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Delete Vless •️' --callback_data '_delvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '• Renew Vless •️' --callback_data '_renewvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 5 --text '• Check Vless •️' --callback_data '_cekvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 6 --text '• Trial Vless •️' --callback_data '_trialvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 7 --text '🔙 Back 🔙' --callback_data '_back2'
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function del_vless --callback_data _delvless
 ShellBot.regHandleFunction --function renew_vless --callback_data _renewvless
