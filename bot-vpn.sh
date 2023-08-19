@@ -212,7 +212,7 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
-    elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
+   # elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
       #  local msg
        # msg="User = $user\n"
      #   msg+="<code>Expired = $exp</code>\n\n"
