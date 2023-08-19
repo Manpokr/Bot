@@ -212,9 +212,9 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
-#    elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
-    #    local msg
-     #   msg="User = $user\n"
+    elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
+      #  local msg
+       # msg="User = $user\n"
      #   msg+="<code>Expired = $exp</code>\n\n"
      #   msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
      #   msg+="Click Link To Confirm Xtls Acc\n"
@@ -268,23 +268,23 @@ req_free() {
 
 req_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $2,$3}' | column -t | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL" | awk '{print $2,$3}' | column -t | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "<b>      🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Delete User =" \
+        --text "Delete User Vless =" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 req_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | awk '{print $2,$3}' | column -t | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL" | awk '{print $2,$3}' | column -t | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "<b>     🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Extend User =" \
+        --text "Renew User Vless =" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
