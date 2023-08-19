@@ -1335,7 +1335,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
@@ -1363,7 +1363,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
@@ -1391,7 +1391,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
@@ -1419,7 +1419,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
@@ -1461,9 +1461,13 @@ while :; do
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_trojan $CAD_ARQ
                     ;;
-                'Del User :')
+		'🗑 REMOVE USER VLess 🗑\n\nUsername:')
+                    reseller_balance
+                    del_vless ${message_text[$id]}
+                    ShellBot.sendMessage --chat_id ${message_from_id[$id]} \
+                        --text "✅ *Successfully removed.* 🚮" \
+                        --parse_mode markdown
                     echo "${message_text[$id]}" >$CAD_ARQ
-                    del_vless $CAD_ARQ
                     ;;
                 'Extend User :')
                     echo "${message_text[$id]}" >$CAD_ARQ
