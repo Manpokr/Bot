@@ -163,26 +163,26 @@ req_voucher() {
 req_url() {
     ori=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
 
- #   if [[ ${callback_query_data[$id]} == _addvmess ]]; then
-     #   ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-      #      --text "Vmess ( User Expired ) =" \
-   #         --reply_markup "$(ShellBot.ForceReply)"
-    if [[ ${callback_query_data[$id]} == _addvless ]]; then
+    if [[ ${callback_query_data[$id]} == _addvmess ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "Vmess ( User Expired ) =" \
+            --reply_markup "$(ShellBot.ForceReply)"
+    elif [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "Vless ( User Expired ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
- #   elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
-   #     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-     #       --text "Xtls ( User Expired ) =" \
-     #       --reply_markup "$(ShellBot.ForceReply)"
- #   elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
-   #     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-   #         --text "Trojan ( User Expired ) =" \
-   #         --reply_markup "$(ShellBot.ForceReply)"
- #   elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
-    #    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-      #      --text "Ssh-VPN ( User Expired ) =" \
-   #         --reply_markup "$(ShellBot.ForceReply)"
+    elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "Xtls ( User Expired ) =" \
+            --reply_markup "$(ShellBot.ForceReply)"
+   elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "Trojan ( User Expired ) =" \
+            --reply_markup "$(ShellBot.ForceReply)"
+   elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "Ssh-VPN ( User Expired ) =" \
+            --reply_markup "$(ShellBot.ForceReply)"
     fi 
 }
 
@@ -192,17 +192,17 @@ link_voucher() {
     exp=$(grep $vouch /root/multi/voucher | awk '{print $2}')
     user=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c4)
 
- #   if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
-   #     local msg
-  #      msg="User = $user\n"
-   #     msg+="<code>Expired = $exp</code>\n\n"
-   #     msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
-     #   msg+="Click Link To Confirm Vmess Acc\n"
+   if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
+        local msg
+        msg="User = $user\n"
+        msg+="<code>Expired = $exp</code>\n\n"
+        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
+        msg+="Click Link To Confirm Vmess Acc\n"
 
-    #    ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-       #     --text "$msg" \
-       #     --parse_mode html
-    if [[ ${callback_query_data[$id]} == _vouchervless ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+    elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
         local msg
         msg="User = $user\n"
         msg+="<code>Expired = $exp</code>\n\n"
@@ -212,26 +212,26 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
-   # elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
-      #  local msg
-       # msg="User = $user\n"
-     #   msg+="<code>Expired = $exp</code>\n\n"
-     #   msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
-     #   msg+="Click Link To Confirm Xtls Acc\n"
+    elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
+        local msg
+        msg="User = $user\n"
+        msg+="<code>Expired = $exp</code>\n\n"
+        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
+        msg+="Click Link To Confirm Xtls Acc\n"
 
-     #   ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-     #       --text "$msg" \
-       #     --parse_mode html
-#    elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
-   #     local msg
-     #   msg="User = $user\n"
-   #     msg+="<code>Expired = $exp</code>\n\n"
-    #    msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
-    #    msg+="Click Link To Confirm Trojan Acc\n"
+        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+    elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
+        local msg
+        msg="User = $user\n"
+        msg+="<code>Expired = $exp</code>\n\n"
+        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
+        msg+="Click Link To Confirm Trojan Acc\n"
 
-   #     ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-   #         --text "$msg" \
-     #       --parse_mode html
+        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
         local msg
         msg="User = $user\n"
@@ -246,22 +246,22 @@ link_voucher() {
 }
 
 req_free() {
- #   if [[ ${callback_query_data[$id]} == _freevmess ]]; then
-  #      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-   #         --text "Vmess ( free ) =" \
-       #     --reply_markup "$(ShellBot.ForceReply)"
-    if [[ ${callback_query_data[$id]} == _freevless ]]; then
+    if [[ ${callback_query_data[$id]} == _freevmess ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "Vmess ( free ) =" \
+            --reply_markup "$(ShellBot.ForceReply)"
+    elif [[ ${callback_query_data[$id]} == _freevless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "Vless ( free ) =" \
             --reply_markup "$(ShellBot.ForceReply)"
- #   elif [[ ${callback_query_data[$id]} == _freextls ]]; then
- #       ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-   #         --text "Xtls ( free ) =" \
-   #         --reply_markup "$(ShellBot.ForceReply)"
-#    elif [[ ${callback_query_data[$id]} == _freetrojan ]]; then
-     #   ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-  #          --text "Trojan ( free ) =" \
-   #         --reply_markup "$(ShellBot.ForceReply)"
+    elif [[ ${callback_query_data[$id]} == _freextls ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "Xtls ( free ) =" \
+            --reply_markup "$(ShellBot.ForceReply)"
+    elif [[ ${callback_query_data[$id]} == _freetrojan ]]; then
+        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "Trojan ( free ) =" \
+            --reply_markup "$(ShellBot.ForceReply)"
     fi
 
 }
