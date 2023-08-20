@@ -893,12 +893,15 @@ if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
 echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
 echo -e "";
-echo -e "━━━━━━━━━━━━━━━━━━━━━" > /tmp/vmess-login
-echo -e "         🟢 VLess User Login 🟢  " >> /tmp/vmess-login
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vmess-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" > /tmp/vless-login
+echo -e "         🟢 VLess User Login 🟢  " >> /tmp/vless-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
 
 for akun in "${data[@]}"
 do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
 
 echo -n > /tmp/ipvless.txt
 data2=( `cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
