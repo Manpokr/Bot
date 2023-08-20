@@ -1455,7 +1455,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
+                    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist\n" \
                             --parse_mode html
