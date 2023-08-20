@@ -278,7 +278,7 @@ req_ext() {
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Extend Vless User :" \
+        --text "Renew Vless User :" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
