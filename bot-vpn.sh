@@ -889,7 +889,7 @@ del_conf() {
 }
 
 check_vless(){
-if [[ "${callback_query_from_id[$id]}" == "$Admin_ID" ]]; then
+if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
 echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
 
