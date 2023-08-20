@@ -929,6 +929,7 @@ fi
 rm -rf /tmp/ipvless.txt
 done
 rm -rf /tmp/other.txt
+rm -rf /tmp/ipvless.txt
 msg=$(cat /tmp/vless-login)
 cekk=$(cat /tmp/vless-login | wc -l)
 if [ "$cekk" = "0" ] || [ "$cekk" = "6" ]; then
