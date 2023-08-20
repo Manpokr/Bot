@@ -918,7 +918,7 @@ jum2=$(cat /tmp/ipvless.txt)
 sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
 jum=$(cat /tmp/ipvless.txt)
-if [[ "$jum" = "$akun" ]]; then
+if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
 jum2=$(cat /tmp/ipvless.txt | nl -s " • " )
