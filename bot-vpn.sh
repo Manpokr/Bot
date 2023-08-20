@@ -159,7 +159,7 @@ req_url() {
 
     if [[ ${callback_query_data[$id]} == _addvmess ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vmess Account ( User Expired ) :" \
+            --text "👤 Create User Vmess 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
@@ -1417,7 +1417,7 @@ while :; do
                         --text "$msg" \
                         --parse_mode html
                     ;;
-                'Vmess Account ( User Expired ) :')
+                '👤 Create User Vmess 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
