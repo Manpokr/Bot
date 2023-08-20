@@ -1055,7 +1055,7 @@ sta_tus() {
     	systemctl is-active --quiet server-sldns && stsdns="Running 🟢" || stsdns="Not Running 🔴"
         systemctl is-active --quiet ws-epro && stsepro="Running 🟢" || stsepro="Not Running 🔴"
 
-	    systemctl is-active --quiet xray && stsray="Running 🟢" || stsray="Not Running 🔴"
+	systemctl is-active --quiet xray && stsray="Running 🟢" || stsray="Not Running 🔴"
         systemctl is-active --quiet xray@none && stsnone="Running 🟢" || stsnone="Not Running 🔴"
         systemctl is-active --quiet xray@vless && stsvless="Running 🟢" || stsvless="Not Running 🔴"
         systemctl is-active --quiet xray@vmess && stsvmess="Running 🟢" || stsvmess="Not Running 🔴"
@@ -1074,9 +1074,9 @@ sta_tus() {
         msg+="Stunnel5          = $stsstn\n"
      	msg+="Openvpn           = $stsovpn\n"
         msg+="Crons             = $stscron\n"
-	    msg+="Vnstat            = $stsvnstat\n"
+        msg+="Vnstat            = $stsvnstat\n"
         msg+="Fail²ban          = $stsban\n"
-	    msg+="Nginx             = $stsnginx\n"
+        msg+="Nginx             = $stsnginx\n"
         msg+="Haproxy           = $stshap\n"
     	msg+="Slowdns           = $stsdns\n"
         msg+="Xray Tcp Xtls     = $stsray\n"
@@ -1094,8 +1094,8 @@ sta_tus() {
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
+	    --reply_markup "$keyboard4" \
             --parse_mode html
-            --reply_markup "$keyboard4" \
    }        
 
 unset menu1
