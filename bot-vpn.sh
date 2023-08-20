@@ -938,7 +938,7 @@ rm -rf /tmp/other.txt
 rm -rf /tmp/ipvless.txt
 msg=$(cat /tmp/vless-login)
 cekk=$(cat /tmp/vless-login | wc -l)
-if [ "$cekk" = "0" ] || [ "$cekk" = "4" ]; then
+if [ "$cekk" = "0" ] || [ "$cekk" = "6" ]; then
 ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
                 --text "⛔ No Users Online ⛔" \
                 --parse_mode html
@@ -1522,7 +1522,7 @@ while :; do
                     fi
                     ;;
                '👤 Create User Vless 👤\n\n( Username Expired ) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
+                    echo "${message_text[$id]}" >>$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "👤 Limit Quota 👤\n\n( example 1= 1Gb ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
