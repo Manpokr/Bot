@@ -757,14 +757,14 @@ create_vless() {
          SKIP=true
     fi
     }
-    
-    limit='10'
+    limit=$(cat /tmp/limit.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
        export limit_nya="Unlimited"
     fi
+    
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
@@ -1521,9 +1521,17 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                '👤 Create User Vless 👤\n\n( Username Expired ) :')
+               '👤 Create User Vless 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-                    reseller_balance
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "👤 Limit Quota 👤\n\n( example 1= 1Gb ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+                    ;;
+                '👤 Limit Quota 👤\n\n( example 1= 1Gb ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    limit=$(cut -d' ' -f3 $CAD_ARQ)
+                    echo "$limit" >>/tmp/limit.txt
+                    reseller_balance                   
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         exp=$(cut -d' ' -f2 $CAD_ARQ)
