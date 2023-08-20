@@ -709,6 +709,7 @@ EOF
 }
 
 ###############-XRAY-VLESS-ALL-############
+
 menuXray() {
     local msg
     msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Vless 🕴️\n"
@@ -720,6 +721,11 @@ menuXray() {
         --parse_mode html
 }
 
+vless_kota() {
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "Limit Quota ( ex: 1= 1Gb ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
 
 create_vless() {
     file_user=$1
@@ -1530,7 +1536,12 @@ while :; do
                             --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
-                    else
+                        else
+	            'Limit Quota ( ex: 1= 1Gb ) :')
+                        echo "${message_text[$id]}" >>$CAD_ARQ
+                        reseller_balance
+                        kota_vless $CAD_ARQ
+		    else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
                         msg="User : $user\n"
