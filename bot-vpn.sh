@@ -163,19 +163,19 @@ req_url() {
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vless Account ( User Expired ) :" \
+            --text "👤 Create User Vless 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Xtls Account ( User Expired ) :" \
+            --text "👤 Create User Xtls 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan Account ( User Expired ) :" \
+            --text "👤 Create User Trojan 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Ssh-VPN ( User Expired ) :" \
+            --text "👤 Create User ssh-VPN 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 }
@@ -242,19 +242,19 @@ link_voucher() {
 req_free() {
     if [[ ${callback_query_data[$id]} == _freevmess ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vmess Account Free ( User ) :" \
+            --text "👤 Create User Vmess free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freevless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vless Account Free ( User ) :" \
+            --text "👤 Create User Vless free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freextls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Xtls Account Free ( User ) :" \
+            --text "👤 Create User Xtls free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freetrojan ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan Account Free ( User ) :" \
+            --text "👤 Create User Trojan free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 
@@ -1445,7 +1445,7 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Vless Account ( User Expired ) :')
+                '👤 Create User Vless 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1473,7 +1473,7 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Xtls Account ( User Expired ) :')
+                '👤 Create User Xtls 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1501,7 +1501,7 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Trojan Account ( User Expired ) :')
+                '👤 Create User Trojan 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1529,25 +1529,25 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Vmess Account Free ( User ) :')
+                '👤 Create User Vmess free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vmess $CAD_ARQ
                     ;;
-                'Vless Account Free ( User ) :')
+                '👤 Create User Vless free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vless $CAD_ARQ
                     ;;
-                'Xtls Account Free ( User ) :')
+                '👤 Create User Xtls free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_xtls $CAD_ARQ
                     ;;
-                'Trojan Account Free ( User ) :')
+                '👤 Create User Trojan free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
