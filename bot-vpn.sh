@@ -953,9 +953,9 @@ rm /tmp/vmess-login
 return 0
 fi
 else
-ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-                --text "⛔ ACCESS DENIED ⛔" \
-                --parse_mode html
+ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ Access Denied ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
 return 0
 fi
 }
