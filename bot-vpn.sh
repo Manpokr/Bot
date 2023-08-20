@@ -893,9 +893,9 @@ if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
 echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
 echo -e "";
-echo -e "━━━━━━━━━━━━━━━━━━━━━" > /tmp/vless-login
-echo -e "         🟢 VLess User Login 🟢  " >> /tmp/vless-login
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" 
+echo -e "         🟢 VLess User Login 🟢 "
+echo -e "━━━━━━━━━━━━━━━━━━━━━" 
 
 for akun in "${data[@]}"
 do
