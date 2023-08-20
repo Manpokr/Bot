@@ -242,19 +242,19 @@ link_voucher() {
 req_free() {
     if [[ ${callback_query_data[$id]} == _freevmess ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vmess Account ( free ) :" \
+            --text "Vmess Account Free ( User ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freevless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vless Account ( free ) :" \
+            --text "Vless Account Free ( User ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freextls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Xtls Account ( free ) :" \
+            --text "Xtls Account Free ( User ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freetrojan ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan Account ( free ) :" \
+            --text "Trojan Account Free ( User ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 
@@ -1529,25 +1529,25 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Vmess Account ( free ) :')
+                'Vmess Account Free ( User ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vmess $CAD_ARQ
                     ;;
-                'Vless Account ( free ) :')
+                'Vless Account Free ( User ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vless $CAD_ARQ
                     ;;
-                'Xtls Account ( free ) :')
+                'Xtls Account Free ( User ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_xtls $CAD_ARQ
                     ;;
-                'Trojan Account ( free ) :')
+                'Trojan Account Free ( User ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
