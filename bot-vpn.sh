@@ -1396,7 +1396,7 @@ while :; do
                     reseller_balance
                     input_extssh $CAD_ARQ
                     ;;
-                'OVPN ( User Expired ) :')
+                'Ssh-VPN ( User Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1411,7 +1411,7 @@ while :; do
                     msg="User : $user\n"
                     msg+="<code>Expired : $exp</code>\n\n"
                     msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
-                    msg+="Click Link To Confirm OVPN Acc\n"
+                    msg+="Click Link To Confirm Ssh-VPN Account\n"
 
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "$msg" \
