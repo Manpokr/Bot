@@ -1094,7 +1094,7 @@ sta_tus() {
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
            --message_id ${callback_query_message_message_id[$id]} \
            --text "$msg" \
-           --reply_markup "$keyboard4" \
+           --reply_markup "$keyboardsts" \
            --parse_mode html
    }        
 
@@ -1116,6 +1116,14 @@ ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
 ShellBot.regHandleFunction --function freelimitReq --callback_data _freelimit
 unset keyboard1
 keyboard1="$(ShellBot.InlineKeyboardMarkup -b 'menu1')"
+
+# // Menu Back Status
+unset menusts
+menusts=''
+ShellBot.InlineKeyboardButton --button 'menusts' --line 1 --text '🔙 Back 🔙' --callback_data '_backsts'
+ShellBot.regHandleFunction --function backReq --callback_data _backsts
+unset keyboardsts
+keyboardsts="$(ShellBot.InlineKeyboardMarkup -b 'menusts')"
 
 unset menu2
 menu2=''
