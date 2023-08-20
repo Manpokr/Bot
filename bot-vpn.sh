@@ -1042,15 +1042,73 @@ restartReq() {
     fi
 }
 
+sta_tus() {
+        systemctl is-active --quiet stunnel5 && stsstn="Running 🟢" || stsstn="Not Running 🔴"
+        systemctl is-active --quiet dropbear && stsdb="Running 🟢" || stsdb="Not Running 🔴"
+        systemctl is-active --quiet cron && stscron="Running 🟢" || stscron="Not Running 🔴"
+        systemctl is-active --quiet ssh && stsssh="Running 🟢" || stssah="Not Running 🔴"
+        systemctl is-active --quiet openvpn && stsovpn="Running 🟢" || stsovpn="Not Running 🔴"
+        systemctl is-active --quiet vnstat && stsvnstat="Running 🟢" || stsvnstat="Not Running 🔴"
+        systemctl is-active --quiet fail2ban && stsban="Running 🟢" || stsban="Not Running 🔴"
+        systemctl is-active --quiet nginx && stsnginx="Running 🟢" || stsnginx="Not Running 🔴"
+        systemctl is-active --quiet haproxy && stshap="Running 🟢" || stshap="Not Running 🔴"
+    	systemctl is-active --quiet server-sldns && stsdns="Running 🟢" || stsdns="Not Running 🔴"
+        systemctl is-active --quiet ws-epro && stsepro="Running 🟢" || stsepro="Not Running 🔴"
+
+	    systemctl is-active --quiet xray && stsray="Running 🟢" || stsray="Not Running 🔴"
+        systemctl is-active --quiet xray@none && stsnone="Running 🟢" || stsnone="Not Running 🔴"
+        systemctl is-active --quiet xray@vless && stsvless="Running 🟢" || stsvless="Not Running 🔴"
+        systemctl is-active --quiet xray@vmess && stsvmess="Running 🟢" || stsvmess="Not Running 🔴"
+        systemctl is-active --quiet xray@trojan && ststrojan="Running 🟢" || ststrojan="Not Running 🔴"
+        systemctl is-active --quiet xray@ss && stsss="Running 🟢" || stsss="Not Running 🔴"
+        
+    	systemctl is-active --quiet trojan-go && ststrgo="Running 🟢" || ststrgo="Not Running 🔴"
+                
+        local msg
+        msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> WELCOME TO BOT </b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="Status Service = 🟢🔴\n\n"
+        msg+="<code>Dropbear          = $stsdb\n"
+     	msg+="Openssh           = $stsssh\n"
+        msg+="Stunnel5          = $stsstn\n"
+     	msg+="Openvpn           = $stsovpn\n"
+        msg+="Crons             = $stscron\n"
+	    msg+="Vnstat            = $stsvnstat\n"
+        msg+="Fail²ban          = $stsban\n"
+	    msg+="Nginx             = $stsnginx\n"
+        msg+="Haproxy           = $stshap\n"
+    	msg+="Slowdns           = $stsdns\n"
+        msg+="Xray Tcp Xtls     = $stsray\n"
+    	msg+="Xray None Tls     = $stsnone\n"
+        msg+="Xray Vless        = $stsvless\n"
+    	msg+="Xray Vmess        = $stsvmess\n"
+    	msg+="Xray Shadowsock22 = $stsss\n"
+        msg+="Xray Trojan       = $ststrojan\n"
+        msg+="Trojan-go         = $ststrgo\n"
+        msg+="Ssh Ws Tls        = $stsepro\n"
+        msg+="Ssh Ws None       = $stsepro\n"
+        msg+="Ovpn Ws Tls       = $stsepro\n"
+        msg+="Ovpn Ws None      = $stsepro</code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+            --reply_markup "$keyboard4" \
+   }        
+
 unset menu1
 menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Reseller •️' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Voucher Generator •️' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode •️' --callback_data '_publicMode'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Limit Free •️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
+ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
 ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
