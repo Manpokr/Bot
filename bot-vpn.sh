@@ -1043,7 +1043,7 @@ del_conf() {
       
     local msg
     msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User ( ${user} ${exp} ) Has Been Removed !\n"
+    msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
     msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -1082,7 +1082,7 @@ ext_conf() {
       
         local msg
         msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-        msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )</code>\n"
+        msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
