@@ -85,17 +85,6 @@ claimVoucher() {
         --parse_mode html
 }
 
-menuSsh() {
-    local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu SSH\n"
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]} \
-        --text "$msg" \
-        --reply_markup "$keyboard4" \
-        --parse_mode html
-}
-
 menuXray() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
@@ -445,6 +434,18 @@ reseller_balance() {
     else
         echo "admin"
     fi
+}
+
+###############-SSH-VPN-ALL-############
+menuSsh() {
+    local msg
+    msg="🕴️ Welcome ${callback_query_from_first_name} MENU SSHVPN 🕴️\n"
+ #   msg+="Menu\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard4" \
+        --parse_mode html
 }
 
 add_ssh() {
