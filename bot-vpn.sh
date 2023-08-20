@@ -1536,11 +1536,6 @@ while :; do
                             --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
-                        else
-	            'Limit Quota ( ex: 1= 1Gb ) :')
-                        echo "${message_text[$id]}" >>$CAD_ARQ
-                        reseller_balance
-                        kota_vless $CAD_ARQ
 		    else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
