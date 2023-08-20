@@ -1553,7 +1553,7 @@ while :; do
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_trojan $CAD_ARQ
                     ;;
-                'Delete Account Vless :')
+                'Del User :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_conf $CAD_ARQ
                     ;;
@@ -1563,7 +1563,7 @@ while :; do
                         --text "Extend Day :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Extend Day  :')
+                'Extend Day :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_conf $CAD_ARQ
