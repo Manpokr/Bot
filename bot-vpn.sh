@@ -253,7 +253,7 @@ req_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove Vless User 🗑\n\n( Username ) :" \
@@ -1561,10 +1561,10 @@ while :; do
                 '📅 Renew Vless User 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "📅 Extend Vless Days 📅\n\n( ex:1 ) :" \
+                        --text "📅 Extend Vless Days 📅\n\n( example: 1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                '📅 Extend Vless Days 📅\n\n( ex:1 ) :')
+                '📅 Extend Vless Days 📅\n\n( example: 1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_conf $CAD_ARQ
