@@ -261,8 +261,8 @@ req_free() {
 }
 
 req_del() {
-    cat /etc/scvpn/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /etc/scvpn/xray/user.txt | awk '{print $1}' | sort | uniq)
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -272,8 +272,8 @@ req_del() {
 }
 
 req_ext() {
-    cat /etc/scvpn/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /etc/scvpn/xray/user.txt | awk '{print $1}' | sort | uniq)
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -624,7 +624,7 @@ req_ovpn() {
 
     sed -i "/$coupon/d" /root/multi/voucher
 }
-
+    
 create_vmess() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
@@ -718,16 +718,22 @@ EOF
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
+
 create_vless() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+
     req_voucher $file_user
     req_limit
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist\n" \
+            --text "User Already Exist ⛔\n" \
             --parse_mode html
         exit 1
     fi
@@ -736,39 +742,73 @@ create_vless() {
     else
         duration=3
     fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
+    warp-nya() {
+      if [ -r /usr/local/etc/warp/warp-reg ]; then
+         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+    else
+         SKIP=true
+    fi
+    }
+    
+    limit='10'
+    if [[ $limit -gt 0 ]]; then
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
-    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
-    none=8000
-    email=${user}
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    sed -i '/#xray$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$email""'"' /etc/scvpn/xray/vless-nontls.json
-    cat /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json
-    vlesslink1="vless://$uuid@$domain:$multi?encryption=none%26security=tls%26sni=%26type=ws%26host=%26path=/xrayws#$user"
-    vlesslink2="vless://$uuid@$domain:$none?encryption=none%26security=none%26sni=%26type=ws%26host=%26path=/xrayws#$user"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${vlesslink1}
-${vlesslink2}
-EOF
-    echo ${base64Result} >"/etc/scvpn/config-url/${uuid}"
-    systemctl restart xray.service
-    systemctl restart xray@n
+    
+    sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+     sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+     sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+      sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
 
+    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
+    
+    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
+    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
+    systemctl restart xray@vless.service
+    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n"
-    msg+="Tls\n"
-    msg+="<code>$vlesslink1</code>\n"
-    msg+="\n"
-    msg+="Ntls\n"
-    msg+="<code>$vlesslink2</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
+    msg+="Subdomain    = ${domain}\n"
+    msg+="Subdomain H2 = vlh2.${domain}\n"
+    msg+="Limit Quota  = ${limit_nya}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="User Id      = ${uuid}</code>\n"
+    warp-nya
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS TLS LINK\n"
+    msg+="<code> $vlesslink1</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS LINK\n"
+    msg+="<code> $vlesslink2</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS H2 TLS LINK\n"
+    msg+="<code> $vlesslink4</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS GRPC TLS LINK\n"
+    msg+="<code> $vlesslink3</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $exp\n"
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -876,37 +916,29 @@ EOF
 del_conf() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "$user" /etc/scvpn/xray/user.txt; then
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist\n" \
             --parse_mode html
         exit 1
     fi
-    uuid="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $2}')"
-    exp="$(cat /etc/scvpn/xray/user.txt | grep -w "$user" | awk '{print $3}')"
-    cat /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/conf/vmess-nontls.json
-    cat /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/03_VLESS_WS_inbounds_tmp.json /etc/scvpn/xray/conf/03_VLESS_WS_inbounds.json
-    sed -i "/^### $user $exp/,/^},{/d" /etc/scvpn/xray/vless-nontls.json
-    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.id == "'${uuid}'"))' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq 'del(.inbounds[0].settings.clients[] | select(.password == "'${uuid}'"))' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    sed -i "/\b$user\b/d" /etc/scvpn/xray/user.txt
-    rm /etc/scvpn/config-user/${user} >/dev/null 2>&1
-    rm /etc/scvpn/config-url/${uuid} >/dev/null 2>&1
-    systemctl restart xray.service
-    systemctl restart xray@n
-    systemctl restart xray.service
-
+    user="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $2}')"
+    exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
+    
+    sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vless.json
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
+    rm -f /etc/manternet/limit/vless/quota/$user
+    rm -f /etc/manternet/limit/vless/ip/$user
+    rm -f /etc/manternet/vless/$user
+    rm -f /etc/manternet/cache/vless/$user
+    systemctl restart xray@vless.service
+      
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Delete ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
+    msg="<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp )</code>\n"
     msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
+    
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -920,30 +952,30 @@ ext_conf() {
     else
         masaaktif=30
     fi
-    if ! grep -qw "$user" /etc/scvpn/xray/user.txt; then
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist\n" \
             --parse_mode html
         exit 1
     else
-        uuid=$(grep -wE "$user" "/etc/scvpn/xray/user.txt" | awk '{print $2}')
-        exp=$(grep -wE "$user" "/etc/scvpn/xray/user.txt" | awk '{print $3}')
+        user=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $2}')
+        exp=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $3}')
         now=$(date +%Y-%m-%d)
         d1=$(date -d "$exp" +%s)
         d2=$(date -d "$now" +%s)
         exp2=$(((d1 - d2) / 86400))
         exp3=$(($exp2 + $masaaktif))
         exp4=$(date -d "$exp3 days" +"%Y-%m-%d")
-        sed -i "/$user/d" /etc/scvpn/xray/user.txt
-        echo -e "${user}\t${uuid}\t${exp4}" >>/etc/scvpn/xray/user.txt
-        systemctl restart xray.service >/dev/null 2>&1
-        systemctl restart xray@n >/dev/null 2>&1
-        systemctl restart xray.service >/dev/null 2>&1
 
+        sed -i "s/VL $user $exp/VL $user $exp4/g" /usr/local/etc/xray/user.txt
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vless.json
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vlesswarp
+
+        systemctl restart xray@vless.service
+      
         local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-        msg+="User : $user\n"
-        msg+="<code>Expired : $exp4</code>\n"
+        msg="<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )</code>\n"
         msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
