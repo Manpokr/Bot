@@ -892,56 +892,48 @@ check_vless(){
 if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
 echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
-
+echo -e "";
 echo -e "━━━━━━━━━━━━━━━━━━━━━" > /tmp/vmess-login
 echo -e "         🟢 VLess User Login 🟢  " >> /tmp/vmess-login
 echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vmess-login
 
 for akun in "${data[@]}"
 do
-if [[ -z "$akun" ]]; then
-akun="tidakada"
-fi
 
-echo -n > /tmp/ipvmess.txt
-data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep xray | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
+echo -n > /tmp/ipvless.txt
+data2=( `cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
 for ip in "${data2[@]}"
 do
 
-jum=$(cat /var/log/xray/access.log | grep -w $akun | awk '{print $3}' | cut -d: -f1 | grep -w $ip | sort | uniq)
+jum=$(cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | grep -w $akun | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -F $ip | sed 's/2402//g' | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
-echo "$jum" >> /tmp/ipvmess.txt
+echo "$jum" >> /tmp/ipvless.txt
 else
 echo "$ip" >> /tmp/other.txt
 fi
-jum2=$(cat /tmp/ipvmess.txt)
+jum2=$(cat /tmp/ipvless.txt)
 sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
 done
-
-jum=$(cat /tmp/ipvmess.txt)
-if [[ -z "$jum" ]]; then
+jum=$(cat /tmp/ipvless.txt)
+if [[ "$jum" = "$akun" ]]; then
 echo > /dev/null
 else
-jum2=$(cat /tmp/ipvmess.txt | nl)
-echo "user : $akun" >> /tmp/vmess-login
-echo "$jum2" >> /tmp/vmess-login
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vmess-login
+jum2=$(cat /tmp/ipvless.txt | nl -s " • " )
+echo -e "  User = $akun" >> /tmp/vless-login
+echo -e "$jum2" >> /tmp/vless-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
 fi
-rm -rf /tmp/ipvmess.txt
+rm -rf /tmp/ipvless.txt
 done
-
-oth=$(cat /tmp/other.txt | sort | uniq | nl)
-echo "other" >> /tmp/vmess-login
-echo "$oth" >> /tmp/vmess-login
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vmess-login
+rm -rf /tmp/ipvless.txt
 rm -rf /tmp/other.txt
-msg=$(cat /tmp/vmess-login)
-cekk=$(cat /tmp/vmess-login | wc -l)
+msg=$(cat /tmp/vless-login)
+cekk=$(cat /tmp/vless-login | wc -l)
 if [ "$cekk" = "0" ] || [ "$cekk" = "6" ]; then
 ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-                --text "⛔ NO USERS ONLINE ⛔" \
+                --text "⛔ No Users Online ⛔" \
                 --parse_mode html
-rm /tmp/vmess-login
+rm /tmp/vless-login
 return 0
 else
 ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -949,7 +941,7 @@ ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
 ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
          --text "$msg" \
          --parse_mode html
-rm /tmp/vmess-login
+rm /tmp/vless-login
 return 0
 fi
 else
