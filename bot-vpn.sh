@@ -928,7 +928,6 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tm
 fi
 rm -rf /tmp/ipvless.txt
 done
-rm -rf /tmp/ipvless.txt
 rm -rf /tmp/other.txt
 msg=$(cat /tmp/vless-login)
 cekk=$(cat /tmp/vless-login | wc -l)
