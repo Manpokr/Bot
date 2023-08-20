@@ -1091,11 +1091,11 @@ sta_tus() {
         msg+="Ovpn Ws Tls       = $stsepro\n"
         msg+="Ovpn Ws None      = $stsepro</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "$msg" \
-	    --reply_markup "$keyboard4" \
-            --parse_mode html
+        ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+           --message_id ${callback_query_message_message_id[$id]} \
+           --text "$msg" \
+           --reply_markup "$keyboard4" \
+           --parse_mode html
    }        
 
 unset menu1
