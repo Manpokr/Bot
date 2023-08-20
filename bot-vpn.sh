@@ -935,9 +935,9 @@ del_conf() {
     systemctl restart xray@vless.service
       
     local msg
-    msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>User ( ${user} ${exp} ) Has Been Removed !</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User ( ${user} ${exp} ) Has Been Removed !\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -974,9 +974,9 @@ ext_conf() {
         systemctl restart xray@vless.service
       
         local msg
-        msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )</code>\n"
-        msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
