@@ -1238,7 +1238,7 @@ ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Vmess •️
 ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Vless •️' --callback_data '_addvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Xtls •️' --callback_data '_addxtls'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Trojan •️' --callback_data '_addtrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Trojan •️' --callback_data '_trialvless'
+#ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Trojan •️' --callback_data '_trialvless'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Delete User •️' --callback_data '_delconf'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Extend User •️' --callback_data '_extconf'
 ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
@@ -1246,7 +1246,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addvmess
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function req_url --callback_data _addxtls
 ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
-ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
+#ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
 ShellBot.regHandleFunction --function req_del --callback_data _delconf
 ShellBot.regHandleFunction --function req_ext --callback_data _extconf
 ShellBot.regHandleFunction --function backReq --callback_data _back2
@@ -1557,13 +1557,13 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_conf $CAD_ARQ
                     ;;
-                'Renew Account Vless :')
+                'Extend User :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "Extend Day :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Renew Account Vless :')
+                'Extend Day  :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_conf $CAD_ARQ
