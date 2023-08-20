@@ -270,7 +270,7 @@ req_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL" | awk '{print $2,$3}' | column -t | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "<b>      🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "<b> 🔸    DELETE ACCOUNT VLESS  🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Delete User Vless =" \
@@ -281,7 +281,7 @@ req_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL" | awk '{print $2,$3}' | column -t | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "<b>     🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "<b>🔸    RENEW USER VLESS    🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Renew User Vless =" \
@@ -759,7 +759,7 @@ create_vless() {
 del_vless() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ⛔\n" \
             --parse_mode html
@@ -796,7 +796,7 @@ renew_vless() {
     else
         masaaktif=30
     fi
-    if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ⛔\n" \
             --parse_mode html
@@ -1472,7 +1472,7 @@ while :; do
                 'Extend User :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Extend Day :" \
+                        --text "Renew Vless ( Days ) =" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
                 'Extend Day :')
