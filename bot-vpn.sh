@@ -278,7 +278,7 @@ req_ext() {
         --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Renew Vless User :" \
+        --text "Extend Vless User :" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
@@ -1563,7 +1563,7 @@ while :; do
                         --text "Extend Day :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Renew Vless Day :')
+                'Extend Vless Day :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_conf $CAD_ARQ
