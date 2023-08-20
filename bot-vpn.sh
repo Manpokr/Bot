@@ -439,7 +439,7 @@ reseller_balance() {
 ###############-SSH-VPN-ALL-############
 menuSsh() {
     local msg
-    msg="🕴️ Welcome ${callback_query_from_first_name} MENU SSHVPN 🕴️\n"
+    msg="🕴️ Welcome ${callback_query_from_first_name} Menu ssh-vpn 🕴️\n"
  #   msg+="Menu\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
@@ -1062,7 +1062,7 @@ ext_conf() {
     fi
     if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist\n" \
+            --text "HeyUser does not exist\n" \
             --parse_mode html
         exit 1
     else
