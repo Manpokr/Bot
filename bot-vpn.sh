@@ -1560,7 +1560,7 @@ while :; do
                 'Renew Vless User :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Extend Day :" \
+                        --text "Extend Vless Day :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
                 'Extend Vless Day :')
