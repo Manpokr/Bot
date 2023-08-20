@@ -29,7 +29,7 @@ msg_welcome() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "❌Access Deny❌\n\nThis Is Your Id: <code>${message_from_id}</code>\n" \
+            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${message_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -56,7 +56,7 @@ backReq() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
-            --text "❌Access Deny❌\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -124,11 +124,11 @@ publicReq() {
         echo "on" >/root/multi/public
         echo "" >/root/multi/claimed
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "✅ Public Mode Is On, Limit Is $limituser ✅"
+            --text "✅ Public Mode Is Online, Limit Is $limituser ✅"
     else
         echo "off" >/root/multi/public
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "❌ Public Mode Is OFf,Limit Is $limituser ❌"
+            --text "⛔ Public Mode Is Offline,Limit Is $limituser ⛔"
     fi
 }
 
@@ -159,23 +159,23 @@ req_url() {
 
     if [[ ${callback_query_data[$id]} == _addvmess ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vmess (USER EXPIRED) :" \
+            --text "Vmess Account ( User Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vless (USER EXPIRED) :" \
+            --text "Vless Account ( User Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Xtls (USER EXPIRED) :" \
+            --text "Xtls Account ( User Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan (USER EXPIRED) :" \
+            --text "Trojan Account ( User Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "OVPN (USER EXPIRED) :" \
+            --text "Ssh-VPN ( User Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 }
@@ -242,19 +242,19 @@ link_voucher() {
 req_free() {
     if [[ ${callback_query_data[$id]} == _freevmess ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vmess(free) :" \
+            --text "Vmess Account ( free ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freevless ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Vless(free) :" \
+            --text "Vless Account ( free ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freextls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Xtls(free) :" \
+            --text "Xtls Account ( free ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _freetrojan ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "Trojan(free) :" \
+            --text "Trojan Account ( free ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 
@@ -1396,7 +1396,7 @@ while :; do
                     reseller_balance
                     input_extssh $CAD_ARQ
                     ;;
-                'OVPN (USER EXPIRED) :')
+                'OVPN ( User Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1417,7 +1417,7 @@ while :; do
                         --text "$msg" \
                         --parse_mode html
                     ;;
-                'Vmess ( User Expired ) :')
+                'Vmess Account ( User Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1427,9 +1427,9 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
+                            --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
                     else
@@ -1457,7 +1457,7 @@ while :; do
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
+                            --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
                     else
@@ -1501,7 +1501,7 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Trojan ( User Expired ) :')
+                'Trojan Account ( User Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1529,25 +1529,25 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-                'Vmess ( free account ) :')
+                'Vmess Account ( free ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vmess $CAD_ARQ
                     ;;
-                'Vless ( free account ) :')
+                'Vless Account ( free ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_vless $CAD_ARQ
                     ;;
-                'Xtls ( free account ) :')
+                'Xtls Account ( free ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_xtls $CAD_ARQ
                     ;;
-                'Trojan ( free account ) :')
+                'Trojan Account ( free ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
