@@ -900,7 +900,7 @@ echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
 echo -e "";
 echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
-echo -e "         🟢 VLess User Login 🟢 " >> /tmp/vless-login
+echo -e "         🟢gg Vless User Login 🟢 " >> /tmp/vless-login
 echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
 
 for akun in "${data[@]}"
@@ -938,7 +938,7 @@ rm -rf /tmp/other.txt
 rm -rf /tmp/ipvless.txt
 msg=$(cat /tmp/vless-login)
 cekk=$(cat /tmp/vless-login | wc -l)
-if [ "$cekk" = "0" ] || [ "$cekk" = "6" ]; then
+if [ "$cekk" = "0" ] || [ "$cekk" = "5" ]; then
 ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
                 --text "⛔ No Users Online ⛔" \
                 --parse_mode html
