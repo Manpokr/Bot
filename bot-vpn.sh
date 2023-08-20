@@ -264,10 +264,10 @@ req_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s ' • ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Del ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Delete Vless User :" \
+        --text "🗑 Remove Vless User 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -275,10 +275,10 @@ req_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | column -t | nl -s ' • ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Renew Vless User :" \
+        --text "📅 Renew Vless User 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
@@ -1553,17 +1553,17 @@ while :; do
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_trojan $CAD_ARQ
                     ;;
-                'Delete Vless User :')
+                '🗑 Remove Vless User 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_conf $CAD_ARQ
                     ;;
-                'Renew Vless User :')
+                '📅 Renew Vless User 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Extend Vless Day :" \
+                        --text "📅 Extend Vless Days 📅\n\n( ex:1 ):" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Extend Vless Day :')
+                '📅 Extend Vless Days 📅\n\n( ex:1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_conf $CAD_ARQ
