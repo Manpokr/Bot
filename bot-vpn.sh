@@ -844,7 +844,7 @@ del_vmess() {
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -883,7 +883,7 @@ ext_vmess() {
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
-        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -1175,6 +1175,12 @@ vless_ext() {
 
 }
 
+trial_vl() {
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "👤 Create Vless Trial 👤\n\n( Enter ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
+
 vless_kota() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Limit Quota ( ex: 1= 1Gb ) :" \
@@ -1310,7 +1316,7 @@ ext_vless() {
         local msg
         msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
-        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -1342,7 +1348,7 @@ del_vless() {
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -1530,7 +1536,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function vless_del --callback_data _delconfvless
 ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvless
 ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
-ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
+ShellBot.regHandleFunction --function trial_vl --callback_data _trialvless
 ShellBot.regHandleFunction --function back_ser --callback_data _backvless
 unset keyboardvl
 keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
@@ -1540,8 +1546,7 @@ keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
 
 menu_xtls() {
     local msg
-    msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Xtls 🕴️\n"
-  #  msg+="Menu SSH\n"
+    msg="🕴️ Menu Xray Xtls 🕴️\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -1887,8 +1892,7 @@ keyboardxt="$(ShellBot.InlineKeyboardMarkup -b 'menuxt')"
 
 menu_trojan() {
     local msg
-    msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Trojan 🕴️\n"
-  #  msg+="Menu SSH\n"
+    msg="🕴️ Menu Xray Trojan 🕴️\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -1923,11 +1927,16 @@ create_trojan() {
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+
     req_voucher $file_user
     req_limit
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+    if grep -E "^TR $user" /etc/scvpn/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist\n" \
+            --text "User Already Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -1936,26 +1945,66 @@ create_trojan() {
     else
         duration=3
     fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
+    limit='0'
+    if [[ $limit -gt 0 ]]; then
+        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
+        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+        export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
-    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
-    email=${user}
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"password": "'${uuid}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    tro="trojan://$uuid@$domain:$multi?sni=#$user"
     
-    systemctl restart xray
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n"
-    msg+="Trojan\n"
-    msg+="<code>$tro</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+    # // TR WS TLS
+    sed -i '/#trojanws$/a\### '"$user $exp"'\
+      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
 
+    # // TR GRPC
+    sed -i '/#trojangrpc$/a\### '"$user $exp"'\
+      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+
+    echo -e "TR $user $exp" >> /usr/local/etc/xray/user.txt;
+
+    trojanlink1="trojan://${uuid}@${domain}:${xtls1}?type=ws%26security=tls%26path=%2Ftrojan%26sni=bug.com#${user}";
+    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com&security=none%26type=ws%26path=%2Ftrojan-none#${user}";
+    trojanlink3="trojan://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=trojan-grpc%26sni=bug.com#${user}";
+    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%252Ftrojan-h2%26sni=bug.com#${user}";
+ 
+    systemctl restart xray@trojan.service
+      
+    local msg
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
+    msg+="Subdomain    = ${domain}\n"
+    msg+="Subdomain H2 = vlh2.${domain}\n"
+    msg+="Limit Quota  = ${limit_nya}\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="Password     = ${uuid}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN WS TLS LINK\n"
+    msg+="<code> $trojanlink1</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN WS LINK\n"
+    msg+="<code> $trojanlink2</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN H2 TLS LINK\n"
+    msg+="<code> $trojanlink4</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN GRPC TLS LINK\n"
+    msg+="<code> $trojanlink3</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $exp\n"
+    
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -1970,9 +2019,9 @@ ext_trojan() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist !\n" \
+            --text "User does not exist ❗❗\n" \
             --parse_mode html
         exit 1
     else
@@ -1985,16 +2034,15 @@ ext_trojan() {
         exp3=$(($exp2 + $masaaktif))
         exp4=$(date -d "$exp3 days" +"%Y-%m-%d")
 
-        sed -i "s/VL $user $exp/VL $user $exp4/g" /usr/local/etc/xray/user.txt
-        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vless.json
-        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vlesswarp
+        sed -i "s/TR $user $exp/TR $user $exp4/g" /usr/local/etc/xray/user.txt
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/trojan.json
 
-        systemctl restart xray@vless.service
+        systemctl restart xray@trojan.service
       
         local msg
-        msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER TROJAN 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
-        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -2005,9 +2053,9 @@ ext_trojan() {
 del_trojan() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist !\n" \
+            --text "User does not exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -2015,18 +2063,18 @@ del_trojan() {
     exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
     
     sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
-    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vless.json
-    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
-    rm -f /etc/manternet/limit/vless/quota/$user
-    rm -f /etc/manternet/limit/vless/ip/$user
-    rm -f /etc/manternet/vless/$user
-    rm -f /etc/manternet/cache/vless/$user
-    systemctl restart xray@vless.service
-      
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/trojan.json
+    rm -f /etc/manternet/limit/trojan/quota/$user
+    rm -f /etc/manternet/limit/trojan/ip/$user
+    rm -f /etc/manternet/trojan/$user
+    rm -f /etc/manternet/cache/trojan/$user
+
+    systemctl restart xray@trojan.service
+
     local msg
-    msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER TROJAN 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -2104,24 +2152,21 @@ fi
 trial_trojan() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
-    t_time=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    exp1=1
+    hariini=`date -d "0 days" +"%Y-%m-%d"`
+    exp=`date -d "$exp1 days" +"%Y-%m-%d"`
+    exp1=`date -d "$masaaktif days" +"%d-%m-%Y"` 
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+ 
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    [[ -z $t_time ]] && {
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "$(echo -e "⛔ Error Try Again")" \
-            --parse_mode html
-        return 0
-        _erro='1'
-    }
+    
     req_voucher $file_user
     req_limit
-    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ⛔\n" \
             --parse_mode html
@@ -2132,14 +2177,6 @@ trial_trojan() {
     else
         duration=3
     fi
-    warp-nya() {
-      if [ -r /usr/local/etc/warp/warp-reg ]; then
-         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
-    else
-         SKIP=true
-    fi
-    }
-    
     limit='10'
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
@@ -2153,25 +2190,25 @@ trial_trojan() {
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
     
-    sed -i '/#vless$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-     sed -i '/#vless$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
-     sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-      sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+    # // TR WS TLS
+    sed -i '/#trojanws$/a\### '"$user $exp"'\
+      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
 
-    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
-    
-    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
-    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
-    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
-    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
-    systemctl restart xray@vless.service
-    
+    # // TR GRPC
+    sed -i '/#trojangrpc$/a\### '"$user $exp"'\
+      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+
+    echo -e "TR $user $exp" >> /usr/local/etc/xray/user.txt;
+
+    trojanlink1="trojan://${uuid}@${domain}:${xtls1}?type=ws%26security=tls%26path=%2Ftrojan%26sni=bug.com#${user}";
+    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com&security=none%26type=ws%26path=%2Ftrojan-none#${user}";
+    trojanlink3="trojan://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=trojan-grpc%26sni=bug.com#${user}";
+    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%252Ftrojan-h2%26sni=bug.com#${user}";
+ 
+    systemctl restart xray@trojan.service
+      
     local msg
-    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -2180,27 +2217,26 @@ trial_trojan() {
     msg+="Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
-    msg+="User Id      = ${uuid}</code>\n"
-    warp-nya
+    msg+="Password     = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS TLS LINK\n"
-    msg+="<code> $vlesslink1</code>\n"
+    msg+="TROJAN WS TLS LINK\n"
+    msg+="<code> $trojanlink1</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS LINK\n"
-    msg+="<code> $vlesslink2</code>\n"
+    msg+="TROJAN WS LINK\n"
+    msg+="<code> $trojanlink2</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS H2 TLS LINK\n"
-    msg+="<code> $vlesslink4</code>\n"
+    msg+="TROJAN H2 TLS LINK\n"
+    msg+="<code> $trojanlink4</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS GRPC TLS LINK\n"
-    msg+="<code> $vlesslink3</code>\n"
+    msg+="TROJAN GRPC TLS LINK\n"
+    msg+="<code> $trojanlink3</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $t_time\n"
-
+    msg+="Expired On    = $exp\n"
+    
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -2749,6 +2785,11 @@ while :; do
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_trojan $CAD_ARQ
+                    ;;
+		'👤 Create Vless Trial 👤\n\n( Enter ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    trial_vless $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
