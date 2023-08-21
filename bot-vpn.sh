@@ -729,8 +729,10 @@ vless_kota() {
 
 create_vless() {
     file_user=$1
+    limit=$(sed -n '3 p' $file_user | cut -d' ' -f1)
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    coupon1=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -757,7 +759,7 @@ create_vless() {
          SKIP=true
     fi
     }
-    limit=$(cat /tmp/limit.txt)
+    #limit=$(cat /tmp/limit.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -795,7 +797,7 @@ create_vless() {
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
     msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port None    = ${none}\n"
+    msg+="Port None    = ${none} $coupon1 $limit\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
@@ -900,7 +902,7 @@ echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
 echo -e "";
 echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
-echo -e "         🟢gg Vless User Login 🟢 " >> /tmp/vless-login
+echo -e "         🟢 Vless User Login 🟢 " >> /tmp/vless-login
 echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
 
 for akun in "${data[@]}"
@@ -938,7 +940,7 @@ rm -rf /tmp/other.txt
 rm -rf /tmp/ipvless.txt
 msg=$(cat /tmp/vless-login)
 cekk=$(cat /tmp/vless-login | wc -l)
-if [ "$cekk" = "0" ] || [ "$cekk" = "6" ]; then
+if [ "$cekk" = "0" ] || [ "$cekk" = "3" ]; then
 ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
                 --text "⛔ No Users Online ⛔" \
                 --parse_mode html
