@@ -2201,7 +2201,7 @@ sta_tus() {
 
 unset menu1
 menu1=''
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
+#ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuser'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
 #ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
@@ -2209,7 +2209,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Reseller •
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Voucher Generator •️' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode •️' --callback_data '_publicMode'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Limit Free •️' --callback_data '_freelimit'
-ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
+#ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
