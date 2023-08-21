@@ -662,10 +662,15 @@ create_vmess() {
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+
     req_voucher $file_user
     req_limit
 
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -676,70 +681,119 @@ create_vmess() {
     else
         duration=3
     fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
 
-
-    
-    cat >/etc/scvpn/xray/$user-tls.json <<EOF
-      {
-       "v": "2",
-       "ps": "${user}",
-       "add": "${domain}",
-       "port": "${multi}",
-       "id": "${uuid}",
-       "aid": "0",
-       "scy": "auto",
-       "net": "ws",
-       "type": "none",
-       "host": "${BUG}",
-       "path": "/xrayvws",
-       "tls": "tls",
-       "sni": "${BUG}"
+    cat > /usr/local/etc/xray/$user-tls.json << EOF
+            {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "${xtls1}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/vmess",
+      "type": "none",
+      "host": "bug.com",
+      "tls": "tls"
 }
 EOF
 
-    cat >/etc/scvpn/xray/$user-none.json <<EOF
+cat > /usr/local/etc/xray/$user-none.json << EOF
       {
       "v": "2",
       "ps": "${user}",
       "add": "${domain}",
-      "port": "${none}",
+      "port": "${none1}",
       "id": "${uuid}",
       "aid": "0",
       "net": "ws",
-      "path": "/xrayws",
+      "path": "/vmess-none",
       "type": "none",
-      "host": "",
+      "host": "bug.com",
       "tls": "none"
 }
 EOF
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    cat /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","alterId": 0,"add": "'${domain}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/05_VMess_WS_inbounds_tmp.json /etc/scvpn/xray/conf/05_VMess_WS_inbounds.json
-    sed -i '/#xray$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$email""'"' /etc/scvpn/xray/conf/vmess-nontls.json
-    vmess_base641=$(base64 -w 0 <<<$vmess_json1)
-    vmess_base642=$(base64 -w 0 <<<$vmess_json2)
-    vmesslink1="vmess://$(base64 -w 0 /etc/scvpn/xray/$user-tls.json)"
-    vmesslink2="vmess://$(base64 -w 0 /etc/scvpn/xray/$user-none.json)"
-    
-    base64Result=$(base64 -w 0 /etc/scvpn/config-user/${user})
-    echo ${base64Result} >"/etc/scvpn/config-url/${uuid}"
-    systemctl restart xray.service
+
+cat > /usr/local/etc/xray/$user-grpc.json << EOF
+      {
+      "v": "0",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "${xtls1}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "grpc",
+      "path": "vmess-grpc",
+      "type": "none",
+      "host": "bug.com",
+      "tls": "tls"
+}
+EOF
+
+cat > /usr/local/etc/xray/$user-h2.json << EOF
+            {
+      "v": "2",
+      "ps": "${user}",
+      "add": "vmh2.${domain}",
+      "port": "${xtls1}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "h2",
+      "path": "/vmess-h2",
+      "type": "none",
+      "host": "bug.com",
+      "tls": "tls"
+}
+EOF
+    echo -e "VM $user $exp" >> /usr/local/etc/xray/user.txt
+
+    vmess_base641=$( base64 -w 0 <<< $vmess_json1);
+    vmess_base642=$( base64 -w 0 <<< $vmess_json2);
+    vmess_base643=$( base64 -w 0 <<< $vmess_json3);
+    vmess_base644=$( base64 -w 0 <<< $vmess_json4);
+
+    vmesslink1="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-tls.json)";
+    vmesslink2="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-none.json)";
+    vmesslink3="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-grpc.json)";
+    vmesslink4="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-h2.json)";
+
+    systemctl restart xray@vmess.service
 
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Vmess ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n"
-    msg+="Tls\n"
-    msg+="<code>$vmesslink1</code>\n"
-    msg+="\n"
-    msg+="Ntls\n"
-    msg+="<code>$vmesslink2</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = ${ip_nya}\n"
+    msg+="Subdomain    = ${domain}\n"
+    msg+="Subdomain H2 = vmh2.${domain}\n"
+    msg+="Limit Quota  = ${limit_nya}\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Alter Id     = 0\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="User Id      = ${uuid}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VMESS WS TLS LINK\n"
+    msg+="<code> $vmesslink1</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VMESS WS LINK\n"
+    msg+="<code> $vmesslink2</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VMESS H2 TLS LINK\n"
+    msg+="<code> $vmesslink4</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VMESS GRPC TLS LINK\n"
+    msg+="<code> $vmesslink3</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $exp\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
