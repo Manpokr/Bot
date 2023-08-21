@@ -681,11 +681,26 @@ create_vmess() {
     else
         duration=3
     fi
+    limit='0'
+    if [[ $limit -gt 0 ]]; then
+    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
+
+    # VM WS TLS 
+    sed -i '/#vmess$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
+
+    # VM GRPC
+    sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
     cat > /usr/local/etc/xray/$user-tls.json << EOF
             {
@@ -961,7 +976,7 @@ trial_vmess() {
 
     req_voucher $file_user
     req_limit
-    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -972,10 +987,25 @@ trial_vmess() {
     else
         duration=3
     fi
+    limit='0'
+    if [[ $limit -gt 0 ]]; then
+    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
+
+    # VM WS TLS 
+    sed -i '/#vmess$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
+
+    # VM GRPC
+    sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
     cat > /usr/local/etc/xray/$user-tls.json << EOF
             {
