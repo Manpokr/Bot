@@ -987,7 +987,7 @@ trial_vmess() {
     else
         duration=3
     fi
-    limit='0'
+    limit='10'
     if [[ $limit -gt 0 ]]; then
     echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
