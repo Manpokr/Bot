@@ -614,7 +614,43 @@ req_ovpn() {
 
     sed -i "/$coupon/d" /root/multi/voucher
 }
-    
+
+##################-VMESS-ALL-MENU-#######
+
+menu_vmess() {
+    local msg
+    msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Vmess 🕴️\n"
+  #  msg+="Menu SSH\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard2" \
+        --parse_mode html
+}
+
+vmess_del() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "🗑 Remove Vmess User 🗑\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
+
+vmess_ext() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "📅 Renew Vmess User 📅\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+
+}
+
 create_vmess() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
@@ -707,6 +743,24 @@ EOF
         --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
 }
+
+unset menu2
+menu2=''
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Vmess' --callback_data '_addvmess'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Vmess' --callback_data '_delconfvmess'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Vmess' --callback_data '_extconfvmess'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Vmess' --callback_data '_cekvmess'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Vmess' --callback_data '_trialvmess'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_backvmess'
+ShellBot.regHandleFunction --function req_url --callback_data _addvmess
+ShellBot.regHandleFunction --function vmess_del --callback_data _delconfvmess
+ShellBot.regHandleFunction --function vmess_ext --callback_data _extconfvmess
+ShellBot.regHandleFunction --function check_vmessaaa --callback_data _cekvmess
+ShellBot.regHandleFunction --function trial_vmess --callback_data _trialvmess
+ShellBot.regHandleFunction --function backReq --callback_data _backtrojan
+unset keyboard2
+keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+
 
 ###############-XRAY-VLESS-ALL-############
 
@@ -1069,6 +1123,60 @@ trial_vless() {
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
+unset menu2
+menu2=''
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Vless' --callback_data '_addvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Vless' --callback_data '_delconfvl'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Vless' --callback_data '_extconfvl'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Vless' --callback_data '_addtrojan'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Vless' --callback_data '_trialvless'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
+ShellBot.regHandleFunction --function req_url --callback_data _addvless
+ShellBot.regHandleFunction --function vless_del --callback_data _delconfvl
+ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvl
+ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
+ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
+ShellBot.regHandleFunction --function backReq --callback_data _back2
+unset keyboard2
+keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+
+
+##################-XTLS-ALL-MENU-#######
+
+menu_xtls() {
+    local msg
+    msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Xtls 🕴️\n"
+  #  msg+="Menu SSH\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard2" \
+        --parse_mode html
+}
+
+xtls_del() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "🗑 Remove Vmess User 🗑\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
+
+xtls_ext() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "📅 Renew Xtls User 📅\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+
+}
+
 create_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
@@ -1121,6 +1229,126 @@ EOF
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
+check_xtls(){
+if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
+echo -n > /tmp/other.txt
+data=( `cat /usr/local/etc/xray/user.txt | grep 'XTLS' | cut -d ' ' -f 2 | sort | uniq`);
+echo -e "";
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/xtls-login
+echo -e "         🟢 Xtls User Login 🟢 " >> /tmp/xtls-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/xtls-login
+
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+
+echo -n > /tmp/ipxtls.txt
+data2=( `cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+
+jum=$(cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | grep -w $akun | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -F $ip | sed 's/2402//g' | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipxtls.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/ipxtls.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+done
+jum=$(cat /tmp/ipxtls.txt)
+if [[ -z "$jum" ]]; then
+echo > /dev/null
+else
+jum2=$(cat /tmp/ipxtls.txt | nl -s " • " )
+echo -e "  User = $akun" >> /tmp/xtls-login
+echo -e "$jum2" >> /tmp/xtls-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/xtls-login
+fi
+rm -rf /tmp/ipxtls.txt
+done
+rm -rf /tmp/other.txt
+rm -rf /tmp/ipxtls.txt
+msg=$(cat /tmp/xtls-login)
+cekk=$(cat /tmp/xtls-login | wc -l)
+if [ "$cekk" = "0" ] || [ "$cekk" = "3" ]; then
+ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ No Users Online ⛔" \
+                --parse_mode html
+rm /tmp/xtls-login
+return 0
+else
+ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+         --text "$msg" \
+         --parse_mode html
+rm /tmp/xtls-login
+return 0
+fi
+else
+ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ Access Denied ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+return 0
+fi
+}
+
+unset menu2
+menu2=''
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Xtls' --callback_data '_addxtls'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Xtls' --callback_data '_delconfxt'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Xtls' --callback_data '_extconfxt'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Xtls' --callback_data '_cekxtls'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Xtls' --callback_data '_trialxtls'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
+ShellBot.regHandleFunction --function req_url --callback_data _addxtls
+ShellBot.regHandleFunction --function xtls_del --callback_data _delconfxt
+ShellBot.regHandleFunction --function xtls_ext --callback_data _extconfxt
+ShellBot.regHandleFunction --function check_xtls --callback_data _cekxtls
+ShellBot.regHandleFunction --function trial_xtls --callback_data _trialxtls
+ShellBot.regHandleFunction --function backReq --callback_data _back2
+unset keyboard2
+keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+
+
+##################-TROJAN-ALL-MENU-#######
+
+menu_trojan() {
+    local msg
+    msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Vmess 🕴️\n"
+  #  msg+="Menu SSH\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboard2" \
+        --parse_mode html
+}
+
+trojan_del() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "🗑 Remove Trojan User 🗑\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
+
+trojan_ext() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "📅 Renew Trojan User 📅\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+
+}
 create_trojan() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
@@ -1166,6 +1394,92 @@ EOF
         --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
 }
+
+check_trojan(){
+"${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
+echo -n > /tmp/other.txt
+data=( `cat /usr/local/etc/xray/user.txt | grep 'TR' | cut -d ' ' -f 2 | sort | uniq`);
+echo -e "";
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/trojan-login
+echo -e "         🟢 Xtls User Login 🟢 " >> /tmp/trojan-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/trojan-login
+
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+
+echo -n > /tmp/iptrojan.txt
+data2=( `cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+
+jum=$(cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | grep -w $akun | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -F $ip | sed 's/2402//g' | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/iptrojan.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/iptrojan.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+done
+jum=$(cat /tmp/iptrojan.txt)
+if [[ -z "$jum" ]]; then
+echo > /dev/null
+else
+jum2=$(cat /tmp/iptrojan.txt | nl -s " • " )
+echo -e "  User = $akun" >> /tmp/trojan-login
+echo -e "$jum2" >> /tmp/trojan-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/trojan-login
+fi
+rm -rf /tmp/iptrojan.txt
+done
+rm -rf /tmp/other.txt
+rm -rf /tmp/iptrojan.txt
+msg=$(cat /tmp/trojan-login)
+cekk=$(cat /tmp/trojan-login | wc -l)
+if [ "$cekk" = "0" ] || [ "$cekk" = "3" ]; then
+ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ No Users Online ⛔" \
+                --parse_mode html
+rm /tmp/trojan-login
+return 0
+else
+ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+         --text "$msg" \
+         --parse_mode html
+rm /tmp/trojan-login
+return 0
+fi
+else
+ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ Access Denied ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+return 0
+fi
+}
+
+unset menu2
+menu2=''
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Trojan' --callback_data '_addtrojan'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Trojan' --callback_data '_delconftrojan'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Trojan' --callback_data '_extconftrojan'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Trojan' --callback_data '_cektrojan'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Trojan' --callback_data '_trialtrojan'
+ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_backtrojan'
+ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
+ShellBot.regHandleFunction --function trojan_del --callback_data _delconftrojan
+ShellBot.regHandleFunction --function trojan_ext --callback_data _extconftrojan
+ShellBot.regHandleFunction --function check_trojan --callback_data _cektrojan
+ShellBot.regHandleFunction --function trial_trojan --callback_data _trialtrojan
+ShellBot.regHandleFunction --function backReq --callback_data _backtrojan
+unset keyboard2
+keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+
+
 
 start_req() {
     file_user=$1
