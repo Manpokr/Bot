@@ -61,6 +61,24 @@ backReq() {
     fi
 }
 
+back_ser() {
+    oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
+    if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
+        local msg
+        msg="⏭️ Menu Service ⏮️\n"
+        ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+            --message_id ${callback_query_message_message_id[$id]} \
+            --text "$msg" \
+            --reply_markup "$keyboardxr" \
+            --parse_mode html
+    else
+        ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+    fi
+}
+
+
 freeReq() {
     if [ "$(cat /root/multi/public)" == "on" ]; then
         local msg
@@ -987,7 +1005,7 @@ ShellBot.regHandleFunction --function vmess_del --callback_data _delconfvmess
 ShellBot.regHandleFunction --function vmess_ext --callback_data _extconfvmess
 ShellBot.regHandleFunction --function check_vmess --callback_data _cekvmess
 ShellBot.regHandleFunction --function trial_vmess --callback_data _trialvmess
-ShellBot.regHandleFunction --function backReq --callback_data _backvmess
+ShellBot.regHandleFunction --function back_ser --callback_data _backvmess
 unset keyboardvm
 keyboardvm="$(ShellBot.InlineKeyboardMarkup -b 'menuvm')"
 
@@ -1389,7 +1407,7 @@ ShellBot.regHandleFunction --function vless_del --callback_data _delconfvless
 ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvless
 ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
 ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
-ShellBot.regHandleFunction --function backReq --callback_data _backvless
+ShellBot.regHandleFunction --function back_ser --callback_data _backvless
 unset keyboardvl
 keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
 
@@ -1736,7 +1754,7 @@ ShellBot.regHandleFunction --function xtls_del --callback_data _delconfxtls
 ShellBot.regHandleFunction --function xtls_ext --callback_data _extconfxtls
 ShellBot.regHandleFunction --function check_xtls --callback_data _cekxtls
 ShellBot.regHandleFunction --function trial_xtls --callback_data _trialxtls
-ShellBot.regHandleFunction --function backReq --callback_data _backxtls
+ShellBot.regHandleFunction --function back_ser --callback_data _backxtls
 unset keyboardxt
 keyboardxt="$(ShellBot.InlineKeyboardMarkup -b 'menuxt')"
 
@@ -2079,7 +2097,7 @@ ShellBot.regHandleFunction --function trojan_del --callback_data _delconftrojan
 ShellBot.regHandleFunction --function trojan_ext --callback_data _extconftrojan
 ShellBot.regHandleFunction --function check_trojan --callback_data _cektrojan
 ShellBot.regHandleFunction --function trial_trojan --callback_data _trialtrojan
-ShellBot.regHandleFunction --function backReq --callback_data _backtrojan
+ShellBot.regHandleFunction --function back_ser --callback_data _backtrojan
 unset keyboardtr
 keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
 
