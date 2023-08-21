@@ -1523,15 +1523,9 @@ while :; do
                             --parse_mode html
                     fi
                     ;;
-               '👤 Create User Vless 👤\n\n( Username Expired ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ		    
-                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "👤 Limit Quota 👤\n\n( example 1= 1Gb ) :" \
-                        --reply_markup "$(ShellBot.ForceReply)"
-                    ;;
-                '👤 Limit Quota 👤\n\n( example 1= 1Gb ) :')
-		   echo "${message_text[$id]}" >>$CAD_ARQ              
-                    reseller_balance                   
+                '👤 Create User Vless 👤\n\n( Username Expired ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -1539,24 +1533,24 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+                    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ⛔\n" \
                             --parse_mode html
                         exit 1
-		    else
+                    else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
                         msg="User : $user\n"
                         msg+="<code>Expired : $exp</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
-                        msg+="Click Link To Confirm Vless Acc\n"
+                        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
+                        msg+="Click Link To Confirm Vmess Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
                             --parse_mode html
                     fi
-                    ;;
+                    ;;                    
                 '👤 Create User Xtls 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
