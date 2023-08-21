@@ -85,6 +85,17 @@ claimVoucher() {
         --parse_mode html
 }
 
+menu_ser() {
+    local msg
+    msg="Welcome ${callback_query_from_first_name}\n"
+    msg+="⏭️ Menu Service ⏮️\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboardxr" \
+        --parse_mode html
+}
+
 menuRes() {
     local msg
     msg="Welcome ${callback_query_from_first_name}\n"
@@ -235,29 +246,6 @@ req_free() {
             --text "👤 Create User Trojan free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
-
-}
-
-req_del() {
-    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
-        --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "🗑 Remove Vless User 🗑\n\n( Username ) :" \
-        --reply_markup "$(ShellBot.ForceReply)"
-}
-
-req_ext() {
-    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
-        --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📅 Renew Vless User 📅\n\n( Username ) :" \
-        --reply_markup "$(ShellBot.ForceReply)"
 
 }
 
@@ -426,7 +414,7 @@ reseller_balance() {
 }
 
 ###############-SSH-VPN-ALL-############
-menuSsh() {
+menu_ssh() {
     local msg
     msg="🕴️ Welcome ${callback_query_from_first_name} Menu ssh-vpn 🕴️\n"
  #   msg+="Menu\n"
@@ -624,7 +612,7 @@ menu_vmess() {
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard2" \
+        --reply_markup "$keyboardvm" \
         --parse_mode html
 }
 
@@ -1006,14 +994,14 @@ keyboardvm="$(ShellBot.InlineKeyboardMarkup -b 'menuvm')"
 
 ###############-XRAY-VLESS-ALL-############
 
-menuXray() {
+menu_vless() {
     local msg
     msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Vless 🕴️\n"
   #  msg+="Menu SSH\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard2" \
+        --reply_markup "$keyboardvl" \
         --parse_mode html
 }
 
@@ -1403,7 +1391,7 @@ ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
 ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
 ShellBot.regHandleFunction --function backReq --callback_data _backvless
 unset keyboardvl
-keyboardv="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
+keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
 
 
 ##################-XTLS-ALL-MENU-#######
@@ -1415,7 +1403,7 @@ menu_xtls() {
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard2" \
+        --reply_markup "$keyboardxt" \
         --parse_mode html
 }
 
@@ -1762,7 +1750,7 @@ menu_trojan() {
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
-        --reply_markup "$keyboard2" \
+        --reply_markup "$keyboardtr" \
         --parse_mode html
 }
 
@@ -2214,7 +2202,7 @@ sta_tus() {
 unset menu1
 menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuxray'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuser'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
 #ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Reseller •️' --callback_data '_resellerMenu'
@@ -2223,7 +2211,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode 
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Limit Free •️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
 ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
-ShellBot.regHandleFunction --function menuXray --callback_data _menuxray
+ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
@@ -2239,8 +2227,8 @@ ShellBot.regHandleFunction --function backReq --callback_data _backsts
 unset keyboardsts
 keyboardsts="$(ShellBot.InlineKeyboardMarkup -b 'menusts')"
 
-unset menu2
-menu2=''
+unset menuxr
+menuxr=''
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'Menu Vless' --callback_data '_menuvless'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'Menu Vmess' --callback_data '_menuvmess'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'Menu Trojan' --callback_data '_menutrojan'
@@ -2252,7 +2240,7 @@ ShellBot.regHandleFunction --function menu_trojan --callback_data _menutrojan
 ShellBot.regHandleFunction --function menu_xtls --callback_data _menuxtls
 ShellBot.regHandleFunction --function backReq --callback_data _backxray
 unset keyboardxr
-keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menuxr')"
+keyboardxr="$(ShellBot.InlineKeyboardMarkup -b 'menuxr')"
 
 unset menu3
 menu3=''
@@ -2287,9 +2275,16 @@ keyboard4="$(ShellBot.InlineKeyboardMarkup -b 'menu4')"
 unset menu5
 menu5=''
 ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu SSH •️' --callback_data '_menussh5'
-ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray5'
-ShellBot.regHandleFunction --function menuSsh --callback_data _menussh5
-ShellBot.regHandleFunction --function menuXray --callback_data _menuxray5
+ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu Vless •️' --callback_data '_menuvless5'
+ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu Vmess •️' --callback_data '_menuvmess5'
+ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu Trojan •️' --callback_data '_menutrojan5'
+ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text '• Menu Xtls •️' --callback_data '_menuxtls5'
+ShellBot.regHandleFunction --function menu_ssh --callback_data _menussh5
+ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless5
+ShellBot.regHandleFunction --function menu_vmess --callback_data _menuvmess5
+ShellBot.regHandleFunction --function menu_trojan --callback_data _menutrojan5
+ShellBot.regHandleFunction --function menu_xtls --callback_data _menuxtls5
+
 unset keyboard5
 keyboard5="$(ShellBot.InlineKeyboardMarkup -b 'menu5')"
 
