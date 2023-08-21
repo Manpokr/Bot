@@ -792,11 +792,11 @@ create_vless() {
     
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>Remarks      = $user\n"
+    msg+="<code>Remarks      =<code>$(awk -F " " '/user/ {print $2}' $CAD_ARQ)</code>\n $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
+    msg+="Limit Quota  =  <code>$(awk -F " " '/limit/ {print $2}' $CAD_ARQ)</code>\n"
     msg+="Port None    = ${none} $coupon1 $limit\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
@@ -1524,15 +1524,17 @@ while :; do
                     fi
                     ;;
                '👤 Create User Vless 👤\n\n( Username Expired ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ
+                  #  echo "${message_text[$id]}" >>$CAD_ARQ
+		    echo "user ${message_text[$id]}" >>$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "👤 Limit Quota 👤\n\n( example 1= 1Gb ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
                 '👤 Limit Quota 👤\n\n( example 1= 1Gb ) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-		    limit=$(cut -d' ' -f3 $CAD_ARQ)
-                    echo "$limit" >>/tmp/limit.txt
+		   echo "limit: ${message_text[$id]}" >>$CAD_ARQ
+               #     echo "${message_text[$id]}" >$CAD_ARQ
+		#    limit=$(cut -d' ' -f3 $CAD_ARQ)
+                 #   echo "$limit" >>/tmp/limit.txt
                     reseller_balance                   
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
