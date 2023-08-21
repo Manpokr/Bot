@@ -1,4 +1,7 @@
- #!/bin/bash
+#!/bin/bash
+# // Exporting maklumat rangkaian
+source /root/ip-detail.txt;
+export ip_nya="$IP";
 
 source /etc/.maAsiss/.Shellbtsss
 get_Token=$(sed -n '1 p' /root/ResBotAuth | cut -d' ' -f2)
@@ -626,7 +629,6 @@ req_ovpn() {
 menu_vmess() {
     local msg
     msg="🕴️ Menu Xray Vmess 🕴️\n"
-  #  msg+="Menu SSH\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -798,15 +800,19 @@ EOF
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS TLS LINK\n"
     msg+="<code> $vmesslink1</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS LINK\n"
     msg+="<code> $vmesslink2</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS H2 TLS LINK\n"
     msg+="<code> $vmesslink4</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS GRPC TLS LINK\n"
     msg+="<code> $vmesslink3</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
 
@@ -842,7 +848,7 @@ del_vmess() {
     systemctl restart xray@vmess.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
@@ -881,7 +887,7 @@ ext_vmess() {
         systemctl restart xray@vmess.service
       
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
@@ -976,7 +982,7 @@ trial_vmess() {
 
     req_voucher $file_user
     req_limit
-    if grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
+    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1103,15 +1109,19 @@ EOF
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS TLS LINK\n"
     msg+="<code> $vmesslink1</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS LINK\n"
     msg+="<code> $vmesslink2</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS H2 TLS LINK\n"
     msg+="<code> $vmesslink4</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS GRPC TLS LINK\n"
     msg+="<code> $vmesslink3</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
 
@@ -1199,7 +1209,7 @@ create_vless() {
 
     req_voucher $file_user
     req_limit
-    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1266,15 +1276,19 @@ create_vless() {
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS TLS LINK\n"
     msg+="<code> $vlesslink1</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS LINK\n"
     msg+="<code> $vlesslink2</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS H2 TLS LINK\n"
     msg+="<code> $vlesslink4</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS GRPC TLS LINK\n"
     msg+="<code> $vlesslink3</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
 
@@ -1314,7 +1328,7 @@ ext_vless() {
         systemctl restart xray@vless.service
       
         local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -1346,7 +1360,7 @@ del_vless() {
     systemctl restart xray@vless.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
@@ -1439,7 +1453,7 @@ trial_vless() {
 
     req_voucher $file_user
     req_limit
-    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1506,15 +1520,19 @@ trial_vless() {
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS TLS LINK\n"
     msg+="<code> $vlesslink1</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS LINK\n"
     msg+="<code> $vlesslink2</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS H2 TLS LINK\n"
     msg+="<code> $vlesslink4</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS GRPC TLS LINK\n"
     msg+="<code> $vlesslink3</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp1\n"
 
@@ -1587,7 +1605,7 @@ create_xtls() {
 
     req_voucher $file_user
     req_limit
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+    if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1700,7 +1718,7 @@ ext_xtls() {
     else
         masaaktif=30
     fi
-    if ! grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ❗❗\n" \
             --parse_mode html
@@ -1721,7 +1739,7 @@ ext_xtls() {
         systemctl restart xray.service   
 	
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER XTLS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER XTLS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )<\code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
      
@@ -1754,7 +1772,7 @@ del_xtls() {
     systemctl restart xray.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed !</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -1844,7 +1862,7 @@ trial_xtls() {
   
     req_voucher $file_user
     req_limit
-    if grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
+    if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -2065,15 +2083,19 @@ create_trojan() {
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS TLS LINK\n"
     msg+="<code> $trojanlink1</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS LINK\n"
     msg+="<code> $trojanlink2</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN H2 TLS LINK\n"
     msg+="<code> $trojanlink4</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN GRPC TLS LINK\n"
     msg+="<code> $trojanlink3</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
     
@@ -2112,7 +2134,7 @@ ext_trojan() {
         systemctl restart xray@trojan.service
       
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER TROJAN 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER TROJAN 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -2144,7 +2166,7 @@ del_trojan() {
     systemctl restart xray@trojan.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER TROJAN 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER TROJAN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
@@ -2238,7 +2260,7 @@ trial_trojan() {
     
     req_voucher $file_user
     req_limit
-    if grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
+    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ⛔\n" \
             --parse_mode html
@@ -2297,15 +2319,19 @@ trial_trojan() {
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS TLS LINK\n"
     msg+="<code> $trojanlink1</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS LINK\n"
     msg+="<code> $trojanlink2</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN H2 TLS LINK\n"
     msg+="<code> $trojanlink4</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN GRPC TLS LINK\n"
     msg+="<code> $trojanlink3</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
     
@@ -2700,7 +2726,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+                    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
@@ -2708,10 +2734,10 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
+                        msg="<code>User     = $user\n"
+                        msg+="Expired = $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
-                        msg+="Click Link To Confirm Vmess Acc\n"
+                        msg+="Click Link To Confirm Vless Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
@@ -2728,7 +2754,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
@@ -2736,8 +2762,8 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
+                        msg="<code>User    = $user\n"
+                        msg+="Expired = $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Xtls Acc\n"
 
@@ -2756,7 +2782,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist p❗❗\n" \
                             --parse_mode html
@@ -2764,8 +2790,8 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
+                        msg="<code>User    = $user\n"
+                        msg+="Expired = $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Trojan Acc\n"
 
