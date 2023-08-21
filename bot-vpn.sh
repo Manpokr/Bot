@@ -718,10 +718,7 @@ EOF
     vmess_base642=$(base64 -w 0 <<<$vmess_json2)
     vmesslink1="vmess://$(base64 -w 0 /etc/scvpn/xray/$user-tls.json)"
     vmesslink2="vmess://$(base64 -w 0 /etc/scvpn/xray/$user-none.json)"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${vmesslink1}
-${vmesslink2}
-EOF
+    
     base64Result=$(base64 -w 0 /etc/scvpn/config-user/${user})
     echo ${base64Result} >"/etc/scvpn/config-url/${uuid}"
     systemctl restart xray.service
@@ -744,22 +741,267 @@ EOF
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
-unset menu2
-menu2=''
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Vmess' --callback_data '_addvmess'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Vmess' --callback_data '_delconfvmess'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Vmess' --callback_data '_extconfvmess'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Vmess' --callback_data '_cekvmess'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Vmess' --callback_data '_trialvmess'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_backvmess'
+del_conf() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User does not exist !\n" \
+            --parse_mode html
+        exit 1
+    fi
+    user="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $2}')"
+    exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
+    
+    sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vless.json
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
+    rm -f /etc/manternet/limit/vless/quota/$user
+    rm -f /etc/manternet/limit/vless/ip/$user
+    rm -f /etc/manternet/vless/$user
+    rm -f /etc/manternet/cache/vless/$user
+    systemctl restart xray@vless.service
+      
+    local msg
+    msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+}
+
+
+ext_conf() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+        masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
+    else
+        masaaktif=30
+    fi
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User does not exist !\n" \
+            --parse_mode html
+        exit 1
+    else
+        user=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $2}')
+        exp=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $3}')
+        now=$(date +%Y-%m-%d)
+        d1=$(date -d "$exp" +%s)
+        d2=$(date -d "$now" +%s)
+        exp2=$(((d1 - d2) / 86400))
+        exp3=$(($exp2 + $masaaktif))
+        exp4=$(date -d "$exp3 days" +"%Y-%m-%d")
+
+        sed -i "s/VL $user $exp/VL $user $exp4/g" /usr/local/etc/xray/user.txt
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vless.json
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vlesswarp
+
+        systemctl restart xray@vless.service
+      
+        local msg
+        msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
+        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+    fi
+}
+
+check_vmess(){
+if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
+echo -n > /tmp/other.txt
+data=( `cat /usr/local/etc/xray/user.txt | grep 'VL' | cut -d ' ' -f 2 | sort | uniq`);
+echo -e "";
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
+echo -e "         🟢 Vless User Login 🟢 " >> /tmp/vless-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
+
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+
+echo -n > /tmp/ipvless.txt
+data2=( `cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+
+jum=$(cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | grep -w $akun | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -F $ip | sed 's/2402//g' | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipvless.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/ipvless.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+done
+jum=$(cat /tmp/ipvless.txt)
+if [[ -z "$jum" ]]; then
+echo > /dev/null
+else
+jum2=$(cat /tmp/ipvless.txt | nl -s " • " )
+echo -e "  User = $akun" >> /tmp/vless-login
+echo -e "$jum2" >> /tmp/vless-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
+fi
+rm -rf /tmp/ipvless.txt
+done
+rm -rf /tmp/other.txt
+rm -rf /tmp/ipvless.txt
+msg=$(cat /tmp/vless-login)
+cekk=$(cat /tmp/vless-login | wc -l)
+if [ "$cekk" = "0" ] || [ "$cekk" = "3" ]; then
+ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ No Users Online ⛔" \
+                --parse_mode html
+rm /tmp/vless-login
+return 0
+else
+ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+         --text "$msg" \
+         --parse_mode html
+rm /tmp/vless-login
+return 0
+fi
+else
+ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ Access Denied ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+return 0
+fi
+}
+
+trial_vmess() {
+    file_user=$1
+    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
+    t_time=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    [[ -z $t_time ]] && {
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$(echo -e "⛔ Error Try Again")" \
+            --parse_mode html
+        return 0
+        _erro='1'
+    }
+    req_voucher $file_user
+    req_limit
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Already Exist ⛔\n" \
+            --parse_mode html
+        exit 1
+    fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=3
+    fi
+    warp-nya() {
+      if [ -r /usr/local/etc/warp/warp-reg ]; then
+         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+    else
+         SKIP=true
+    fi
+    }
+    
+    limit='10'
+    if [[ $limit -gt 0 ]]; then
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
+    exp=$(date -d +${duration}days +%Y-%m-%d)
+    
+    sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+     sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+     sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+      sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+
+    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
+    
+    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
+    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
+    systemctl restart xray@vless.service
+    
+    local msg
+    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
+    msg+="Subdomain    = ${domain}\n"
+    msg+="Subdomain H2 = vlh2.${domain}\n"
+    msg+="Limit Quota  = ${limit_nya}\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="User Id      = ${uuid}</code>\n"
+    warp-nya
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS TLS LINK\n"
+    msg+="<code> $vlesslink1</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS LINK\n"
+    msg+="<code> $vlesslink2</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS H2 TLS LINK\n"
+    msg+="<code> $vlesslink4</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS GRPC TLS LINK\n"
+    msg+="<code> $vlesslink3</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $t_time\n"
+
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+        sed -i "/$coupon/d" /root/multi/voucher
+}
+
+unset menuvm
+menuvm=''
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 1 --text 'Create Account Vmess' --callback_data '_addvmess'
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 1 --text 'Delete Account Vmess' --callback_data '_delconfvmess'
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 2 --text 'Renew Account Vmess' --callback_data '_extconfvmess'
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 2 --text 'Check Account Vmess' --callback_data '_cekvmess'
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 3 --text 'Trial Account Vmess' --callback_data '_trialvmess'
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 4 --text '🔙 Back 🔙' --callback_data '_backvmess'
 ShellBot.regHandleFunction --function req_url --callback_data _addvmess
 ShellBot.regHandleFunction --function vmess_del --callback_data _delconfvmess
 ShellBot.regHandleFunction --function vmess_ext --callback_data _extconfvmess
 ShellBot.regHandleFunction --function check_vmessaaa --callback_data _cekvmess
 ShellBot.regHandleFunction --function trial_vmess --callback_data _trialvmess
-ShellBot.regHandleFunction --function backReq --callback_data _backtrojan
-unset keyboard2
-keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+ShellBot.regHandleFunction --function backReq --callback_data _backvmess
+unset keyboardvm
+keyboardvm="$(ShellBot.InlineKeyboardMarkup -b 'menuvm')"
 
 
 ###############-XRAY-VLESS-ALL-############
@@ -1123,22 +1365,22 @@ trial_vless() {
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
-unset menu2
-menu2=''
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Vless' --callback_data '_addvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Vless' --callback_data '_delconfvl'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Vless' --callback_data '_extconfvl'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Vless' --callback_data '_addtrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Vless' --callback_data '_trialvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
+unset menuvl
+menuvl=''
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 1 --text 'Create Account Vless' --callback_data '_addvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 1 --text 'Delete Account Vless' --callback_data '_delconfvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 2 --text 'Renew Account Vless' --callback_data '_extconfvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 2 --text 'Check Account Vless' --callback_data '_cekvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 3 --text 'Trial Account Vless' --callback_data '_trialvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 4 --text '🔙 Back 🔙' --callback_data '_backvless'
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
-ShellBot.regHandleFunction --function vless_del --callback_data _delconfvl
-ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvl
+ShellBot.regHandleFunction --function vless_del --callback_data _delconfvless
+ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvless
 ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
 ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
-ShellBot.regHandleFunction --function backReq --callback_data _back2
-unset keyboard2
-keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+ShellBot.regHandleFunction --function backReq --callback_data _backvless
+unset keyboardvl
+keyboardv="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
 
 
 ##################-XTLS-ALL-MENU-#######
@@ -1205,10 +1447,7 @@ create_xtls() {
     mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
     splice="vless://$uuid@$domain:$multi?flow=xtls-rprx-splice%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
     direct="vless://$uuid@$domain:$multi?flow=xtls-rprx-direct%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${splice}
-${direct}
-EOF
+    
     systemctl restart xray
 
     local msg
@@ -1227,6 +1466,77 @@ EOF
         --text "$msg" \
         --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
+}
+
+ext_conf() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+        masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
+    else
+        masaaktif=30
+    fi
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User does not exist !\n" \
+            --parse_mode html
+        exit 1
+    else
+        user=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $2}')
+        exp=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $3}')
+        now=$(date +%Y-%m-%d)
+        d1=$(date -d "$exp" +%s)
+        d2=$(date -d "$now" +%s)
+        exp2=$(((d1 - d2) / 86400))
+        exp3=$(($exp2 + $masaaktif))
+        exp4=$(date -d "$exp3 days" +"%Y-%m-%d")
+
+        sed -i "s/VL $user $exp/VL $user $exp4/g" /usr/local/etc/xray/user.txt
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vless.json
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vlesswarp
+
+        systemctl restart xray@vless.service
+      
+        local msg
+        msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
+        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+    fi
+}
+
+del_conf() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User does not exist !\n" \
+            --parse_mode html
+        exit 1
+    fi
+    user="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $2}')"
+    exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
+    
+    sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vless.json
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
+    rm -f /etc/manternet/limit/vless/quota/$user
+    rm -f /etc/manternet/limit/vless/ip/$user
+    rm -f /etc/manternet/vless/$user
+    rm -f /etc/manternet/cache/vless/$user
+    systemctl restart xray@vless.service
+      
+    local msg
+    msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
 }
 
 check_xtls(){
@@ -1296,29 +1606,135 @@ return 0
 fi
 }
 
-unset menu2
-menu2=''
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Xtls' --callback_data '_addxtls'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Xtls' --callback_data '_delconfxt'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Xtls' --callback_data '_extconfxt'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Xtls' --callback_data '_cekxtls'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Xtls' --callback_data '_trialxtls'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
+trial_xtls() {
+    file_user=$1
+    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
+    t_time=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    [[ -z $t_time ]] && {
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$(echo -e "⛔ Error Try Again")" \
+            --parse_mode html
+        return 0
+        _erro='1'
+    }
+    req_voucher $file_user
+    req_limit
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Already Exist ⛔\n" \
+            --parse_mode html
+        exit 1
+    fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=3
+    fi
+    warp-nya() {
+      if [ -r /usr/local/etc/warp/warp-reg ]; then
+         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+    else
+         SKIP=true
+    fi
+    }
+    
+    limit='10'
+    if [[ $limit -gt 0 ]]; then
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
+    exp=$(date -d +${duration}days +%Y-%m-%d)
+    
+    sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+     sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+     sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+      sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+
+    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
+    
+    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
+    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
+    systemctl restart xray@vless.service
+    
+    local msg
+    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
+    msg+="Subdomain    = ${domain}\n"
+    msg+="Subdomain H2 = vlh2.${domain}\n"
+    msg+="Limit Quota  = ${limit_nya}\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="User Id      = ${uuid}</code>\n"
+    warp-nya
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS TLS LINK\n"
+    msg+="<code> $vlesslink1</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS LINK\n"
+    msg+="<code> $vlesslink2</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS H2 TLS LINK\n"
+    msg+="<code> $vlesslink4</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS GRPC TLS LINK\n"
+    msg+="<code> $vlesslink3</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $t_time\n"
+
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+        sed -i "/$coupon/d" /root/multi/voucher
+}
+
+unset menuxt
+menuxt=''
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 1 --text 'Create Account Xtls' --callback_data '_addxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 1 --text 'Delete Account Xtls' --callback_data '_delconfxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 2 --text 'Renew Account Xtls' --callback_data '_extconfxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 2 --text 'Check Account Xtls' --callback_data '_cekxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 3 --text 'Trial Account Xtls' --callback_data '_trialxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 4 --text '🔙 Back 🔙' --callback_data '_backxtls'
 ShellBot.regHandleFunction --function req_url --callback_data _addxtls
-ShellBot.regHandleFunction --function xtls_del --callback_data _delconfxt
-ShellBot.regHandleFunction --function xtls_ext --callback_data _extconfxt
+ShellBot.regHandleFunction --function xtls_del --callback_data _delconfxtls
+ShellBot.regHandleFunction --function xtls_ext --callback_data _extconfxtls
 ShellBot.regHandleFunction --function check_xtls --callback_data _cekxtls
 ShellBot.regHandleFunction --function trial_xtls --callback_data _trialxtls
-ShellBot.regHandleFunction --function backReq --callback_data _back2
-unset keyboard2
-keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+ShellBot.regHandleFunction --function backReq --callback_data _backxtls
+unset keyboardxt
+keyboardxt="$(ShellBot.InlineKeyboardMarkup -b 'menuxt')"
 
 
 ##################-TROJAN-ALL-MENU-#######
 
 menu_trojan() {
     local msg
-    msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Vmess 🕴️\n"
+    msg="🕴️ Welcome ${callback_query_from_first_name} Menu Xray Trojan 🕴️\n"
   #  msg+="Menu SSH\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
@@ -1376,9 +1792,7 @@ create_trojan() {
     cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"password": "'${uuid}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
     mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
     tro="trojan://$uuid@$domain:$multi?sni=#$user"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${tro}
-EOF
+    
     systemctl restart xray
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
@@ -1394,6 +1808,78 @@ EOF
         --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
 }
+
+ext_conf() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+        masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
+    else
+        masaaktif=30
+    fi
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User does not exist !\n" \
+            --parse_mode html
+        exit 1
+    else
+        user=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $2}')
+        exp=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $3}')
+        now=$(date +%Y-%m-%d)
+        d1=$(date -d "$exp" +%s)
+        d2=$(date -d "$now" +%s)
+        exp2=$(((d1 - d2) / 86400))
+        exp3=$(($exp2 + $masaaktif))
+        exp4=$(date -d "$exp3 days" +"%Y-%m-%d")
+
+        sed -i "s/VL $user $exp/VL $user $exp4/g" /usr/local/etc/xray/user.txt
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vless.json
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vlesswarp
+
+        systemctl restart xray@vless.service
+      
+        local msg
+        msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
+        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+    fi
+}
+
+del_conf() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User does not exist !\n" \
+            --parse_mode html
+        exit 1
+    fi
+    user="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $2}')"
+    exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
+    
+    sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vless.json
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
+    rm -f /etc/manternet/limit/vless/quota/$user
+    rm -f /etc/manternet/limit/vless/ip/$user
+    rm -f /etc/manternet/vless/$user
+    rm -f /etc/manternet/cache/vless/$user
+    systemctl restart xray@vless.service
+      
+    local msg
+    msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+}
+
 
 check_trojan(){
 "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
@@ -1462,22 +1948,129 @@ return 0
 fi
 }
 
-unset menu2
-menu2=''
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Create Account Trojan' --callback_data '_addtrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text 'Delete Account Trojan' --callback_data '_delconftrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Renew Account Trojan' --callback_data '_extconftrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Check Account Trojan' --callback_data '_cektrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text 'Trial Account Trojan' --callback_data '_trialtrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_backtrojan'
+trial_trojan() {
+    file_user=$1
+    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
+    t_time=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    [[ -z $t_time ]] && {
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$(echo -e "⛔ Error Try Again")" \
+            --parse_mode html
+        return 0
+        _erro='1'
+    }
+    req_voucher $file_user
+    req_limit
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Already Exist ⛔\n" \
+            --parse_mode html
+        exit 1
+    fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=3
+    fi
+    warp-nya() {
+      if [ -r /usr/local/etc/warp/warp-reg ]; then
+         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
+    else
+         SKIP=true
+    fi
+    }
+    
+    limit='10'
+    if [[ $limit -gt 0 ]]; then
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
+    exp=$(date -d +${duration}days +%Y-%m-%d)
+    
+    sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+     sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+     sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+      sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+
+    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
+    
+    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
+    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
+    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
+    systemctl restart xray@vless.service
+    
+    local msg
+    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
+    msg+="Subdomain    = ${domain}\n"
+    msg+="Subdomain H2 = vlh2.${domain}\n"
+    msg+="Limit Quota  = ${limit_nya}\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="User Id      = ${uuid}</code>\n"
+    warp-nya
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS TLS LINK\n"
+    msg+="<code> $vlesslink1</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS WS LINK\n"
+    msg+="<code> $vlesslink2</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS H2 TLS LINK\n"
+    msg+="<code> $vlesslink4</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS GRPC TLS LINK\n"
+    msg+="<code> $vlesslink3</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $t_time\n"
+
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+        sed -i "/$coupon/d" /root/multi/voucher
+}
+
+
+unset menutr
+menutr=''
+ShellBot.InlineKeyboardButton --button 'menutr' --line 1 --text 'Create Account Trojan' --callback_data '_addtrojan'
+ShellBot.InlineKeyboardButton --button 'menutr' --line 1 --text 'Delete Account Trojan' --callback_data '_delconftrojan'
+ShellBot.InlineKeyboardButton --button 'menutr' --line 2 --text 'Renew Account Trojan' --callback_data '_extconftrojan'
+ShellBot.InlineKeyboardButton --button 'menutr' --line 2 --text 'Check Account Trojan' --callback_data '_cektrojan'
+ShellBot.InlineKeyboardButton --button 'menutr' --line 3 --text 'Trial Account Trojan' --callback_data '_trialtrojan'
+ShellBot.InlineKeyboardButton --button 'menutr' --line 4 --text '🔙 Back 🔙' --callback_data '_backtrojan'
 ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
 ShellBot.regHandleFunction --function trojan_del --callback_data _delconftrojan
 ShellBot.regHandleFunction --function trojan_ext --callback_data _extconftrojan
 ShellBot.regHandleFunction --function check_trojan --callback_data _cektrojan
 ShellBot.regHandleFunction --function trial_trojan --callback_data _trialtrojan
 ShellBot.regHandleFunction --function backReq --callback_data _backtrojan
-unset keyboard2
-keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+unset keyboardtr
+keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
 
 
 
