@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 source /etc/.maAsiss/.Shellbtsss
 get_Token=$(sed -n '1 p' /root/ResBotAuth | cut -d' ' -f2)
@@ -1582,11 +1582,14 @@ create_xtls() {
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+
     req_voucher $file_user
     req_limit
     if grep -qw "$user" /etc/scvpn/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist\n" \
+            --text "User Already Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -1595,30 +1598,93 @@ create_xtls() {
     else
         duration=3
     fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
+    limit='0'
+    if [[ $limit -gt 0 ]]; then
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
-    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
-    email=${user}
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","add": "'${domain}'","flow": "xtls-rprx-direct","email": "'${email}'"}]' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
-    splice="vless://$uuid@$domain:$multi?flow=xtls-rprx-splice%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
-    direct="vless://$uuid@$domain:$multi?flow=xtls-rprx-direct%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
     
-    systemctl restart xray
+    cat > /usr/local/etc/xray/$user-tcp.json << EOF
+      {
+      "v": "0",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "${xtls1}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "tcp",
+      "path": "/vmesstcp",
+      "type": "http",
+      "host": "bug.com",
+      "tls": "tls"
+}
+EOF
 
+    # // VL XTLS
+    sed -i '/#xtls$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    # // TR TCP TLS
+    sed -i '/#trojanws$/a\### '"$user $exp"'\
+      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    # // VM TCP HTTP TLS
+    sed -i '/#vmess$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    # // VL TCP HTTP TLS
+    sed -i '/#vless$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    echo -e "XTLS $user $exp" >> /usr/local/etc/xray/user.txt;
+
+    # // Link
+    vmess_base641=$( base64 -w 0 <<< $vmess_json1);
+
+    vmesslink1="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-tcp.json)";
+    vlesslink2="vless://${uuid}@${domain}:${xtls1}?security=tls%26encryption=none%26headerType=none%26type=tcp%26flow=xtls-rprx-vision%26sni=bug.com#${user}"
+    trojanlink3="trojan://${uuid}@${domain}:${xtls1}?type=tcp%26flow=xtls-rprx-direct%26sni=bug.com#${user}"
+    vlesslink4="vless://${uuid}@${domain}:${xtls1}?security=tls%26encryption=none%26type=tcp%26headerType=http%26path=/vlesstcp%26sni=bug.com%26host=bug.com#${user}"
+
+    systemctl restart xray.service    
+    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Remarks            = $user\n"
+    msg+="Myip               = $ip_nya\n"
+    msg+="Subdomain          = ${domain}\n"    
+    msg+="Limit Quota        = ${limit_nya}\n"
+    msg+="Port Tls           = ${xtls}\n"
+    msg+="Password & User Id = ${uuid}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS TCP TLS VISION LINK\n"
+    msg+="<code> $vlesslink2</code>\n"
     msg+="\n"
-    msg+="Splice\n"
-    msg+="<code>$splice</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VLESS TCP HTTP TLS LINK\n"
+    msg+="<code> $vlesslink4</code>\n"
     msg+="\n"
-    msg+="Direct\n"
-    msg+="<code>$direct</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="VMESS TCP HTTP TLS LINK\n"
+    msg+="<code> $vmesslink1</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN TCP TLS LINK\n"
+    msg+="<code> $trojanlink3</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $exp\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -1634,9 +1700,9 @@ ext_xtls() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist !\n" \
+            --text "User does not exist ❗❗\n" \
             --parse_mode html
         exit 1
     else
@@ -1649,17 +1715,16 @@ ext_xtls() {
         exp3=$(($exp2 + $masaaktif))
         exp4=$(date -d "$exp3 days" +"%Y-%m-%d")
 
-        sed -i "s/VL $user $exp/VL $user $exp4/g" /usr/local/etc/xray/user.txt
-        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vless.json
-        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/vlesswarp
+        sed -i "s/XTLS $user $exp/XTLS $user $exp4/g" /usr/local/etc/xray/user.txt
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/config.json
 
-        systemctl restart xray@vless.service
-      
+        systemctl restart xray.service   
+	
         local msg
-        msg="<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-        msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
-        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
-
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER XTLS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )<\code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+     
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
@@ -1669,9 +1734,9 @@ ext_xtls() {
 del_xtls() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist !\n" \
+            --text "User does not exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -1679,19 +1744,20 @@ del_xtls() {
     exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
     
     sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
-    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vless.json
-    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vlesswarp
-    rm -f /etc/manternet/limit/vless/quota/$user
-    rm -f /etc/manternet/limit/vless/ip/$user
-    rm -f /etc/manternet/vless/$user
-    rm -f /etc/manternet/cache/vless/$user
-    systemctl restart xray@vless.service
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/config.json
+    rm -f /usr/local/etc/xray/$user-tcp.json;
+    rm -f /etc/manternet/limit/xtls/quota/$user
+    rm -f /etc/manternet/limit/xtls/ip/$user
+    rm -f /etc/manternet/xtls/$user
+    rm -f /etc/manternet/cache/xtls/$user
+
+    systemctl restart xray.service
       
     local msg
-    msg="<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
-    
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>User ( ${user} ${exp} ) Has Been Removed !</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -1767,26 +1833,20 @@ fi
 trial_xtls() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
-    t_time=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    exp1=1
+    hariini=`date -d "0 days" +"%Y-%m-%d"`
+    exp=`date -d "$exp1 days" +"%Y-%m-%d"`
+    exp1=`date -d "$masaaktif days" +"%d-%m-%Y"` 
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
-    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    [[ -z $t_time ]] && {
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "$(echo -e "⛔ Error Try Again")" \
-            --parse_mode html
-        return 0
-        _erro='1'
-    }
+  
     req_voucher $file_user
     req_limit
-    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist ⛔\n" \
+            --text "User Already Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -1795,74 +1855,86 @@ trial_xtls() {
     else
         duration=3
     fi
-    warp-nya() {
-      if [ -r /usr/local/etc/warp/warp-reg ]; then
-         msg+="<code>Vless Warp   = Cloudflare Ip</code>\n"
-    else
-         SKIP=true
-    fi
-    }
-    
-    limit='10'
-    if [[ $limit -gt 0 ]]; then
-       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
-    else
-       export limit_nya="Unlimited"
-    fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
     
-    sed -i '/#vless$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-     sed -i '/#vless$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
-     sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-      sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+    cat > /usr/local/etc/xray/$user-tcp.json << EOF
+      {
+      "v": "0",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "${xtls1}",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "tcp",
+      "path": "/vmesstcp",
+      "type": "http",
+      "host": "bug.com",
+      "tls": "tls"
+}
+EOF
 
-    echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
-    
-    vlesslink1="vless://${uuid}@${domain}:${xtls1}?path=%2Fvless%26security=tls%26encryption=none%26type=ws%26sni=bug.com#${userna}"
-    vlesslink2="vless://${uuid}@${domain}:${none1}?path=%2Fvless-none%26encryption=none%26type=ws%26sni=bug.com#${userna}"
-    vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${userna}"
-    vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${userna}"
-    systemctl restart xray@vless.service
+    # // VL XTLS
+    sed -i '/#xtls$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    # // TR TCP TLS
+    sed -i '/#trojanws$/a\### '"$user $exp"'\
+      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    # // VM TCP HTTP TLS
+    sed -i '/#vmess$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    # // VL TCP HTTP TLS
+    sed -i '/#vless$/a\### '"$user $exp"'\
+      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+
+    echo -e "XTLS $user $exp" >> /usr/local/etc/xray/user.txt;
+
+    # // Link
+    vmess_base641=$( base64 -w 0 <<< $vmess_json1);
+
+    vmesslink1="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-tcp.json)";
+    vlesslink2="vless://${uuid}@${domain}:${xtls1}?security=tls%26encryption=none%26headerType=none%26type=tcp%26flow=xtls-rprx-vision%26sni=bug.com#${user}"
+    trojanlink3="trojan://${uuid}@${domain}:${xtls1}?type=tcp%26flow=xtls-rprx-direct%26sni=bug.com#${user}"
+    vlesslink4="vless://${uuid}@${domain}:${xtls1}?security=tls%26encryption=none%26type=tcp%26headerType=http%26path=/vlesstcp%26sni=bug.com%26host=bug.com#${user}"
+
+    systemctl restart xray.service    
     
     local msg
-    msg="<b>  🔸 VLESS ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>Remarks      = $user\n"
-    msg+="Myip         = $ip_nya\n"
-    msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port Tls     = ${xtls}\n"
-    msg+="Port None    = ${none}\n"
-    msg+="Grpc Type    = Gun %26 Multi\n"
-    msg+="User Id      = ${uuid}</code>\n"
-    warp-nya
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Remarks            = $user\n"
+    msg+="Myip               = $ip_nya\n"
+    msg+="Subdomain          = ${domain}\n"    
+    msg+="Limit Quota        = ${limit_nya}\n"
+    msg+="Port Tls           = ${xtls}\n"
+    msg+="Password & User Id = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS TLS LINK\n"
-    msg+="<code> $vlesslink1</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS WS LINK\n"
+    msg+="VLESS TCP TLS VISION LINK\n"
     msg+="<code> $vlesslink2</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS H2 TLS LINK\n"
+    msg+="VLESS TCP HTTP TLS LINK\n"
     msg+="<code> $vlesslink4</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="VLESS GRPC TLS LINK\n"
-    msg+="<code> $vlesslink3</code>\n"
+    msg+="VMESS TCP HTTP TLS LINK\n"
+    msg+="<code> $vmesslink1</code>\n"
+    msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $t_time\n"
+    msg+="TROJAN TCP TLS LINK\n"
+    msg+="<code> $trojanlink3</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Expired On    = $exp\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -2602,7 +2674,7 @@ while :; do
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist ⛔\n" \
+                            --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
                     else
@@ -2630,7 +2702,7 @@ while :; do
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist ⛔\n" \
+                            --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
                     else
@@ -2658,7 +2730,7 @@ while :; do
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -qw "$user" /etc/scvpn/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
+                            --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
                     else
@@ -2686,7 +2758,7 @@ while :; do
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -qw "$user" /etc/scvpn/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist\n" \
+                            --text "User Already Exist p❗❗\n" \
                             --parse_mode html
                         exit 1
                     else
