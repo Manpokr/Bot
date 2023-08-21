@@ -1526,7 +1526,6 @@ while :; do
                 '👤 Create User Vless 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-		    vless_kota
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         exp=$(cut -d' ' -f2 $CAD_ARQ)
