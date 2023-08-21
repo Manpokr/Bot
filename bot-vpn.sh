@@ -866,7 +866,7 @@ ext_vmess() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ❗❗\n" \
             --parse_mode html
@@ -1306,7 +1306,7 @@ ext_vless() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ❗❗\n" \
             --parse_mode html
@@ -1718,7 +1718,7 @@ ext_xtls() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ❗❗\n" \
             --parse_mode html
@@ -2113,7 +2113,7 @@ ext_trojan() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User does not exist ❗❗\n" \
             --parse_mode html
