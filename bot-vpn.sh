@@ -1521,17 +1521,12 @@ while :; do
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
                             --parse_mode html
-                    fi
-                    ;; 
-		'👤 Create User Vless 👤\n\n( Username Expired ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ
-                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "👤 limit quota 👤\n\n( Username Expired ) :" \
-                        --reply_markup "$(ShellBot.ForceReply)"
+	            fi
                     ;;
-                '👤 limit quota 👤\n\n( Username Expired ) :')
+                '👤 Create User Vless 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
+		    vless_kota
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         exp=$(cut -d' ' -f2 $CAD_ARQ)
