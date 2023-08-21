@@ -741,7 +741,7 @@ EOF
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
-del_conf() {
+del_vmess() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -773,7 +773,7 @@ del_conf() {
 }
 
 
-ext_conf() {
+ext_vmess() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
@@ -1017,6 +1017,29 @@ menuXray() {
         --parse_mode html
 }
 
+vless_del() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "🗑 Remove Vmess User 🗑\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
+
+vless_ext() {
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "📅 Renew Vmess User 📅\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+
+}
+
 vless_kota() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Limit Quota ( ex: 1= 1Gb ) :" \
@@ -1121,7 +1144,7 @@ create_vless() {
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
-ext_conf() {
+ext_vless() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
@@ -1161,7 +1184,7 @@ ext_conf() {
     fi
 }
 
-del_conf() {
+del_vless() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -1403,7 +1426,7 @@ xtls_del() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "🗑 Remove Vmess User 🗑\n\n( Username ) :" \
+        --text "🗑 Remove Xtls User 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -1468,7 +1491,7 @@ create_xtls() {
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
-ext_conf() {
+ext_xtls() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
@@ -1508,7 +1531,7 @@ ext_conf() {
     fi
 }
 
-del_conf() {
+del_xtls() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -1809,7 +1832,7 @@ create_trojan() {
     sed -i "/$coupon/d" /root/multi/voucher
 }
 
-ext_conf() {
+ext_trojan() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
@@ -1849,7 +1872,7 @@ ext_conf() {
     fi
 }
 
-del_conf() {
+del_trojan() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -2191,8 +2214,9 @@ sta_tus() {
 unset menu1
 menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuxray'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
+#ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Reseller •️' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Voucher Generator •️' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode •️' --callback_data '_publicMode'
@@ -2217,26 +2241,18 @@ keyboardsts="$(ShellBot.InlineKeyboardMarkup -b 'menusts')"
 
 unset menu2
 menu2=''
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Vmess •️' --callback_data '_addvmess'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 1 --text '• Vless •️' --callback_data '_addvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Xtls •️' --callback_data '_addxtls'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '• Trojan •️' --callback_data '_addtrojan'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text 'Trial Account Vless' --callback_data '_trialvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 2 --text '•Check Account Vless' --callback_data '_cekvless'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Delete User •️' --callback_data '_delconf'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 3 --text '• Extend User •️' --callback_data '_extconf'
-ShellBot.InlineKeyboardButton --button 'menu2' --line 4 --text '🔙 Back 🔙' --callback_data '_back2'
-ShellBot.regHandleFunction --function req_url --callback_data _addvmess
-ShellBot.regHandleFunction --function req_url --callback_data _addvless
-ShellBot.regHandleFunction --function req_url --callback_data _addxtls
-ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
-ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
-ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
-ShellBot.regHandleFunction --function req_del --callback_data _delconf
-ShellBot.regHandleFunction --function req_ext --callback_data _extconf
-ShellBot.regHandleFunction --function backReq --callback_data _back2
-unset keyboard2
-keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menu2')"
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'Menu Vless' --callback_data '_menuvless'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'Menu Vmess' --callback_data '_menuvmess'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'Menu Trojan' --callback_data '_menutrojan'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'Menu Xtls' --callback_data '_menuxtls'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 4 --text '🔙 Back 🔙' --callback_data '_backxray'
+ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless
+ShellBot.regHandleFunction --function menu_vmess --callback_data _menuvmess
+ShellBot.regHandleFunction --function menu_trojan --callback_data _menutrojan
+ShellBot.regHandleFunction --function menu_xtls --callback_data _menuxtls
+ShellBot.regHandleFunction --function backReq --callback_data _backxray
+unset keyboardxr
+keyboard2="$(ShellBot.InlineKeyboardMarkup -b 'menuxr')"
 
 unset menu3
 menu3=''
@@ -2540,7 +2556,7 @@ while :; do
                     ;;
                 '🗑 Remove Vless User 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-                    del_conf $CAD_ARQ
+                    del_vless $CAD_ARQ
                     ;;
                 '📅 Renew Vless User 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
@@ -2551,7 +2567,52 @@ while :; do
                 '📅 Extend Vless Days 📅\n\n( example: 1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
-                    ext_conf $CAD_ARQ
+                    ext_vless $CAD_ARQ
+                    ;;
+	        '🗑 Remove Vmess User 🗑\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    del_vmess $CAD_ARQ
+                    ;;
+                '📅 Renew Vmess User 📅\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📅 Extend Vmess Days 📅\n\n( example: 1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+                    ;;
+                '📅 Extend Vmess Days 📅\n\n( example: 1 ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    ext_vmess $CAD_ARQ
+                    ;;
+		'🗑 Remove Xtls User 🗑\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    del_xtls $CAD_ARQ
+                    ;;
+                '📅 Renew Xtls User 📅\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📅 Extend Xtls Days 📅\n\n( example: 1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+                    ;;
+                '📅 Extend Xtls Days 📅\n\n( example: 1 ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    ext_xtls $CAD_ARQ
+                    ;;
+	        '🗑 Remove Trojan User 🗑\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    del_trojan $CAD_ARQ
+                    ;;
+                '📅 Renew Trojan User 📅\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📅 Extend Trojan Days 📅\n\n( example: 1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+                    ;;
+                '📅 Extend Trojan Days 📅\n\n( example: 1 ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    ext_trojan $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
