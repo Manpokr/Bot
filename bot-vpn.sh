@@ -794,10 +794,10 @@ create_vless() {
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
-    msg+="Subdomain    = ${domain}\n"
+    msg+="Subdomain    = ${domain} $limit1\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
     msg+="Limit Quota  = $limit_nya\n"
-    msg+="Port None    = ${none} $limit1\n"
+    msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
