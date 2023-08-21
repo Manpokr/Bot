@@ -840,7 +840,7 @@ echo -e "$jum2" >> /tmp/vless-login
 echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/vless-login
 fi
 rm -rf /tmp/ipvless.txt
-done
+done 
 rm -rf /tmp/other.txt
 rm -rf /tmp/ipvless.txt
 msg=$(cat /tmp/vless-login)
@@ -985,7 +985,7 @@ ShellBot.InlineKeyboardButton --button 'menuvm' --line 4 --text '🔙 Back 🔙'
 ShellBot.regHandleFunction --function req_url --callback_data _addvmess
 ShellBot.regHandleFunction --function vmess_del --callback_data _delconfvmess
 ShellBot.regHandleFunction --function vmess_ext --callback_data _extconfvmess
-ShellBot.regHandleFunction --function check_vmessaaa --callback_data _cekvmess
+ShellBot.regHandleFunction --function check_vmess --callback_data _cekvmess
 ShellBot.regHandleFunction --function trial_vmess --callback_data _trialvmess
 ShellBot.regHandleFunction --function backReq --callback_data _backvmess
 unset keyboardvm
