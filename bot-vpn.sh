@@ -1522,8 +1522,14 @@ while :; do
                             --text "$msg" \
                             --parse_mode html
                     fi
+                    ;; 
+		'👤 Create User Vless 👤\n\n( Username Expired ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "👤 limit quota 👤\n\n( Username Expired ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                '👤 Create User Vless 👤\n\n( Username Expired ) :')
+                '👤 limit quota 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -1543,7 +1549,7 @@ while :; do
                         local msg
                         msg="User : $user\n"
                         msg+="<code>Expired : $exp</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
+                        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Vmess Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
