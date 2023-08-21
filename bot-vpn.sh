@@ -729,10 +729,10 @@ vless_kota() {
 
 create_vless() {
     file_user=$1
-    limit=$(sed -n '3 p' $file_user | cut -d' ' -f1)
+    limit=$(sed -n '2 p' $file_user | cut -d' ' -f1)
+    limit1=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    coupon1=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -792,12 +792,12 @@ create_vless() {
     
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>  🔸 Vless ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>Remarks      =<code>$(awk -F " " '/user/ {print $2}' $CAD_ARQ)</code>\n $user\n"
+    msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  =  <code>$(awk -F " " '/limit/ {print $2}' $CAD_ARQ)</code>\n"
-    msg+="Port None    = ${none} $coupon1 $limit\n"
+    msg+="Limit Quota  = $limit_nya\n"
+    msg+="Port None    = ${none} $limit1\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
@@ -1524,17 +1524,13 @@ while :; do
                     fi
                     ;;
                '👤 Create User Vless 👤\n\n( Username Expired ) :')
-                  #  echo "${message_text[$id]}" >>$CAD_ARQ
-		    echo "user ${message_text[$id]}" >>$CAD_ARQ
+                    echo "${message_text[$id]}" >>$CAD_ARQ		    
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "👤 Limit Quota 👤\n\n( example 1= 1Gb ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
                 '👤 Limit Quota 👤\n\n( example 1= 1Gb ) :')
-		   echo "limit: ${message_text[$id]}" >>$CAD_ARQ
-               #     echo "${message_text[$id]}" >$CAD_ARQ
-		#    limit=$(cut -d' ' -f3 $CAD_ARQ)
-                 #   echo "$limit" >>/tmp/limit.txt
+		   echo "${message_text[$id]}" >>$CAD_ARQ              
                     reseller_balance                   
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
