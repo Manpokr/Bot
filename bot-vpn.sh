@@ -1893,7 +1893,7 @@ del_trojan() {
 
 
 check_trojan(){
-"${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
+if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
 echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'TR' | cut -d ' ' -f 2 | sort | uniq`);
 echo -e "";
