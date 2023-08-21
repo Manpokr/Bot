@@ -13,14 +13,14 @@ msg_welcome() {
     oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome MASTER\n"
+        msg="Welcome To Bot Vpn\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard1" \
             --parse_mode html
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller\n\n"
+        msg="Welcome Reseller Vpn\n\n"
         msg+="Your Id : <code>${message_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -38,7 +38,7 @@ backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome MASTER\n"
+        msg="Welcome To Bot Vpn\n"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
             --text "$msg" \
@@ -46,7 +46,7 @@ backReq() {
             --parse_mode html
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller\n\n"
+        msg="Welcome Reseller Vpn\n\n"
         msg+="Your Id : <code>${callback_query_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -2219,17 +2219,14 @@ sta_tus() {
 
 unset menu1
 menu1=''
-#ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu SSH •️' --callback_data '_menussh'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ Open Service ❇️️' --callback_data '_menuser'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 Status Service 🟢️️' --callback_data '_stsserv'
-#ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '• Menu Xray •️' --callback_data '_menuxray'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Reseller •️' --callback_data '_resellerMenu'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '• Voucher Generator •️' --callback_data '_voucherGenerator'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Public Mode •️' --callback_data '_publicMode'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '• Limit Free •️' --callback_data '_freelimit'
-#ShellBot.regHandleFunction --function menuSsh --callback_data _menussh
-ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
+ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '👨‍🦱 Reseller 👨‍🦱' --callback_data '_resellerMenu'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🏷️ Voucher Generator 🏷️' --callback_data '_voucherGenerator'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🌐 Public Mode 🌐' --callback_data '_publicMode'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🌡️ Limit Free 🌡️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
+ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
@@ -2247,11 +2244,13 @@ keyboardsts="$(ShellBot.InlineKeyboardMarkup -b 'menusts')"
 
 unset menuxr
 menuxr=''
-ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'Menu Vless' --callback_data '_menuvless'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'Menu Ssh-Vpn' --callback_data '_menussh'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'Menu Vless' --callback_data '_menuvless'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'Menu Vmess' --callback_data '_menuvmess'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'Menu Trojan' --callback_data '_menutrojan'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'Menu Xtls' --callback_data '_menuxtls'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 4 --text '🔙 Back 🔙' --callback_data '_backxray'
+ShellBot.regHandleFunction --function menu_ssh --callback_data _menussh
 ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless
 ShellBot.regHandleFunction --function menu_vmess --callback_data _menuvmess
 ShellBot.regHandleFunction --function menu_trojan --callback_data _menutrojan
