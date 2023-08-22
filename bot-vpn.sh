@@ -2365,13 +2365,13 @@ start_req() {
     config=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     pass=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    if [ "${config}" == "vmess" ]; then
+    if [ "${config}" == "Vmess" ]; then
         create_vmess $file_user
-    elif [ "${config}" == "vless" ]; then
+    elif [ "${config}" == "Vless" ]; then
         create_vless $file_user
-    elif [ "${config}" == "xtls" ]; then
+    elif [ "${config}" == "Xtls" ]; then
         create_xtls $file_user
-    elif [ "${config}" == "trojan" ]; then
+    elif [ "${config}" == "Trojan" ]; then
         create_trojan $file_user
     elif [ "${config}" == "ovpn" ]; then
         req_ovpn $file_user
