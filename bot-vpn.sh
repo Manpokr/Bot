@@ -197,8 +197,8 @@ link_voucher() {
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
         local msg
-        msg="User    = $user\n"
-        msg+="<code>Expired = $exp</code>\n\n"
+        msg="User : $user\n"
+        msg+="<code>Expired : $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -207,8 +207,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
         local msg
-        msg="User    = $user\n"
-        msg+="<code>Expired = $exp</code>\n\n"
+        msg="User : $user\n"
+        msg+="<code>Expired : $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vless Acc\n"
 
@@ -217,8 +217,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
-        msg="User    = $user\n"
-        msg+="<code>Expired = $exp</code>\n\n"
+        msg="User : $user\n"
+        msg+="<code>Expired : $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
         msg+="Click Link To Confirm Xtls Acc\n"
 
@@ -227,8 +227,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
         local msg
-        msg="User    = $user\n"
-        msg+="<code>Expired = $exp</code>\n\n"
+        msg="User : $user\n"
+        msg+="<code>Expired : $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
         msg+="Click Link To Confirm Trojan Acc\n"
 
@@ -237,8 +237,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
         local msg
-        msg="User    = $user\n"
-        msg+="<code>Expired = $exp</code>\n\n"
+        msg="User : $user\n"
+        msg+="<code>Expired : $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -2365,13 +2365,13 @@ start_req() {
     config=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     pass=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    if [ "${config}" == "Vmess" ]; then
+    if [ "${config}" == "vmess" ]; then
         create_vmess $file_user
-    elif [ "${config}" == "Vless" ]; then
+    elif [ "${config}" == "vless" ]; then
         create_vless $file_user
-    elif [ "${config}" == "Xtls" ]; then
+    elif [ "${config}" == "xtls" ]; then
         create_xtls $file_user
-    elif [ "${config}" == "Trojan" ]; then
+    elif [ "${config}" == "trojan" ]; then
         create_trojan $file_user
     elif [ "${config}" == "ovpn" ]; then
         req_ovpn $file_user
@@ -2678,10 +2678,10 @@ while :; do
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     echo "$vouch $exp" >>/root/multi/voucher
                     local msg
-                    msg="<code>User    = $user\n"
-                    msg+="Expired = $exp</code>\n\n"
+                    msg="User : $user\n"
+                    msg+="<code>Expired : $exp</code>\n\n"
                     msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
-                    msg+="Click Link To Confirm Ssh-VPN Account\n"
+                    msg+="Click Link To Confirm OVPN Acc\n"
 
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "$msg" \
@@ -2705,8 +2705,8 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User    = $user\n"
-                        msg+="<code>Expired = $exp</code>\n\n"
+                        msg="User : $user\n"
+                        msg+="<code>Expired : $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -2733,8 +2733,8 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User    = $user\n"
-                        msg+="<code>Expired = $exp</code>\n\n"
+                        msg="User : $user\n"
+                        msg+="<code>Expired : $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Vless Acc\n"
 
@@ -2761,8 +2761,8 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User    = $user\n"
-                        msg+="<code>Expired = $exp</code>\n\n"
+                        msg="User : $user\n"
+                        msg+="<code>Expired : $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Xtls Acc\n"
 
@@ -2789,8 +2789,8 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User    = $user\n"
-                        msg+="<code>Expired = $exp</code>\n\n"
+                        msg="User : $user\n"
+                        msg+="<code>Expired : $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Trojan Acc\n"
 
