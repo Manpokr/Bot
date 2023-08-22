@@ -2650,7 +2650,7 @@ while :; do
                         --text "🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-             '🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 )'
+             '🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     input_addssh $CAD_ARQ
