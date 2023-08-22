@@ -2647,10 +2647,10 @@ while :; do
                 '🔐 Create Password ssh-vpn 🔐\n\n( passwd ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "🗓️ reate Expired(s Date 🗓️\n\n( days=1 ) :" \
+                        --text "🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-             '🗓️ reate Expired(s Date 🗓️\n\n( days=1 )'
+             '🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 )'
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     input_addssh $CAD_ARQ
