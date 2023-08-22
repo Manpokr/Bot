@@ -2776,15 +2776,16 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        local msg
-                        msg="User    = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Xtls Acc\n"
+                        create_xtls
+                     #   local msg
+                      #  msg="User    = $user\n"
+                    #    msg+="<code>Expired = $exp1</code>\n"
+                     #   msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
+                   #     msg+="Click Link To Confirm Xtls Acc\n"
 
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
+                    #    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                    #        --text "$msg" \
+                     #       --parse_mode html
                     fi
                     ;;
                 '👤 Create User Trojan 👤\n\n( Username Expired ) :')
@@ -2807,15 +2808,16 @@ while :; do
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        local msg
-                        msg="User    = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Trojan Acc\n"
+                        create_trojan
+		      #  local msg
+                      #  msg="User    = $user\n"
+                       # msg+="<code>Expired = $exp1</code>\n"
+                       # msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
+                      #  msg+="Click Link To Confirm Trojan Acc\n"
 
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
+                       # ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                      #      --text "$msg" \
+                        #    --parse_mode html
                     fi
                     ;;
                 '👤 Create User Vmess free 👤\n\n( Username ) :')
