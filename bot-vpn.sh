@@ -108,8 +108,7 @@ claimVoucher() {
 
 menu_ser() {
     local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="⏭️ Menu Service ⏮️\n"
+    msg="⏭️ Menu Service ⏮️\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -198,8 +197,8 @@ link_voucher() {
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
         local msg
-        msg="User : $user\n"
-        msg+="<code>Expired : $exp</code>\n\n"
+        msg="<code>User    = $user\n"
+        msg+="Expired = $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -208,8 +207,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
         local msg
-        msg="User : $user\n"
-        msg+="<code>Expired : $exp</code>\n\n"
+        msg="<code>User    = $user\n"
+        msg+="Expired = $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vless Acc\n"
 
@@ -218,8 +217,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
-        msg="User : $user\n"
-        msg+="<code>Expired : $exp</code>\n\n"
+        msg="<code>User    = $user\n"
+        msg+="Expired = $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
         msg+="Click Link To Confirm Xtls Acc\n"
 
@@ -228,8 +227,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
         local msg
-        msg="User : $user\n"
-        msg+="<code>Expired : $exp</code>\n\n"
+        msg="<code>User    = $user\n"
+        msg+="Expired = $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
         msg+="Click Link To Confirm Trojan Acc\n"
 
@@ -238,8 +237,8 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
         local msg
-        msg="User : $user\n"
-        msg+="<code>Expired : $exp</code>\n\n"
+        msg="<code>User    = $user\n"
+        msg+="Expired = $exp</code>\n\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -2679,8 +2678,8 @@ while :; do
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     echo "$vouch $exp" >>/root/multi/voucher
                     local msg
-                    msg="User : $user\n"
-                    msg+="<code>Expired : $exp</code>\n\n"
+                    msg="<code>User    = $user\n"
+                    msg+="Expired = $exp</code>\n\n"
                     msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
                     msg+="Click Link To Confirm Ssh-VPN Account\n"
 
@@ -2706,8 +2705,8 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="User : $user\n"
-                        msg+="<code>Expired : $exp</code>\n\n"
+                        msg="<code>User    = $user\n"
+                        msg+="Expired = $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -2734,7 +2733,7 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
-                        msg="<code>User     = $user\n"
+                        msg="<code>User    = $user\n"
                         msg+="Expired = $exp</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Vless Acc\n"
@@ -2782,7 +2781,7 @@ while :; do
                         exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -qw "$user" /usr/local/etc/xray/user.txt; then
+                    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist p❗❗\n" \
                             --parse_mode html
