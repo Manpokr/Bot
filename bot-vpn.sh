@@ -667,11 +667,7 @@ create_vmess() {
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
-    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
-    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
-
+    
     req_voucher $file_user
     req_limit
 
@@ -698,6 +694,10 @@ create_vmess() {
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
 
     # VM WS TLS 
 sed -i '/#vmess$/a\### '"$user $exp"'\
@@ -1598,39 +1598,7 @@ xtls_ext() {
 
 }
 
-create_xtls() {
-    file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-    req_voucher $file_user
-    req_limit
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist\n" \
-            --parse_mode html
-        exit 1
-    fi
-    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        duration=$expadmin
-    else
-        duration=3
-    fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
-    exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
-    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
-    email=${user}
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","add": "'${domain}'","flow": "xtls-rprx-direct","email": "'${email}'"}]' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
-    splice="vless://$uuid@$domain:$multi?flow=xtls-rprx-splice%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
-    direct="vless://$uuid@$domain:$multi?flow=xtls-rprx-direct%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${splice}
-${direct}
-EOF
-    systemctl restart xray
+
 
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
@@ -1651,7 +1619,7 @@ EOF
 }
 
 
-create_free() {
+create_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1759,11 +1727,22 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User : $user\n"
+    msg+="<code>Expired : $exp</code>\n"
+    msg+="\n"
+    msg+="Splice\n"
+    msg+="<code>$splice</code>\n"
+    msg+="\n"
+    msg+="Direct\n"
+    msg+="<code>$direct</code>\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
+
 }
 
 ext_xtls() {
@@ -2074,52 +2053,6 @@ create_trojan() {
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-    req_voucher $file_user
-    req_limit
-    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist\n" \
-            --parse_mode html
-        exit 1
-    fi
-    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        duration=$expadmin
-    else
-        duration=3
-    fi
-    uuid=$(cat /proc/sys/kernel/random/uuid)
-    exp=$(date -d +${duration}days +%Y-%m-%d)
-    domain=$(cat /root/domain)
-    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
-    email=${user}
-    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
-    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"password": "'${uuid}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
-    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
-    tro="trojan://$uuid@$domain:$multi?sni=#$user"
-    cat <<EOF >>"/etc/scvpn/config-user/${user}"
-${tro}
-EOF
-    systemctl restart xray
-    local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-    msg+="\n"
-    msg+="Trojan\n"
-    msg+="<code>$tro</code>\n"
-    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucher
-}
-
-create_tr() {
-    file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
@@ -2201,11 +2134,19 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
-    
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User : $user\n"
+    msg+="<code>Expired : $exp</code>\n"
+    msg+="\n"
+    msg+="Trojan\n"
+    msg+="<code>$tro</code>\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
     sed -i "/$coupon/d" /root/multi/voucher
+   
 }
 
 ext_trojan() {
