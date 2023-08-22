@@ -198,7 +198,7 @@ link_voucher() {
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
         local msg
-        msg="User    = $user\n"
+        msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Vmess Acc\n"
@@ -209,7 +209,7 @@ link_voucher() {
 	    
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
         local msg
-        msg="User    = $user\n"
+        msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Vless Acc\n"
@@ -220,7 +220,7 @@ link_voucher() {
 	    
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
-        msg="User    = $user\n"
+        msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Xtls Acc\n"
@@ -231,7 +231,7 @@ link_voucher() {
 	    
     elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
         local msg
-        msg="User    = $user\n"
+        msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Trojan Acc\n"
@@ -241,7 +241,7 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
         local msg
-        msg="User    = $user\n"
+        msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Vmess Acc\n"
@@ -700,12 +700,12 @@ create_vmess() {
     exp=$(date -d +${duration}days +%Y-%m-%d)
 
     # VM WS TLS 
-    sed -i '/#vmess$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
+sed -i '/#vmess$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
     # VM GRPC
-    sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
+sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
     cat > /usr/local/etc/xray/$user-tls.json << EOF
             {
@@ -785,7 +785,7 @@ EOF
     systemctl restart xray@vmess.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -851,7 +851,7 @@ del_vmess() {
     systemctl restart xray@vmess.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER VMESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
@@ -890,7 +890,7 @@ ext_vmess() {
         systemctl restart xray@vmess.service
       
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VMESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER VMESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
@@ -1009,12 +1009,12 @@ trial_vmess() {
     exp=$(date -d +${duration}days +%Y-%m-%d)
 
     # VM WS TLS 
-    sed -i '/#vmess$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
+sed -i '/#vmess$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
     # VM GRPC
-    sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
+sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
     cat > /usr/local/etc/xray/$user-tls.json << EOF
             {
@@ -1094,7 +1094,7 @@ EOF
     systemctl restart xray@vmess.service    
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1200,7 +1200,7 @@ vless_kota() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_vless() {
+create_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1244,14 +1244,14 @@ create_vless() {
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
     
-    sed -i '/#vless$/a\### '"$user $exp"'\
-       },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-    sed -i '/#vless$/a\### '"$user $exp"'\
-       },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
-    sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-       },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-    sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-       },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
 
     echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
     
@@ -1331,7 +1331,7 @@ ext_vless() {
         systemctl restart xray@vless.service
       
         local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER VLESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -1363,7 +1363,7 @@ del_vless() {
     systemctl restart xray@vless.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 DELETE USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER VLESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
@@ -1486,15 +1486,15 @@ trial_vless() {
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
-        
-    sed -i '/#vless$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-    sed -i '/#vless$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
-    sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
-    sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+      
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vless.json
+sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/vlesswarp
 
     echo -e "VL $user $exp" >> /usr/local/etc/xray/user.txt
     
@@ -1598,7 +1598,7 @@ xtls_ext() {
 
 }
 
-create_xtls() {
+create_vless() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1649,20 +1649,20 @@ create_xtls() {
 EOF
 
     # // VL XTLS
-    sed -i '/#xtls$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#xtls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     # // TR TCP TLS
-    sed -i '/#trojanws$/a\### '"$user $exp"'\
-      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#trojanws$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     # // VM TCP HTTP TLS
-    sed -i '/#vmess$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#vmess$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     # // VL TCP HTTP TLS
-    sed -i '/#vless$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     echo -e "XTLS $user $exp" >> /usr/local/etc/xray/user.txt;
 
@@ -1742,7 +1742,7 @@ ext_xtls() {
         systemctl restart xray.service   
 	
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER XTLS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER XTLS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )<\code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
      
@@ -1775,7 +1775,7 @@ del_xtls() {
     systemctl restart xray.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER VLESS 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER VLESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed !</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -1899,20 +1899,20 @@ trial_xtls() {
 EOF
 
     # // VL XTLS
-    sed -i '/#xtls$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#xtls$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     # // TR TCP TLS
-    sed -i '/#trojanws$/a\### '"$user $exp"'\
-      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#trojanws$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     # // VM TCP HTTP TLS
-    sed -i '/#vmess$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#vmess$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     # // VL TCP HTTP TLS
-    sed -i '/#vless$/a\### '"$user $exp"'\
-      },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+sed -i '/#vless$/a\### '"$user $exp"'\
+},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
     echo -e "XTLS $user $exp" >> /usr/local/etc/xray/user.txt;
 
@@ -2052,12 +2052,12 @@ create_trojan() {
     exp=$(date -d +${duration}days +%Y-%m-%d)
     
     # // TR WS TLS
-    sed -i '/#trojanws$/a\### '"$user $exp"'\
-      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+sed -i '/#trojanws$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
 
     # // TR GRPC
-    sed -i '/#trojangrpc$/a\### '"$user $exp"'\
-      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+sed -i '/#trojangrpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
 
     echo -e "TR $user $exp" >> /usr/local/etc/xray/user.txt;
 
@@ -2137,7 +2137,7 @@ ext_trojan() {
         systemctl restart xray@trojan.service
       
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸 RENEW USER TROJAN 🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER TROJAN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -2685,7 +2685,7 @@ while :; do
                     echo "$vouch $exp" >>/root/multi/voucher
 		    exp1=$(date -d +${duration}days +%Y-%m-%d)
                     local msg
-                    msg="User    = $user\n"
+                    msg="User      = $user\n"
                     msg+="<code>Expired = $exp1</code>\n"
                     msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
                     msg+="Click Link To Confirm OVPN Acc\n"
@@ -2715,7 +2715,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="User    = $user\n"
+                        msg="User      = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Vmess Acc\n"
@@ -2746,7 +2746,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="User    = $user\n"
+                        msg="User      = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Vless Acc\n"
@@ -2776,16 +2776,15 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        create_xtls $CAD_ARQ
-                     #   local msg
-                      #  msg="User    = $user\n"
-                    #    msg+="<code>Expired = $exp1</code>\n"
-                     #   msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
-                   #     msg+="Click Link To Confirm Xtls Acc\n"
+                        local msg
+                        msg="User      = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
+                        msg+="Click Link To Confirm Xtls Acc\n"
 
-                    #    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                    #        --text "$msg" \
-                     #       --parse_mode html
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "$msg" \
+                            --parse_mode html
                     fi
                     ;;
                 '👤 Create User Trojan 👤\n\n( Username Expired ) :')
@@ -2808,16 +2807,15 @@ while :; do
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        create_trojan $CAD_ARQ
-		      #  local msg
-                      #  msg="User    = $user\n"
-                       # msg+="<code>Expired = $exp1</code>\n"
-                       # msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
-                      #  msg+="Click Link To Confirm Trojan Acc\n"
+		        local msg
+                        msg="User      = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
+                        msg+="Click Link To Confirm Trojan Acc\n"
 
-                       # ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                      #      --text "$msg" \
-                        #    --parse_mode html
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "$msg" \
+                            --parse_mode html
                     fi
                     ;;
                 '👤 Create User Vmess free 👤\n\n( Username ) :')
