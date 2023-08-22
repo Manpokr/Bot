@@ -869,7 +869,7 @@ ext_vmess() {
     else
         masaaktif=30
     fi
-    if ! grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
@@ -1200,7 +1200,7 @@ vless_kota() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_xtls() {
+create_vless() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1309,7 +1309,7 @@ ext_vless() {
     else
         masaaktif=30
     fi
-    if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
@@ -1598,7 +1598,60 @@ xtls_ext() {
 
 }
 
-create_vless() {
+create_xtls() {
+    file_user=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    req_voucher $file_user
+    req_limit
+    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Already Exist\n" \
+            --parse_mode html
+        exit 1
+    fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=3
+    fi
+    uuid=$(cat /proc/sys/kernel/random/uuid)
+    exp=$(date -d +${duration}days +%Y-%m-%d)
+    domain=$(cat /root/domain)
+    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
+    email=${user}
+    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
+    cat /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"id": "'${uuid}'","add": "'${domain}'","flow": "xtls-rprx-direct","email": "'${email}'"}]' >/etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json
+    mv -f /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/02_VLESS_TCP_inbounds.json
+    splice="vless://$uuid@$domain:$multi?flow=xtls-rprx-splice%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
+    direct="vless://$uuid@$domain:$multi?flow=xtls-rprx-direct%26encryption=none%26security=xtls%26sni=%26type=tcp%26headerType=none%26host=#$user"
+    cat <<EOF >>"/etc/scvpn/config-user/${user}"
+${splice}
+${direct}
+EOF
+    systemctl restart xray
+
+    local msg
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User : $user\n"
+    msg+="<code>Expired : $exp</code>\n"
+    msg+="\n"
+    msg+="Splice\n"
+    msg+="<code>$splice</code>\n"
+    msg+="\n"
+    msg+="Direct\n"
+    msg+="<code>$direct</code>\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+    sed -i "/$coupon/d" /root/multi/voucher
+}
+
+
+create_free() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1721,7 +1774,7 @@ ext_xtls() {
     else
         masaaktif=30
     fi
-    if ! grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
@@ -2015,7 +2068,54 @@ trojan_ext() {
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
+
 create_trojan() {
+    file_user=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    req_voucher $file_user
+    req_limit
+    if grep -qw "$user" /etc/scvpn/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Already Exist\n" \
+            --parse_mode html
+        exit 1
+    fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=3
+    fi
+    uuid=$(cat /proc/sys/kernel/random/uuid)
+    exp=$(date -d +${duration}days +%Y-%m-%d)
+    domain=$(cat /root/domain)
+    multi="$(cat ~/log-install.txt | grep -w "VLess TCP XTLS" | cut -d: -f2 | sed 's/ //g')"
+    email=${user}
+    echo -e "${user}\t${uuid}\t${exp}" >>/etc/scvpn/xray/user.txt
+    cat /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json | jq '.inbounds[0].settings.clients += [{"password": "'${uuid}'","email": "'${email}'"}]' >/etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json
+    mv -f /etc/scvpn/xray/conf/04_trojan_TCP_inbounds_tmp.json /etc/scvpn/xray/conf/04_trojan_TCP_inbounds.json
+    tro="trojan://$uuid@$domain:$multi?sni=#$user"
+    cat <<EOF >>"/etc/scvpn/config-user/${user}"
+${tro}
+EOF
+    systemctl restart xray
+    local msg
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="User : $user\n"
+    msg+="<code>Expired : $exp</code>\n"
+    msg+="\n"
+    msg+="Trojan\n"
+    msg+="<code>$tro</code>\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+    sed -i "/$coupon/d" /root/multi/voucher
+}
+
+create_tr() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2116,7 +2216,7 @@ ext_trojan() {
     else
         masaaktif=30
     fi
-    if ! grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
