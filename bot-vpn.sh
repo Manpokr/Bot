@@ -192,43 +192,47 @@ req_url() {
 link_voucher() {
     file_user=/tmp/cad.${callback_query_message_chat_id[$id]}
     vouch=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    exp=$(grep $vouch /root/multi/voucher | awk '{print $2}')
+    duration=$(grep $vouch /root/multi/voucher | awk '{print $2}')
+    exp1=$(date -d +${duration}days +%Y-%m-%d)
     user=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c4)
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
         local msg
         msg="<code>User    = $user\n"
-        msg+="Expired = $exp</code>\n\n"
+        msg+="Expired = $exp1</code>\n\n"
         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
+	    
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
         local msg
         msg="<code>User    = $user\n"
-        msg+="Expired = $exp</code>\n\n"
+        msg+="Expired = $exp1</code>\n\n"
         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vless Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
+	    
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
         msg="<code>User    = $user\n"
-        msg+="Expired = $exp</code>\n\n"
+        msg+="Expired = $exp1</code>\n\n"
         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
         msg+="Click Link To Confirm Xtls Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
+	    
     elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
         local msg
         msg="<code>User    = $user\n"
-        msg+="Expired = $exp</code>\n\n"
+        msg+="Expired = $exp1</code>\n\n"
         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
         msg+="Click Link To Confirm Trojan Acc\n"
 
@@ -238,7 +242,7 @@ link_voucher() {
     elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
         local msg
         msg="<code>User    = $user\n"
-        msg+="Expired = $exp</code>\n\n"
+        msg+="Expired = $exp1</code>\n\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -271,7 +275,7 @@ req_free() {
 
 req_limit() {
     limituser=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
-    total=$(wc -l /etc/scvpn/xray/user.txt | cut -d' ' -f1)
+    total=$(wc -l /usr/local/etc/xray/user.txt | cut -d' ' -f1)
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     ori=$(grep ${message_from_id} multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
@@ -637,7 +641,7 @@ menu_vmess() {
 
 vmess_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -648,7 +652,7 @@ vmess_del() {
 
 vmess_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -671,7 +675,7 @@ create_vmess() {
     req_voucher $file_user
     req_limit
 
-    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -824,9 +828,9 @@ EOF
 del_vmess() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -867,7 +871,7 @@ ext_vmess() {
     fi
     if ! grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     else
@@ -981,7 +985,7 @@ trial_vmess() {
 
     req_voucher $file_user
     req_limit
-    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1163,7 +1167,7 @@ menu_vless() {
 
 vless_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -1174,7 +1178,7 @@ vless_del() {
 
 vless_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -1208,7 +1212,7 @@ create_vless() {
 
     req_voucher $file_user
     req_limit
-    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1307,7 +1311,7 @@ ext_vless() {
     fi
     if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     else
@@ -1340,9 +1344,9 @@ ext_vless() {
 del_vless() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -1452,7 +1456,7 @@ trial_vless() {
 
     req_voucher $file_user
     req_limit
-    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1573,7 +1577,7 @@ menu_xtls() {
 
 xtls_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -1584,7 +1588,7 @@ xtls_del() {
 
 xtls_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -1604,7 +1608,7 @@ create_xtls() {
 
     req_voucher $file_user
     req_limit
-    if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1719,7 +1723,7 @@ ext_xtls() {
     fi
     if ! grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     else
@@ -1751,9 +1755,9 @@ ext_xtls() {
 del_xtls() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -1861,7 +1865,7 @@ trial_xtls() {
   
     req_voucher $file_user
     req_limit
-    if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -1991,7 +1995,7 @@ menu_trojan() {
 
 trojan_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -2002,7 +2006,7 @@ trojan_del() {
 
 trojan_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -qw "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -2023,7 +2027,7 @@ create_trojan() {
 
     req_voucher $file_user
     req_limit
-    if grep -E "^TR $user" /etc/scvpn/xray/user.txt; then
+    if grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -2114,7 +2118,7 @@ ext_trojan() {
     fi
     if ! grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     else
@@ -2146,9 +2150,9 @@ ext_trojan() {
 del_trojan() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User does not exist ❗❗\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -2259,9 +2263,9 @@ trial_trojan() {
     
     req_voucher $file_user
     req_limit
-    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+    if grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "User Already Exist ⛔\n" \
+            --text "User Already Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
@@ -2671,15 +2675,18 @@ while :; do
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        exp=30
+                        duration=30
+			exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     echo "$vouch $exp" >>/root/multi/voucher
+		    exp1=$(date -d +${duration}days +%Y-%m-%d)
                     local msg
                     msg="User : $user\n"
-                    msg+="<code>Expired : $exp</code>\n\n"
+                    msg+="<code>Expired : $exp1</code>\n\n"
                     msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
                     msg+="Click Link To Confirm OVPN Acc\n"
 
@@ -2693,21 +2700,23 @@ while :; do
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
                         duration=30
+			exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+                    if grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
                     else
-		        exp=$(date -d +${duration}days +%Y-%m-%d)
                         echo "$vouch $exp" >>/root/multi/voucher
+			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
                         msg="<code>User    = $user\n"
-                        msg+="Expired = $exp</code>\n\n"
+                        msg+="Expired = $exp1</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Vmess Acc\n"
 
@@ -2722,21 +2731,23 @@ while :; do
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
                         duration=30
+			exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+                    if grep -qw "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
-                    else
-		        exp=$(date -d +${duration}days +%Y-%m-%d)
+                    else       
                         echo "$vouch $exp" >>/root/multi/voucher
+			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
                         msg="<code>User    = $user\n"
-                        msg+="Expired = $exp</code>\n\n"
+                        msg+="Expired = $exp1</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Vless Acc\n"
 
@@ -2751,21 +2762,23 @@ while :; do
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
                         duration=30
+			exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
+                    if grep -qw "^XTLS $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
                     else
-		        exp=$(date -d +${duration}days +%Y-%m-%d)
                         echo "$vouch $exp" >>/root/multi/voucher
+			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
                         msg="<code>User    = $user\n"
-                        msg+="Expired = $exp</code>\n\n"
+                        msg+="Expired = $exp1</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Xtls Acc\n"
 
@@ -2780,21 +2793,23 @@ while :; do
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
                         duration=30
+			exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+                    if grep -qw "^TR $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist p❗❗\n" \
+                            --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
-                    else
-		        exp=$(date -d +${duration}days +%Y-%m-%d)
+                    else      
                         echo "$vouch $exp" >>/root/multi/voucher
+			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
                         msg="<code>User    = $user\n"
-                        msg+="Expired = $exp</code>\n\n"
+                        msg+="Expired = $exp1</code>\n\n"
                         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
                         msg+="Click Link To Confirm Trojan Acc\n"
 
