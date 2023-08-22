@@ -2776,7 +2776,7 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        create_xtls
+                        create_xtls $CAD_ARQ
                      #   local msg
                       #  msg="User    = $user\n"
                     #    msg+="<code>Expired = $exp1</code>\n"
@@ -2808,7 +2808,7 @@ while :; do
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        create_trojan
+                        create_trojan $CAD_ARQ
 		      #  local msg
                       #  msg="User    = $user\n"
                        # msg+="<code>Expired = $exp1</code>\n"
