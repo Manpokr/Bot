@@ -2369,7 +2369,7 @@ start_req() {
         create_vmess $file_user
     elif [ "${config}" == "vless" ]; then
         create_vless $file_user
-    elif [ "${config}" == "xtls" ]; then
+    elif [ "${config}" == "vless" ]; then
         create_xtls $file_user
     elif [ "${config}" == "trojan" ]; then
         create_trojan $file_user
@@ -2692,9 +2692,9 @@ while :; do
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        exp=30
+                        duration=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
@@ -2703,6 +2703,7 @@ while :; do
                             --parse_mode html
                         exit 1
                     else
+		        exp=$(date -d +${duration}days +%Y-%m-%d)
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
                         msg="<code>User    = $user\n"
@@ -2720,9 +2721,9 @@ while :; do
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        exp=30
+                        duration=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -2731,6 +2732,7 @@ while :; do
                             --parse_mode html
                         exit 1
                     else
+		        exp=$(date -d +${duration}days +%Y-%m-%d)
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
                         msg="<code>User    = $user\n"
@@ -2748,9 +2750,9 @@ while :; do
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        exp=30
+                        duration=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
@@ -2759,6 +2761,7 @@ while :; do
                             --parse_mode html
                         exit 1
                     else
+		        exp=$(date -d +${duration}days +%Y-%m-%d)
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
                         msg="<code>User    = $user\n"
@@ -2776,9 +2779,9 @@ while :; do
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        exp=30
+                        duration=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
@@ -2787,6 +2790,7 @@ while :; do
                             --parse_mode html
                         exit 1
                     else
+		        exp=$(date -d +${duration}days +%Y-%m-%d)
                         echo "$vouch $exp" >>/root/multi/voucher
                         local msg
                         msg="<code>User    = $user\n"
