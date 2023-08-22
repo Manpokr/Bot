@@ -184,7 +184,7 @@ req_url() {
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User ssh-VPN 👤\n\n( Username Expired ) :" \
+            --text "👤 Create User ssh-vpn 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 }
@@ -198,9 +198,9 @@ link_voucher() {
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
         local msg
-        msg="<code>User    = $user\n"
-        msg+="Expired = $exp1</code>\n\n"
-        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
+        msg="User    = $user\n"
+        msg+="<code>Expired = $exp1</code>\n"
+        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -209,9 +209,9 @@ link_voucher() {
 	    
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
         local msg
-        msg="<code>User    = $user\n"
-        msg+="Expired = $exp1</code>\n\n"
-        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
+        msg="User    = $user\n"
+        msg+="<code>Expired = $exp1</code>\n"
+        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Vless Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -220,9 +220,9 @@ link_voucher() {
 	    
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
-        msg="<code>User    = $user\n"
-        msg+="Expired = $exp1</code>\n\n"
-        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
+        msg="User    = $user\n"
+        msg+="<code>Expired = $exp1</code>\n"
+        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Xtls Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -231,9 +231,9 @@ link_voucher() {
 	    
     elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
         local msg
-        msg="<code>User    = $user\n"
-        msg+="Expired = $exp1</code>\n\n"
-        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
+        msg="User    = $user\n"
+        msg+="<code>Expired = $exp1</code>\n"
+        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Trojan Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -241,9 +241,9 @@ link_voucher() {
             --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
         local msg
-        msg="<code>User    = $user\n"
-        msg+="Expired = $exp1</code>\n\n"
-        msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
+        msg="User    = $user\n"
+        msg+="<code>Expired = $exp1</code>\n"
+        msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -451,19 +451,19 @@ menu_ssh() {
 
 add_ssh() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Create User(ssh) :" \
+        --text "👤 Create User ssh-vpn 👤\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 del_ssh() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Delete User(ssh) :" \
+        --text "🗑 Remove User ssh-vpn 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 ext_ssh() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Extend User(ssh) :" \
+        --text "📅 Renew User ssh-vpn 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -646,7 +646,7 @@ vmess_del() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "🗑 Remove Vmess User 🗑\n\n( Username ) :" \
+        --text "🗑 Remove User Vmess 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -657,7 +657,7 @@ vmess_ext() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📅 Renew Vmess User 📅\n\n( Username ) :" \
+        --text "📅 Renew User Vmess 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
@@ -1172,7 +1172,7 @@ vless_del() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "🗑 Remove Vless User 🗑\n\n( Username ) :" \
+        --text "🗑 Remove User Vless 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -1183,7 +1183,7 @@ vless_ext() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📅 Renew Vless User 📅\n\n( Username ) :" \
+        --text "📅 Renew User Vless 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
@@ -1582,7 +1582,7 @@ xtls_del() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "🗑 Remove Xtls User 🗑\n\n( Username ) :" \
+        --text "🗑 Remove User Xtls 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -1593,7 +1593,7 @@ xtls_ext() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📅 Renew Xtls User 📅\n\n( Username ) :" \
+        --text "📅 Renew User Xtls 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
@@ -2000,7 +2000,7 @@ trojan_del() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "🗑 Remove Trojan User 🗑\n\n( Username ) :" \
+        --text "🗑 Remove User Trojan 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -2011,7 +2011,7 @@ trojan_ext() {
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📅 Renew Trojan User 📅\n\n( Username ) :" \
+        --text "📅 Renew User Trojan 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 
 }
@@ -2638,39 +2638,39 @@ while :; do
             fi
             if [[ ${message_reply_to_message_message_id[$id]} ]]; then
                 case ${message_reply_to_message_text[$id]} in
-                'Create User(ssh) :')
+                '👤 Create User ssh-vpn 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Create Pass(ssh) :" \
+                        --text "🔐 Create Password ssh-vpn 🔐\n\n( passwd ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Create Pass(ssh) :')
+                '🔐 Create Password ssh-vpn 🔐\n\n( passwd ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Create Expired(ssh) :" \
+                        --text "🗓️ reate Expired(s Date 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Create Expired(ssh) :')
+             '🗓️ reate Expired(s Date 🗓️\n\n( days=1 )'
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     input_addssh $CAD_ARQ
                     ;;
-                'Delete User(ssh) :')
+                '🗑 Remove User ssh-vpn 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     input_delssh $CAD_ARQ
                     ;;
-                'Extend User(ssh) :')
+                '📅 Renew User ssh-vpn 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Extend Expired(ssh) :" \
+                        --text "📅 Extend User ssh-vpn Days 📅\n\n( example: 1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                'Extend Expired(ssh) :')
+                '📅 Extend User ssh-vpn Days 📅\n\n( example: 1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     input_extssh $CAD_ARQ
                     ;;
-                'Ssh-VPN ( User Expired ) :')
+                '👤 Create User ssh-vpn 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -2685,9 +2685,9 @@ while :; do
                     echo "$vouch $exp" >>/root/multi/voucher
 		    exp1=$(date -d +${duration}days +%Y-%m-%d)
                     local msg
-                    msg="User : $user\n"
-                    msg+="<code>Expired : $exp1</code>\n\n"
-                    msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n"
+                    msg="User    = $user\n"
+                    msg+="<code>Expired = $exp1</code>\n"
+                    msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
                     msg+="Click Link To Confirm OVPN Acc\n"
 
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2715,9 +2715,9 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="<code>User    = $user\n"
-                        msg+="Expired = $exp1</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n"
+                        msg="User    = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Vmess Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2746,9 +2746,9 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="<code>User    = $user\n"
-                        msg+="Expired = $exp1</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n"
+                        msg="User    = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Vless Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2777,9 +2777,9 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="<code>User    = $user\n"
-                        msg+="Expired = $exp1</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n"
+                        msg="User    = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Xtls Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2808,9 +2808,9 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="<code>User    = $user\n"
-                        msg+="Expired = $exp1</code>\n\n"
-                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n"
+                        msg="User    = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Trojan Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2842,62 +2842,62 @@ while :; do
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
                     create_trojan $CAD_ARQ
                     ;;
-                '🗑 Remove Vless User 🗑\n\n( Username ) :')
+                '🗑 Remove User Vless 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_vless $CAD_ARQ
                     ;;
-                '📅 Renew Vless User 📅\n\n( Username ) :')
+                '📅 Renew User Vless 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "📅 Extend Vless Days 📅\n\n( example: 1 ) :" \
+                        --text "📅 Extend User Vless Days 📅\n\n( example: 1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                '📅 Extend Vless Days 📅\n\n( example: 1 ) :')
+                '📅 Extend User Vless Days 📅\n\n( example: 1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_vless $CAD_ARQ
                     ;;
-	        '🗑 Remove Vmess User 🗑\n\n( Username ) :')
+	        '🗑 Remove User Vmess 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_vmess $CAD_ARQ
                     ;;
-                '📅 Renew Vmess User 📅\n\n( Username ) :')
+                '📅 Renew User Vmess 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "📅 Extend Vmess Days 📅\n\n( example: 1 ) :" \
+                        --text "📅 Extend User Vmess Days 📅\n\n( example: 1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                '📅 Extend Vmess Days 📅\n\n( example: 1 ) :')
+                '📅 Extend User Vmess Days 📅\n\n( example: 1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_vmess $CAD_ARQ
                     ;;
-		'🗑 Remove Xtls User 🗑\n\n( Username ) :')
+		'🗑 Remove User Xtls 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_xtls $CAD_ARQ
                     ;;
-                '📅 Renew Xtls User 📅\n\n( Username ) :')
+                '📅 Renew User Xtls 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "📅 Extend Xtls Days 📅\n\n( example: 1 ) :" \
+                        --text "📅 Extend User Xtls Days 📅\n\n( example: 1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                '📅 Extend Xtls Days 📅\n\n( example: 1 ) :')
+                '📅 Extend User Xtls Days 📅\n\n( example: 1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_xtls $CAD_ARQ
                     ;;
-	        '🗑 Remove Trojan User 🗑\n\n( Username ) :')
+	        '🗑 Remove User Trojan 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_trojan $CAD_ARQ
                     ;;
-                '📅 Renew Trojan User 📅\n\n( Username ) :')
+                '📅 Renew User Trojan 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "📅 Extend Trojan Days 📅\n\n( example: 1 ) :" \
+                        --text "📅 Extend User Trojan Days 📅\n\n( example: 1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-                '📅 Extend Trojan Days 📅\n\n( example: 1 ) :')
+                '📅 Extend User Trojan Days 📅\n\n( example: 1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_trojan $CAD_ARQ
