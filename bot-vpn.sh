@@ -1600,7 +1600,7 @@ trial_xt() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_xtls() {
+trial_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1680,7 +1680,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Remarks            = $user\n"
+    msg+="<code>Remarks     b       = $user\n"
     msg+="Myip               = $ip_nya\n"
     msg+="Subdomain          = ${domain}\n"    
     msg+="Limit Quota        = ${limit_nya}\n"
@@ -1745,6 +1745,11 @@ ext_xtls() {
         systemctl restart xray.service   
 	
         local msg
+	msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg+="User : $user\n"
+        msg+="<code>Expired : $exp4</code>\n"
+        msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER XTLS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )<\code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -1854,7 +1859,7 @@ return 0
 fi
 }
 
-trial_xtls() {
+create_xtls() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
