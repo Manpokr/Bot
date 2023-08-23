@@ -976,11 +976,6 @@ fi
 trial_vmess() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
-    exp1='1'
-    hariini=`date -d "0 days" +"%Y-%m-%d"`
-    exp=`date -d "$exp1 days" +"%Y-%m-%d"`
-    exp1=`date -d "$masaaktif days" +"%d-%m-%Y"`
-
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
 
@@ -1000,7 +995,7 @@ trial_vmess() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     limit='10'
     if [[ $limit -gt 0 ]]; then
