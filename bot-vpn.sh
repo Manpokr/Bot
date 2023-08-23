@@ -548,7 +548,7 @@ input_addssh() {
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"   
-       export link='msg+="\n<code>Openvpn Udp = http://${ip_nya}:85/client-udp.ovpn</code>\n"'
+       export link="<code>Openvpn Udp = http://${ip_nya}:85/client-udp.ovpn</code>\n"
     fi
     }
     
@@ -575,7 +575,8 @@ input_addssh() {
     msg+="Ovpn Ws     = ${wsnone}\n"
     msg+="Ovpn Ws Tls = ${wstls}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Openvpn Tcp = http://${ip_nya}:85/client-tcp.ovpn</code>\n<code>$link</code>\n"
+    msg+="<code>Openvpn Tcp = http://${ip_nya}:85/client-tcp.ovpn</code>\n"
+    msg+="$link"
     msg+="<code>Openvpn Ssl = http://${ip_nya}:85/client-ssl.ovpn</code>\n"
     msg+="<code>Badvpn      = 7100-7900</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
