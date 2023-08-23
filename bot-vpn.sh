@@ -535,6 +535,12 @@ input_addssh() {
     else
         masaaktif=30
     fi
+    if ! grep -E "^SSH $Login" /usr/local/etc/ssh/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Does Not Exist ❗❗\n" \
+            --parse_mode html
+        exit 1
+    fi
     masaaktif=$(sed -n '3 p' $file_user | cut -d' ' -f1)
     ssl=`cat ~/log-install.txt | grep -w "STUNNEL5" | cut -d: -f2`
     ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
@@ -569,7 +575,7 @@ input_addssh() {
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 SSHVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸SSHVPN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Myip        = ${ip_nya}\n"
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
@@ -688,6 +694,12 @@ req_ovpn() {
     masaaktif=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     req_voucher $file_user
     req_limit
+    if ! grep -E "^SSH $Login" /usr/local/etc/ssh/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Does Not Exist ❗❗\n" \
+            --parse_mode html
+        exit 1
+    fi
     ssl=`cat ~/log-install.txt | grep -w "STUNNEL4" | cut -d: -f2`
     ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
     drop=`cat ~/log-install.txt | grep -w "DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f1`
@@ -720,7 +732,7 @@ req_ovpn() {
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 SSHVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸SSHVPN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Myip        = ${ip_nya}\n"
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
