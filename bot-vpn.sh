@@ -218,6 +218,8 @@ req_url() {
 }
 
 link_voucher() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
     file_user=/tmp/cad.${callback_query_message_chat_id[$id]}
     vouch=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     duration=$(grep $vouch /root/multi/voucher | awk '{print $2}')
@@ -345,6 +347,8 @@ req_limit() {
 
 freelimitReq() {
     limituser=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Your Current Free Limit Is $limituser" \
         --parse_mode html
@@ -354,24 +358,32 @@ freelimitReq() {
 }
 
 generatorReq() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Voucher Validity:" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 voucher_req() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Input Your Voucher:" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 resellerReq() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Create Reseller :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 balRes() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Add Balance Reseller :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -379,6 +391,8 @@ balRes() {
 
 allRes() {
     result=$(cat /root/multi/reseller)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━\n 🟢 Reseller 🟢 \n━━━━━━━━━━━━━━━━━━━━━\n\n$result\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
@@ -387,6 +401,8 @@ allRes() {
 }
 
 delRes() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "Delete Reseller :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -3109,8 +3125,9 @@ while :; do
                     ext_trojan $CAD_ARQ
                     ;;
 		'👤 Create Vmess Trial 👤\n\n( Expired Days ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ
-                    reseller_balance
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    userfree=$(sed -n '2 p' $CAD_ARQ | cut -d' ' -f1)
+                   # reseller_balance
                     trial_vm $CAD_ARQ
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
