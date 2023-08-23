@@ -2064,9 +2064,9 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     echo -e "TR $user $exp" >> /usr/local/etc/xray/user.txt;
 
     trojanlink1="trojan://${uuid}@${domain}:${xtls1}?type=ws%26security=tls%26path=%2Ftrojan%26sni=bug.com#${user}";
-    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com&security=none%26type=ws%26path=%2Ftrojan-none#${user}";
+    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com%26security=none%26type=ws%26path=%2Ftrojan-none#${user}";
     trojanlink3="trojan://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=trojan-grpc%26sni=bug.com#${user}";
-    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%252Ftrojan-h2%26sni=bug.com#${user}";
+    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%2Ftrojan-h2%26sni=bug.com#${user}";
  
     systemctl restart xray@trojan.service
       
