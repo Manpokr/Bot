@@ -1677,8 +1677,8 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
     
     local msg
-   # msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸Xtls ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+ #   msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸Xtls ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks            = $user\n"
     msg+="Myip               = $ip_nya\n"
     msg+="Subdomain          = ${domain}\n"    
