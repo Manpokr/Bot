@@ -1679,11 +1679,11 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
  #   msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸Xtls ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Remarks            = $user\n"
+    msg+="Remarks            = $user\n"
     msg+="Myip               = $ip_nya\n"
     msg+="Subdomain          = ${domain}\n"    
     msg+="Limit Quota        = ${limit_nya}\n"
-    msg+="Port Tls           = ${xtls}</code>\n"
+    msg+="Port Tls           = ${xtls}\n"
     msg+="<code>Password & User Id = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
