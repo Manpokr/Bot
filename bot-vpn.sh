@@ -1456,7 +1456,9 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${user}"
     vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${user}"
     systemctl restart xray@vless.service
-    
+
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VLESS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
@@ -1696,7 +1698,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     vlesslink3="vless://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26encryption=none%26type=grpc%26serviceName=vless-grpc%26sni=bug.com#${user}"
     vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${user}"
     systemctl restart xray@vless.service
-    
+   
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VLESS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
@@ -1879,11 +1881,11 @@ sed -i '/#vless$/a\### '"$user $exp"'\
    
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Remarks      = $user\n"
-    msg+="Myip               = $ip_nya\n"
-    msg+="Subdomain          = ${domain}\n"    
-    msg+="Limit Quota        = ${limit_nya}\n"
-    msg+="Port Tls           = ${xtls}</code>\n"
+    msg+="<code>Remarks              = $user\n"
+    msg+="Myip                 = $ip_nya\n"
+    msg+="Subdomain            = ${domain}\n"    
+    msg+="Limit Quota          = ${limit_nya}\n"
+    msg+="Port Tls             = ${xtls}</code>\n"
     msg+="<code>Password %26 User Id = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
@@ -2123,14 +2125,14 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     vlesslink4="vless://${uuid}@${domain}:${xtls1}?security=tls%26encryption=none%26type=tcp%26headerType=http%26path=/vlesstcp%26sni=bug.com%26host=bug.com#${user}"
 
     systemctl restart xray.service    
-    
+
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Remarks            = $user\n"
-    msg+="Myip               = $ip_nya\n"
-    msg+="Subdomain          = ${domain}\n"    
-    msg+="Limit Quota        = ${limit_nya}\n"
-    msg+="Port Tls           = ${xtls}</code>\n"
+    msg+="<code>Remarks              = $user\n"
+    msg+="Myip                 = $ip_nya\n"
+    msg+="Subdomain            = ${domain}\n"    
+    msg+="Limit Quota          = ${limit_nya}\n"
+    msg+="Port Tls             = ${xtls}</code>\n"
     msg+="<code>Password %26 User Id = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
@@ -2675,9 +2677,7 @@ sta_tus() {
         msg+="Ovpn Ws Tls       = $stsepro\n"
         msg+="Ovpn Ws None      = $stsepro</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]}
-        ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+	ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
            --message_id ${callback_query_message_message_id[$id]} \
            --text "$msg" \
            --reply_markup "$keyboardsts" \
