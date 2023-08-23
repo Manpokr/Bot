@@ -186,7 +186,9 @@ req_url() {
             --text "👤 Create User Vmess 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addvless ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Vless 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
