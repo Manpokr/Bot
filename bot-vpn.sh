@@ -544,10 +544,12 @@ input_addssh() {
     if [ -r /usr/local/etc/udp/ ]; then
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
+       
        export UDP='msg+="\n━━━━━━━━━━━━━━━━━━━━━\n<b> SSH UDP-CUSTOM LINK <b>\n\n<b>${domain}:1-65350@${Login}:${Pass}<b>"'
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
-       msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"   
+       msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
+       
        export link="<code>Openvpn Udp = http://${ip_nya}:85/client-udp.ovpn</code>\n"
     fi
     }
