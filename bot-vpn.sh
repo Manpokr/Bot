@@ -525,6 +525,17 @@ input_addssh() {
     else
         masaaktif=30
     fi
+    udp-nya() {
+if [ -r /usr/local/etc/udp/ ]; then
+    msg+="<code>Ssh Udp     = 1-65350</code>"
+    msg+="<code>Openvpn Tcp = ${ovpn}</code>";
+    export UDP='msg+="\n━━━━━━━━━━━━━━━━━━━━━\n<b> SSH UDP-CUSTOM LINK <b>\n\n<b>${domain}:1-65350@${Login}:${Pass}<b>"'
+else
+    msg+="<code>Openvpn Tcp = ${ovpn}</code>"
+    msg+="<code>Openvpn Udp = ${ovpn1}</code>"   
+    export link='msg+="\n<code>Openvpn Udp = http://${IP_NYA}:85/client-udp.ovpn</code>\n"'
+fi
+}
     masaaktif=$(sed -n '3 p' $file_user | cut -d' ' -f1)
     ssl=`cat ~/log-install.txt | grep -w "STUNNEL4" | cut -d: -f2`
     ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
