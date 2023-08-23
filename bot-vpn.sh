@@ -8,6 +8,7 @@ get_Token=$(sed -n '1 p' /root/ResBotAuth | cut -d' ' -f2)
 get_AdminID=$(sed -n '2 p' /root/ResBotAuth | cut -d' ' -f2)
 get_botName=$(sed -n '1 p' /root/multi/bot.conf | cut -d' ' -f2)
 get_limituser=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
+nameStore=$(grep -w "store_name" /root/multi/bot.conf | awk '{print $NF}')
 res_price=5
 
 ShellBot.init --token $get_Token --monitor --return map --flush --log_file /root/log_bot
@@ -16,9 +17,7 @@ msg_welcome() {
     oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b> WELCOME TO BOT $nameStore</b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg="Welcome $nameStore 🛂\n"
 	
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -28,11 +27,11 @@ msg_welcome() {
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b> WELCOME TO BOT RESELLER</b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
-       # msg="👥 Welcome Reseller 👥\n\n"
-        msg+="Your Id : <code>${message_from_id}</code>\n"
-        msg+="Your Balance Is $oribal"
+	msg+="Welcome To Bot Reseller 👥\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg+="Your Name Store = $nameStore"
+        msg+="Your Id         = <code>${message_from_id}</code>\n"
+        msg+="Your Balance Is = $oribal"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -50,10 +49,7 @@ backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b> WELCOME TO BOT </b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
-        #msg="Welcome MASTER\n"
+	msg="Welcome $nameStore 🛂\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -64,11 +60,11 @@ backReq() {
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b> WELCOME TO BOT RESELLER</b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
-       # msg="Welcome Reseller\n\n"
-        msg+="Your Id : <code>${callback_query_from_id}</code>\n"
-        msg+="Your Balance Is $oribal"
+	msg+="Welcome To Bot Reseller 👥\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg+="Your Name Store = $nameStore"
+        msg+="Your Id         = <code>${message_from_id}</code>\n"
+        msg+="Your Balance Is = $oribal"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
  
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -261,7 +257,7 @@ link_voucher() {
         msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm Vmess Acc\n"
+        msg+="Click Link To Confirm ssh-vpn Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
@@ -509,11 +505,12 @@ del_exp() {
         else
             echo "echo "Expired- Username : $username are expired at: $tgl $bulantahun and removed : $hariini "" >>/usr/local/bin/deleteduser
             echo "Username $username that are expired at $tgl $bulantahun removed from the VPS $hariini"
-            userdel $username
+	    userdel $username
+            sed -i "/\b$username\b/d" /usr/local/etc/ssh/user.txt
         fi
     done
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Done Remove Expired User\n" \
+        --text "Success Remove Expired User !\n" \
         --parse_mode html
 
 }
@@ -529,29 +526,62 @@ input_addssh() {
         masaaktif=30
     fi
     masaaktif=$(sed -n '3 p' $file_user | cut -d' ' -f1)
-    domain=$(cat /root/domain)
-    IP=$(wget -qO- ipinfo.io/ip)
-    ssl="$(cat ~/log-install.txt | grep -w "Stunnel4" | cut -d: -f2 | sed 's/ //g')"
-    sqd="$(cat ~/log-install.txt | grep -w "Squid Proxy" | cut -d: -f2 | sed 's/ //g')"
-    ovpn="$(netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
-    ovpn2="$(netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
+    ssl=`cat ~/log-install.txt | grep -w "STUNNEL4" | cut -d: -f2`
+    ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    drop=`cat ~/log-install.txt | grep -w "DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wsnone=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET NONE" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wstls=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    ovpn=`netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn1=`netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn2=`cat ~/log-install.txt | grep -w "OPENVPN" | cut -d: -f2|sed 's/  //g' | cut -f1 | awk '{print $6}'`
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    exp1=`date -d "$masaaktif days" +"%Y-%m-%d"`
+    exp2=`date -d "$masaaktif days" +"%d-%m-%Y"`
+
+    echo -e "SSH $Login $exp1" >> /usr/local/etc/ssh/user.txt;
+
     useradd -e $(date -d "$masaaktif days" +"%Y-%m-%d") -s /bin/false -M $Login
     exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
+    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 OVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Thank You For Using Our Services\n"
-    msg+="SSH %26 OpenVPN Account Info\n"
-    msg+="Username       : $Login\n"
-    msg+="Password       : $Pass\n"
-    msg+="Expired On     : $exp\n"
-    msg+="Host           : ${domain}\n"
-    msg+="\n"
-    msg+="OpenVPN        : TCP $ovpn http://$IP:81/client-tcp-$ovpn.ovpn\n"
-    msg+="OpenVPN        : UDP $ovpn2 http://$IP:81/client-udp-$ovpn2.ovpn\n"
-    msg+="OpenVPN        : SSL 442 http://$IP:81/client-tcp-ssl.ovpn\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 SSHVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Myip        = ${ip_nya}\n"
+    msg+="Subdomain   = ${domain}\n"
+    msg+="Username    = ${Login}\n"
+    msg+="Password    = ${Pass}\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-
+    msg+="Openssh     = ${ssh}\n"
+    msg+="Dropbear    = ${drop}\n"
+    msg+="Ssl-tls     =${ssl}\n"
+    udp-nya
+    msg+="Openvpn Ssl = ${ovpn2}\n"
+    msg+="Ssh Ws      = ${wsnone}\n"
+    msg+="Ssh Ws Tls  = ${wstls}\n"
+    msg+="Ovpn Ws     = ${wsnone}\n"
+    msg+="Ovpn Ws Tls = ${wstls}\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn $link\n"
+    msg+="Openvpn Ssl = http://${IP_NYA}:85/client-ssl.ovpn\n"
+    msg+="Badvpn      = 7100-7900\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Slow Dns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server   (NS)   = ${ns_nya}\n"
+    msg+="Public Key    (KEY)  = ${pub_key}${udp}\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="PAYLOAD WS\n"
+    msg+="GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="PAYLOAD WS TLS\n"
+    msg+="GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Expired On    = $exp2</code>"
+ 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
