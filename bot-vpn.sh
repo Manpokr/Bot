@@ -1199,7 +1199,7 @@ vless_kota() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_vless() {
+create_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1598,7 +1598,7 @@ trial_xt() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_xtls() {
+create_vless() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
