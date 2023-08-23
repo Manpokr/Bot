@@ -662,6 +662,12 @@ vmess_ext() {
 
 }
 
+trial_vmess() {
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "👤 Create Vmess Trial 👤\n\n( Expired Days ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
+
 create_vmess() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
@@ -1188,9 +1194,9 @@ vless_ext() {
 
 }
 
-trial_vl() {
+trial_vless() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "👤 Create Vless Trial 👤\n\n( Enter ) :" \
+        --text "👤 Create Vless Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -1441,11 +1447,7 @@ fi
 
 trial_vless() {
     file_user=$1
-    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
-    exp1=1
-    hariini=`date -d "0 days" +"%Y-%m-%d"`
-    exp=`date -d "$exp1 days" +"%Y-%m-%d"`
-    exp1=`date -d "$masaaktif days" +"%d-%m-%Y"` 
+    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";     
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
 
@@ -1465,7 +1467,7 @@ trial_vless() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     warp-nya() {
       if [ -r /usr/local/etc/warp/warp-reg ]; then
@@ -1482,6 +1484,7 @@ trial_vless() {
     else
        export limit_nya="Unlimited"
     fi
+    exp=`date -d "$duration days" +"%Y-%m-%d"`
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
@@ -1510,8 +1513,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port Tls     = ${xtls}\n"
+    msg+="Limit Quota  = $limit_nya\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
@@ -1537,7 +1539,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="<code> $vlesslink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp1\n"
+    msg+="Expired On    = $exp\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -1595,7 +1597,12 @@ xtls_ext() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Xtls 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+}
 
+trial_xtls() {
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "👤 Create Xtls Trial 👤\n\n( Expired Days ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
 }
 
 create_xtls() {
@@ -1855,10 +1862,6 @@ fi
 trial_xtls() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
-    exp1=1
-    hariini=`date -d "0 days" +"%Y-%m-%d"`
-    exp=`date -d "$exp1 days" +"%Y-%m-%d"`
-    exp1=`date -d "$masaaktif days" +"%d-%m-%Y"` 
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -1875,7 +1878,7 @@ trial_xtls() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
@@ -1956,7 +1959,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
+    msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -2014,7 +2017,12 @@ trojan_ext() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Trojan 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+}
 
+trial_trojan() {
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "👤 Create Trojan Trial 👤\n\n( Expired Days ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
 }
 
 create_trojan() {
@@ -2252,13 +2260,8 @@ fi
 trial_trojan() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
-    exp1=1
-    hariini=`date -d "0 days" +"%Y-%m-%d"`
-    exp=`date -d "$exp1 days" +"%Y-%m-%d"`
-    exp1=`date -d "$masaaktif days" +"%d-%m-%Y"` 
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
- 
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
@@ -2275,7 +2278,7 @@ trial_trojan() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     limit='10'
     if [[ $limit -gt 0 ]]; then
@@ -2315,13 +2318,13 @@ trial_trojan() {
     msg+="Subdomain H2 = vlh2.${domain}\n"
     msg+="Limit Quota  = ${limit_nya}\n"
     msg+="Port Tls     = ${xtls}\n"
-    msg+="Port None    = ${none}\n"
-    msg+="Grpc Type    = Gun %26 Multi\n"
-    msg+="Password     = ${uuid}</code>\n"
+    msg+="Port None    = ${none}</code>\n"
+    msg+="<code>Grpc Type    = Gun %26 Multi</code>\n"
+    msg+="<code>Password     = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
-    msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
+    msg+="Public Key  a (KEY)  = ${pub_key}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS TLS LINK\n"
     msg+="<code> $trojanlink1</code>\n"
@@ -2339,7 +2342,7 @@ trial_trojan() {
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
+    msg+="<code>Expired On    = $exp</code>\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -2905,10 +2908,25 @@ while :; do
                     reseller_balance
                     ext_trojan $CAD_ARQ
                     ;;
-		'👤 Create Vless Trial 👤\n\n( Enter ) :')
+		'👤 Create Vmess Trial 👤\n\n( Expired Days ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    trial_vmess $CAD_ARQ
+                    ;;
+		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     trial_vless $CAD_ARQ
+                    ;;
+		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    trial_xtls $CAD_ARQ
+                    ;;
+		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    trial_trojan $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
