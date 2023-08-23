@@ -545,7 +545,7 @@ input_addssh() {
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        
-       export UDP='msg+="\n━━━━━━━━━━━━━━━━━━━━━\n<b> SSH UDP-CUSTOM LINK <b>\n\n<b>${domain}:1-65350@${Login}:${Pass}<b>"'
+       export udp="━━━━━━━━━━━━━━━━━━━━━\n<b>SSH UDP-CUSTOM LINK<b>\n<b><code> ${domain}:1-65350@${Login}:${Pass}</code>\n"
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
@@ -584,7 +584,8 @@ input_addssh() {
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
     msg+="Name Server   (NS)   = ${ns_nya}\n"
-    msg+="Public Key    (KEY)  = ${pub_key}${udp}</code>\n"
+    msg+="Public Key    (KEY)  = ${pub_key}</code>\n"
+    msg+="$udp\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS\n"
     msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
