@@ -1677,7 +1677,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+ #   msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
  #   msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸Xtls ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Remarks            = $user\n"
     msg+="Myip               = $ip_nya\n"
@@ -1707,14 +1707,15 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="User : $user\n"
     msg+="<code>Expired : $exp</code>\n"
     msg+="\n"
     msg+="Splice\n"
-    msg+="<code>$splice</code>\n"
+    msg+="<code>$vmesslink1</code>\n"
     msg+="\n"
     msg+="Direct\n"
-    msg+="<code>$direct</code>\n"
+    msg+="<code>$trojanlink3</code>\n"
     msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
