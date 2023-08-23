@@ -2071,7 +2071,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+  #  msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
  #   msg+="<code>Remarks      = $user\n"
     #msg+="Myip         = $ip_nya\n"
 #    msg+="Subdomain    = ${domain}\n"
@@ -2081,7 +2081,8 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
  #   msg+="Port None    = ${none}</code>\n"
   #  msg+="<code>Grpc Type    = Gun %26 Multi</code>\n"
    # msg+="<code>Password     = ${uuid}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+   msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+#    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
@@ -2103,7 +2104,13 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp<code>\n"
-
+    msg+="User : $user\n"
+    msg+="<code>Expired : $exp</code>\n"
+    msg+="\n"
+    msg+="Trojan\n"
+    msg+="<code>$tro</code>\n"
+    msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
+    
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
