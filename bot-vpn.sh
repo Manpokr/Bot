@@ -2102,6 +2102,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>Expired On    = $exp<code>\n"
     msg+="User : $user\n"
