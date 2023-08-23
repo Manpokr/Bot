@@ -16,14 +16,14 @@ msg_welcome() {
     oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome To Bot Vpn\n"
+        msg="Welcome MASTER\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard1" \
             --parse_mode html
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller Vpn\n\n"
+        msg="Welcome Reseller\n\n"
         msg+="Your Id : <code>${message_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -32,7 +32,7 @@ msg_welcome() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${message_from_id}</code>\n" \
+            --text "❌Access Deny❌\n\nThis Is Your Id: <code>${message_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -41,7 +41,7 @@ backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome To Bot Vpn\n"
+        msg="Welcome MASTER\n"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
             --text "$msg" \
@@ -49,7 +49,7 @@ backReq() {
             --parse_mode html
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller Vpn\n\n"
+        msg="Welcome Reseller\n\n"
         msg+="Your Id : <code>${callback_query_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -59,7 +59,7 @@ backReq() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
-            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --text "❌Access Deny❌\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -1199,7 +1199,7 @@ vless_kota() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_xtls() {
+create_vless() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1598,7 +1598,7 @@ trial_xt() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_vless() {
+create_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
