@@ -174,7 +174,7 @@ req_url() {
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Vless 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
-    elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
+    elif [[ ${callback_query_data[$id]} == _addvlessxtls ]]; then
         ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Xtls 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
@@ -221,7 +221,7 @@ link_voucher() {
         local msg
         msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=xxxtls_${user}_${vouch}\n\n"
+        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Xtls Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -1962,13 +1962,13 @@ sed -i '/#vless$/a\### '"$user $exp"'\
 
 unset menuxt
 menuxt=''
-ShellBot.InlineKeyboardButton --button 'menuxt' --line 1 --text 'Create Account Xtls' --callback_data '_addxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 1 --text 'Create Account Xtls' --callback_data '_addvlessxtls'
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 1 --text 'Delete Account Xtls' --callback_data '_delconfxtls'
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 2 --text 'Renew Account Xtls' --callback_data '_extconfxtls'
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 2 --text 'Check Account Xtls' --callback_data '_cekxtls'
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 3 --text 'Trial Account Xtls' --callback_data '_trialxtls'
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 4 --text '🔙 Back 🔙' --callback_data '_backxtls'
-ShellBot.regHandleFunction --function req_url --callback_data _addxtls
+ShellBot.regHandleFunction --function req_url --callback_data _addvlessxtls
 ShellBot.regHandleFunction --function xtls_del --callback_data _delconfxtls
 ShellBot.regHandleFunction --function xtls_ext --callback_data _extconfxtls
 ShellBot.regHandleFunction --function check_xtls --callback_data _cekxtls
@@ -2779,7 +2779,7 @@ while :; do
                         msg="User      = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=vlessxtls_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Xtls Acc\n"
+                        msg+="Click Link To Confirm nXtls Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
