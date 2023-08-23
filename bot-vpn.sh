@@ -2104,14 +2104,29 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>Expired On    = $exp<code>\n"
     msg+="User : $user\n"
     msg+="<code>Expired : $exp</code>\n"
     msg+="\n"
+    msg+="TROJAN WS TLS LINK\n"
+    msg+="<code> $trojanlink1</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN WS LINK\n"
+    msg+="<code> $trojanlink2</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN H2 TLS LINK\n"
+    msg+="<code> $trojanlink4</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="TROJAN GRPC TLS LINK\n"
+    msg+="<code> $trojanlink3</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Trojan\n"
     msg+="<code>$tro</code>\n"
     msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-    
+
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
