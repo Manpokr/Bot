@@ -545,7 +545,7 @@ input_addssh() {
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        
-       export udp="━━━━━━━━━━━━━━━━━━━━━\n<b>SSH UDP-CUSTOM LINK<b>\n<b><code> ${domain}:1-65350@${Login}:${Pass}</code>\n"
+       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n"
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
