@@ -1677,10 +1677,10 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     vlesslink4="vless://${uuid}@${domain}:${xtls1}?security=tls%26encryption=none%26type=tcp%26headerType=http%26path=/vlesstcp%26sni=bug.com%26host=bug.com#${user}"
 
     systemctl restart xray.service    
-    
+   
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Remarks     b       = $user\n"
+    msg+="<code>Remarks      = $user\n"
     msg+="Myip               = $ip_nya\n"
     msg+="Subdomain          = ${domain}\n"    
     msg+="Limit Quota        = ${limit_nya}\n"
