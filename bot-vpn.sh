@@ -543,13 +543,11 @@ input_addssh() {
     udp-nya() {
     if [ -r /usr/local/etc/udp/ ]; then
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
-       msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
-       
+       msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"  
        export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n"
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
-       
        export link="<code>Openvpn Udp = http://${ip_nya}:85/client-udp.ovpn</code>\n"
     fi
     }
@@ -585,7 +583,7 @@ input_addssh() {
     msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
     msg+="Name Server   (NS)   = ${ns_nya}\n"
     msg+="Public Key    (KEY)  = ${pub_key}</code>\n"
-    msg+="$udp\n"
+    msg+="$udp"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS\n"
     msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
@@ -673,7 +671,17 @@ req_ovpn() {
     pub_key=$(cat /etc/slowdns/server.pub);
     exp1=`date -d "$masaaktif days" +"%Y-%m-%d"`
     exp2=`date -d "$masaaktif days" +"%d-%m-%Y"`
-
+    udp-nya() {
+    if [ -r /usr/local/etc/udp/ ]; then
+       msg+="<code>Ssh Udp     = 1-65350</code>\n"
+       msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"  
+       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n"
+    else
+       msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
+       msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
+       export link="<code>Openvpn Udp = http://${ip_nya}:85/client-udp.ovpn</code>\n"
+    fi
+    }
     echo -e "SSH $Login $exp1" >> /usr/local/etc/ssh/user.txt;
 
     useradd -e $(date -d "$masaaktif days" +"%Y-%m-%d") -s /bin/false -M $Login
@@ -697,13 +705,15 @@ req_ovpn() {
     msg+="Ovpn Ws     = ${wsnone}\n"
     msg+="Ovpn Ws Tls = ${wstls}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn</code> $link\n"
+    msg+="<code>Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn</code>\n"
+    msg+="$link"
     msg+="<code>Openvpn Ssl = http://${IP_NYA}:85/client-ssl.ovpn</code>\n"
     msg+="<code>Badvpn      = 7100-7900</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
     msg+="Name Server   (NS)   = ${ns_nya}\n"
-    msg+="Public Key    (KEY)  = ${pub_key}${udp}</code>\n"
+    msg+="Public Key    (KEY)  = ${pub_key}</code>\n"
+    msg+="$udp"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS\n"
     msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
