@@ -1016,8 +1016,6 @@ EOF
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
     
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -1375,6 +1373,8 @@ vless_del() {
 vless_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -1770,6 +1770,8 @@ menu_xtls() {
 xtls_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -1781,6 +1783,8 @@ xtls_del() {
 xtls_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -2057,19 +2061,19 @@ trial_xtls() {
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
   
-#    req_voucher $file_user
-#    req_limit
+    req_voucher $file_user
+    req_limit
     if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
-  #  if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
- #       duration=$expadmin
- #   else
-  #      duration=1
-  #  fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=1
+    fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
@@ -2190,6 +2194,8 @@ menu_trojan() {
 trojan_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -2201,6 +2207,8 @@ trojan_del() {
 trojan_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -2667,6 +2675,8 @@ sta_tus() {
         msg+="Ovpn Ws Tls       = $stsepro\n"
         msg+="Ovpn Ws None      = $stsepro</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
            --message_id ${callback_query_message_message_id[$id]} \
            --text "$msg" \
