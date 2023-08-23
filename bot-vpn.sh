@@ -1559,7 +1559,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function vless_del --callback_data _delconfvless
 ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvless
 ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
-ShellBot.regHandleFunction --function trial_vl --callback_data _trialvless
+ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
 ShellBot.regHandleFunction --function back_ser --callback_data _backvless
 unset keyboardvl
 keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
