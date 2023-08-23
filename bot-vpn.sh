@@ -535,7 +535,7 @@ input_addssh() {
     else
         masaaktif=30
     fi
-    if grep -E "^SSH $Login" /usr/local/etc/xray/user.txt; then
+    if grep -E "^SSH $Login" /usr/local/etc/ssh/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
@@ -694,7 +694,7 @@ req_ovpn() {
     masaaktif=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     req_voucher $file_user
     req_limit
-    if grep -E "^SSH $Login" /usr/local/etc/xray/user.txt; then
+    if grep -E "^SSH $Login" /usr/local/etc/ssh/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
