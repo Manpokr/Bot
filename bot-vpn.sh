@@ -560,7 +560,7 @@ input_addssh() {
     if [ -r /usr/local/etc/udp/ ]; then
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"  
-       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n"
+       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n\n"
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
@@ -700,7 +700,7 @@ req_ovpn() {
             --parse_mode html
         exit 1
     fi
-    ssl=`cat ~/log-install.txt | grep -w "STUNNEL4" | cut -d: -f2`
+    ssl=`cat ~/log-install.txt | grep -w "STUNNEL5" | cut -d: -f2`
     ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
     drop=`cat ~/log-install.txt | grep -w "DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f1`
     wsnone=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET NONE" | cut -d: -f2|sed 's/ //g' | cut -f1`
@@ -718,7 +718,7 @@ req_ovpn() {
     if [ -r /usr/local/etc/udp/ ]; then
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"  
-       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n"
+       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n\n"
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
