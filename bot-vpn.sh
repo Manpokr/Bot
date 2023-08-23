@@ -2077,7 +2077,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
     msg+="Limit Quota  = ${limit_nya}</code>\n"
-    msg+="Port Tls     = ${xtls}</code>\n"
+    msg+="Port Tls h    = ${xtls}</code>\n"
     msg+="Port None    = ${none}</code>\n"
     msg+="<code>Grpc Type    = Gun %26 Multi</code>\n"
    # msg+="<code>Password     = ${uuid}</code>\n"
