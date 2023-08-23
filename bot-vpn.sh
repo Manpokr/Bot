@@ -1317,6 +1317,8 @@ menu_vless() {
 vless_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
