@@ -2372,7 +2372,7 @@ start_req() {
         create_vmess $file_user
     elif [ "${config}" == "vless" ]; then
         create_vless $file_user
-    elif [ "${config}" == "vless" ]; then
+    elif [ "${config}" == "vlessxtls" ]; then
         create_xtls $file_user
     elif [ "${config}" == "trojan" ]; then
         create_trojan $file_user
@@ -2778,7 +2778,7 @@ while :; do
                         local msg
                         msg="User      = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
+                        msg+="https://t.me/${get_botName}?start=vlessxtls_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Xtls Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
