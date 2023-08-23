@@ -217,7 +217,6 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
-	    
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
         msg="User      = $user\n"
@@ -228,7 +227,6 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
-	    
     elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
         local msg
         msg="User      = $user\n"
@@ -2757,7 +2755,7 @@ while :; do
                             --parse_mode html
                     fi
                     ;;                    
-                '👤 Create User Xtls 👤\n\n( Username Expired ) :')
+		'👤 Create User Xtls 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -2774,7 +2772,7 @@ while :; do
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
-                    else
+                    else       
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
