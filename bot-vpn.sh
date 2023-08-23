@@ -549,35 +549,35 @@ input_addssh() {
     
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 SSHVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Myip        = ${ip_nya}\n"
+    msg+="<code>Myip        = ${ip_nya}\n"
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
-    msg+="Password    = ${Pass}\n"
+    msg+="Password    = ${Pass}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Openssh     = ${ssh}\n"
+    msg+="<code>Openssh     = ${ssh}\n"
     msg+="Dropbear    = ${drop}\n"
-    msg+="Ssl-tls     =${ssl}\n"
+    msg+="Ssl-tls     =${ssl}</code>\n"
     udp-nya
-    msg+="Openvpn Ssl = ${ovpn2}\n"
+    msg+="<code>Openvpn Ssl = ${ovpn2}\n"
     msg+="Ssh Ws      = ${wsnone}\n"
     msg+="Ssh Ws Tls  = ${wstls}\n"
     msg+="Ovpn Ws     = ${wsnone}\n"
-    msg+="Ovpn Ws Tls = ${wstls}\n"
+    msg+="Ovpn Ws Tls = ${wstls}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn $link\n"
-    msg+="Openvpn Ssl = http://${IP_NYA}:85/client-ssl.ovpn\n"
-    msg+="Badvpn      = 7100-7900\n"
+    msg+="<code>Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn</code> $link\n"
+    msg+="<code>Openvpn Ssl = http://${IP_NYA}:85/client-ssl.ovpn</code>\n"
+    msg+="<code>Badvpn      = 7100-7900</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Slow Dns Port (PORT) = ${xtls1}\n"
+    msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
     msg+="Name Server   (NS)   = ${ns_nya}\n"
-    msg+="Public Key    (KEY)  = ${pub_key}${udp}\n"
+    msg+="Public Key    (KEY)  = ${pub_key}${udp}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS\n"
-    msg+="GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]\n"
+    msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS TLS\n"
-    msg+="GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]\n"
+    msg+="<code> GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp2</code>"
@@ -644,28 +644,61 @@ req_ovpn() {
     masaaktif=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     req_voucher $file_user
     req_limit
-    domain=$(cat /root/domain)
-    IP=$(wget -qO- ipinfo.io/ip)
-    ssl="$(cat ~/log-install.txt | grep -w "Stunnel4" | cut -d: -f2 | sed 's/ //g')"
-    sqd="$(cat ~/log-install.txt | grep -w "Squid Proxy" | cut -d: -f2 | sed 's/ //g')"
-    ovpn="$(netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
-    ovpn2="$(netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
+    ssl=`cat ~/log-install.txt | grep -w "STUNNEL4" | cut -d: -f2`
+    ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    drop=`cat ~/log-install.txt | grep -w "DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wsnone=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET NONE" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    wstls=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET TLS" | cut -d: -f2|sed 's/ //g' | cut -f1`
+    ovpn=`netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn1=`netstat -nlpu | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2`
+    ovpn2=`cat ~/log-install.txt | grep -w "OPENVPN" | cut -d: -f2|sed 's/  //g' | cut -f1 | awk '{print $6}'`
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    exp1=`date -d "$masaaktif days" +"%Y-%m-%d"`
+    exp2=`date -d "$masaaktif days" +"%d-%m-%Y"`
+
+    echo -e "SSH $Login $exp1" >> /usr/local/etc/ssh/user.txt;
+
     useradd -e $(date -d "$masaaktif days" +"%Y-%m-%d") -s /bin/false -M $Login
     exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
+    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 OVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Thank You For Using Our Services\n"
-    msg+="SSH %26 OpenVPN Account Info\n"
-    msg+="Username       : $Login\n"
-    msg+="Password       : $Pass\n"
-    msg+="Expired On     : $exp\n"
-    msg+="Host           : ${domain}\n"
-    msg+="\n"
-    msg+="OpenVPN        : TCP $ovpn http://$IP:81/client-tcp-$ovpn.ovpn\n"
-    msg+="OpenVPN        : UDP $ovpn2 http://$IP:81/client-udp-$ovpn2.ovpn\n"
-    msg+="OpenVPN        : SSL 442 http://$IP:81/client-tcp-ssl.ovpn\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 SSHVPN ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Myip        = ${ip_nya}\n"
+    msg+="Subdomain   = ${domain}\n"
+    msg+="Username    = ${Login}\n"
+    msg+="Password    = ${Pass}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Openssh     = ${ssh}\n"
+    msg+="Dropbear    = ${drop}\n"
+    msg+="Ssl-tls     =${ssl}</code>\n"
+    udp-nya
+    msg+="<code>Openvpn Ssl = ${ovpn2}\n"
+    msg+="Ssh Ws      = ${wsnone}\n"
+    msg+="Ssh Ws Tls  = ${wstls}\n"
+    msg+="Ovpn Ws     = ${wsnone}\n"
+    msg+="Ovpn Ws Tls = ${wstls}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn</code> $link\n"
+    msg+="<code>Openvpn Ssl = http://${IP_NYA}:85/client-ssl.ovpn</code>\n"
+    msg+="<code>Badvpn      = 7100-7900</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server   (NS)   = ${ns_nya}\n"
+    msg+="Public Key    (KEY)  = ${pub_key}${udp}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="PAYLOAD WS\n"
+    msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="PAYLOAD WS TLS\n"
+    msg+="<code> GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Expired On    = $exp2</code>"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
