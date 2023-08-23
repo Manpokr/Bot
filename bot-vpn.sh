@@ -469,12 +469,22 @@ add_ssh() {
 }
 
 del_ssh() {
+    cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User ssh-vpn 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 ext_ssh() {
+    cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User ssh-vpn 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -603,14 +613,26 @@ input_addssh() {
 input_delssh() {
     file_user=$1
     Pengguna=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if getent passwd $Pengguna >/dev/null 2>&1; then
-        userdel $Pengguna
+    if ! grep -E "^SSH $Pengguna" /usr/local/etc/ssh/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "$Pengguna Was Removed\n" \
+            --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
-    else
+        exit 1
+    fi
+    user="$(cat /usr/local/etc/ssh/user.txt | grep -w "$Pengguna" | awk '{print $2}')"
+    exp="$(cat /usr/local/etc/ssh/user.txt | grep -w "$Pengguna" | awk '{print $3}')"
+    
+    if getent passwd $user >/dev/null 2>&1; then
+        userdel $user
+	sed -i "/\b$user\b/d" /usr/local/etc/ssh/user.txt
+ 
+	local msg
+        msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER SSHVPN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+      
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Failure: User $Pengguna Not Exist\n" \
+            --text "$msg" \
             --parse_mode html
     fi
 }
@@ -619,30 +641,39 @@ input_extssh() {
     file_user=$1
     User=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     Days=$(sed -n '2 p' $file_user | cut -d' ' -f1)
-    egrep "^$User" /etc/passwd >/dev/null
+    if ! grep -E "^SSH $User" /usr/local/etc/ssh/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Does Not Exist ❗❗\n" \
+            --parse_mode html
+        exit 1
+    fi
+    user="$(cat /usr/local/etc/ssh/user.txt | grep -w "$User" | awk '{print $2}')"
+    exp="$(cat /usr/local/etc/ssh/user.txt | grep -w "$User" | awk '{print $3}')"
+    egrep "^$user" /etc/passwd >/dev/null
     if [ $? -eq 0 ]; then
         Today=$(date +%s)
         Days_Detailed=$(($Days * 86400))
         Expire_On=$(($Today + $Days_Detailed))
         Expiration=$(date -u --date="1970-01-01 $Expire_On sec GMT" +%Y/%m/%d)
         Expiration_Display=$(date -u --date="1970-01-01 $Expire_On sec GMT" '+%d %b %Y')
-        passwd -u $User
-        usermod -e $Expiration $User
-        egrep "^$User" /etc/passwd >/dev/null
-        echo -e "$Pass\n$Pass\n" | passwd $User &>/dev/null
+        now=$(date +%Y-%m-%d);
+        d1=$(date -d "$exp" +%s);
+        d2=$(date -d "$now" +%s);
+        exp2=$(( (d1 - d2) / 86400 ));
+        exp3=$(($exp2 + $Days));
+        exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
+
+	passwd -u $user
+        usermod -e $Expiration $user
+        egrep "^$user" /etc/passwd >/dev/null
+        echo -e "$Pass\n$Pass\n" | passwd $user &>/dev/null
+        sed -i "s/SSH $user $exp/SSH $user $exp4/g" /usr/local/etc/ssh/user.txt
 
         local msg
-        msg="Username :  $User\n"
-        msg+="Days Added :  $Days Days\n"
-        msg+="Expires on :  $Expiration_Display\n"
-
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "$msg" \
-            --parse_mode html
-    else
-        local msg
-        msg="Username Doesnt Exist\n"
-
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER SSHVPN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="User ( ${User} ) Renewed Then Expired On ( $exp4 ) Days Added ( $Days Days )\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+	
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
