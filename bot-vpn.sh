@@ -1677,13 +1677,14 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Remarks            = $user\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    #msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="Remarks            = $user\n"
     msg+="Myip               = $ip_nya\n"
     msg+="Subdomain          = ${domain}\n"    
     msg+="Limit Quota        = ${limit_nya}\n"
     msg+="Port Tls           = ${xtls}\n"
-    msg+="Password & User Id = ${uuid}</code>\n"
+    msg+="Password & User Id = ${uuid}\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
@@ -1705,8 +1706,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Xtls ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Expired On    = $exp</code>\n"
     msg+="User : $user\n"
     msg+="<code>Expired : $exp</code>\n"
     msg+="\n"
