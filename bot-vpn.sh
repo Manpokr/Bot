@@ -180,27 +180,38 @@ req_voucher() {
 
 req_url() {
     ori=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
-
     if [[ ${callback_query_data[$id]} == _addvmess ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User Vmess 👤\n\n( Username Expired ) :" \
-            --reply_markup "$(ShellBot.ForceReply)"
-    elif [[ ${callback_query_data[$id]} == _addvless ]]; then
         ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "👤 Create User Vmess 👤\n\n( Username Expired ) :" \
+            --reply_markup "$(ShellBot.ForceReply)"
+	    
+    elif [[ ${callback_query_data[$id]} == _addvless ]]; then
+       ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+       ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Vless 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
     elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Xtls 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
     elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Trojan 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
     elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User ssh-vpn 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
@@ -269,21 +280,39 @@ link_voucher() {
 
 req_free() {
     if [[ ${callback_query_data[$id]} == _freevmess ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Vmess free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
     elif [[ ${callback_query_data[$id]} == _freevless ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Vless free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
     elif [[ ${callback_query_data[$id]} == _freextls ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Xtls free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
     elif [[ ${callback_query_data[$id]} == _freetrojan ]]; then
-        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Trojan free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
+  #  elif [[ ${callback_query_data[$id]} == _freetrojango ]]; then
+     #   ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+     #         --message_id ${callback_query_message_message_id[$id]}
+	#ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+       #     --text "👤 Create User Trojan-Go free 👤\n\n( Username ) :" \
+        #    --reply_markup "$(ShellBot.ForceReply)"
     fi
 
 }
@@ -465,6 +494,8 @@ menu_ssh() {
 }
 
 add_ssh() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create User ssh-vpn 👤\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -473,6 +504,8 @@ add_ssh() {
 del_ssh() {
     cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -484,6 +517,8 @@ del_ssh() {
 ext_ssh() {
     cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -792,6 +827,8 @@ menu_vmess() {
 vmess_del() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -803,6 +840,8 @@ vmess_del() {
 vmess_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
@@ -813,6 +852,8 @@ vmess_ext() {
 }
 
 trial_vm() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Vmess Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -974,7 +1015,9 @@ EOF
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
-
+    
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
