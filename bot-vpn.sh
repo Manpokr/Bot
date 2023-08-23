@@ -662,7 +662,7 @@ vmess_ext() {
 
 }
 
-trial_vmess() {
+trial_vm() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Vmess Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -1152,7 +1152,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addvmess
 ShellBot.regHandleFunction --function vmess_del --callback_data _delconfvmess
 ShellBot.regHandleFunction --function vmess_ext --callback_data _extconfvmess
 ShellBot.regHandleFunction --function check_vmess --callback_data _cekvmess
-ShellBot.regHandleFunction --function trial_vmess --callback_data _trialvmess
+ShellBot.regHandleFunction --function trial_vm --callback_data _trialvmess
 ShellBot.regHandleFunction --function back_ser --callback_data _backvmess
 unset keyboardvm
 keyboardvm="$(ShellBot.InlineKeyboardMarkup -b 'menuvm')"
@@ -1194,7 +1194,7 @@ vless_ext() {
 
 }
 
-trial_vless() {
+trial_vl() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Vless Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -1559,7 +1559,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function vless_del --callback_data _delconfvless
 ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvless
 ShellBot.regHandleFunction --function check_vless --callback_data _cekvless
-ShellBot.regHandleFunction --function trial_vless --callback_data _trialvless
+ShellBot.regHandleFunction --function trial_vl --callback_data _trialvless
 ShellBot.regHandleFunction --function back_ser --callback_data _backvless
 unset keyboardvl
 keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
@@ -1599,7 +1599,7 @@ xtls_ext() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-trial_xtls() {
+trial_xt() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Xtls Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -1979,7 +1979,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addxtls
 ShellBot.regHandleFunction --function xtls_del --callback_data _delconfxtls
 ShellBot.regHandleFunction --function xtls_ext --callback_data _extconfxtls
 ShellBot.regHandleFunction --function check_xtls --callback_data _cekxtls
-ShellBot.regHandleFunction --function trial_xtls --callback_data _trialxtls
+ShellBot.regHandleFunction --function trial_xt --callback_data _trialxtls
 ShellBot.regHandleFunction --function back_ser --callback_data _backxtls
 unset keyboardxt
 keyboardxt="$(ShellBot.InlineKeyboardMarkup -b 'menuxt')"
@@ -2019,7 +2019,7 @@ trojan_ext() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-trial_trojan() {
+trial_tr() {
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Trojan Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -2363,7 +2363,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
 ShellBot.regHandleFunction --function trojan_del --callback_data _delconftrojan
 ShellBot.regHandleFunction --function trojan_ext --callback_data _extconftrojan
 ShellBot.regHandleFunction --function check_trojan --callback_data _cektrojan
-ShellBot.regHandleFunction --function trial_trojan --callback_data _trialtrojan
+ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrojan
 ShellBot.regHandleFunction --function back_ser --callback_data _backtrojan
 unset keyboardtr
 keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
@@ -2911,22 +2911,22 @@ while :; do
 		'👤 Create Vmess Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
-                    trial_vmess $CAD_ARQ
+                    trial_vm $CAD_ARQ
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
-                    trial_vless $CAD_ARQ
+                    trial_vl $CAD_ARQ
                     ;;
 		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
-                    trial_xtls $CAD_ARQ
+                    trial_xt $CAD_ARQ
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
-                    trial_trojan $CAD_ARQ
+                    trial_tr $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
