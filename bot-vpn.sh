@@ -221,7 +221,7 @@ link_voucher() {
         local msg
         msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
+        msg+="https://t.me/${get_botName}?start=xxxtls_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Xtls Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
