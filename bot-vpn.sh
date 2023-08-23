@@ -2081,7 +2081,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
+   # msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
    # msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
@@ -2114,6 +2114,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="Expired On    = $exp\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Trojan ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="User : $user\n"
     msg+="<code>Expired : $exp</code>\n"
     msg+="\n"
