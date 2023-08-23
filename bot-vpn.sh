@@ -16,16 +16,25 @@ msg_welcome() {
     oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome MASTER\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> WELCOME TO BOT $nameStore</b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+	
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard1" \
             --parse_mode html
+	    
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller\n\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> WELCOME TO BOT RESELLER</b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+       # msg="👥 Welcome Reseller 👥\n\n"
         msg+="Your Id : <code>${message_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
+	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+ 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard5" \
@@ -41,17 +50,27 @@ backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome MASTER\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> WELCOME TO BOT </b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+        #msg="Welcome MASTER\n"
+	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard1" \
             --parse_mode html
+	    
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="Welcome Reseller\n\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> WELCOME TO BOT RESELLER</b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+       # msg="Welcome Reseller\n\n"
         msg+="Your Id : <code>${callback_query_from_id}</code>\n"
         msg+="Your Balance Is $oribal"
+	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+ 
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
             --text "$msg" \
@@ -68,7 +87,7 @@ back_ser() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="⏭️ Menu Service ⏮️\n"
+        msg="👨‍🔧 Menu Service 👨‍🔧\n"
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
             --text "$msg" \
@@ -108,7 +127,7 @@ claimVoucher() {
 
 menu_ser() {
     local msg
-    msg="⏭️ Menu Service ⏮️\n"
+    msg="👨‍🔧 Menu Service 👨‍🔧\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -2384,8 +2403,7 @@ start_req() {
         echo "$user" >$file_user
         input_voucher $file_user
     else
-        echo -e "hey"
-       # msg_welcome
+        msg_welcome
     fi
 }
 
