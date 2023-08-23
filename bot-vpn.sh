@@ -1677,18 +1677,12 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
     
     local msg
-    msg+="Remarks            = $user\n"
-    msg+="Myip               = $ip_nya\n"
-    
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="User : $user\n"
-    msg+="<code>Expired : $exp</code>\n"
-  #  msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks            = $user\n"
-    msg+="Myip       p        = $ip_nya\n"
+    msg+="Myip               = $ip_nya\n"
     msg+="Subdomain          = ${domain}\n"    
     msg+="Limit Quota        = ${limit_nya}\n"
-    msg+="Port Tls           = ${xtls}</code>\n"
+    msg+="Port Tls   b        = ${xtls}</code>\n"
   #  msg+="Password %26 User Id = <code>${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
