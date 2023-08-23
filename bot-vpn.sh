@@ -1600,7 +1600,7 @@ trial_xt() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-trial_xtls() {
+create_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1745,15 +1745,10 @@ ext_xtls() {
         systemctl restart xray.service   
 	
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸 Extend ACCOUNT 🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n\n"
-        msg+="User : $user\n"
-        msg+="<code>Expired : $exp4</code>\n"
-        msg+="\n━━━━━━━━━━━━━━━━━━━━━\n"
-
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER XTLS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<code>User ( ${user} ) Renewed Then Expired On ( $exp4 )<\code>\n"
+        msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-     
+
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
@@ -1859,7 +1854,7 @@ return 0
 fi
 }
 
-create_xtls() {
+trial_xtls() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1867,19 +1862,19 @@ create_xtls() {
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
   
-    req_voucher $file_user
-    req_limit
+#    req_voucher $file_user
+#    req_limit
     if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
-    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        duration=$expadmin
-    else
-        duration=1
-    fi
+  #  if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+ #       duration=$expadmin
+ #   else
+  #      duration=1
+  #  fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
