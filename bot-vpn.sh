@@ -525,19 +525,8 @@ input_addssh() {
     else
         masaaktif=30
     fi
-    udp-nya() {
-if [ -r /usr/local/etc/udp/ ]; then
-    msg+="<code>Ssh Udp     = 1-65350</code>"
-    msg+="<code>Openvpn Tcp = ${ovpn}</code>";
-    export UDP='msg+="\n━━━━━━━━━━━━━━━━━━━━━\n<b> SSH UDP-CUSTOM LINK <b>\n\n<b>${domain}:1-65350@${Login}:${Pass}<b>"'
-else
-    msg+="<code>Openvpn Tcp = ${ovpn}</code>"
-    msg+="<code>Openvpn Udp = ${ovpn1}</code>"   
-    export link='msg+="\n<code>Openvpn Udp = http://${IP_NYA}:85/client-udp.ovpn</code>\n"'
-fi
-}
     masaaktif=$(sed -n '3 p' $file_user | cut -d' ' -f1)
-    ssl=`cat ~/log-install.txt | grep -w "STUNNEL4" | cut -d: -f2`
+    ssl=`cat ~/log-install.txt | grep -w "STUNNEL5" | cut -d: -f2`
     ssh=`cat ~/log-install.txt | grep -w "OPENSSH" | cut -d: -f2|sed 's/ //g' | cut -f1`
     drop=`cat ~/log-install.txt | grep -w "DROPBEAR" | cut -d: -f2|sed 's/ //g' | cut -f1`
     wsnone=`cat ~/log-install.txt | grep -w "SSH WEBSOCKET NONE" | cut -d: -f2|sed 's/ //g' | cut -f1`
@@ -551,7 +540,18 @@ fi
     pub_key=$(cat /etc/slowdns/server.pub);
     exp1=`date -d "$masaaktif days" +"%Y-%m-%d"`
     exp2=`date -d "$masaaktif days" +"%d-%m-%Y"`
-
+    udp-nya() {
+    if [ -r /usr/local/etc/udp/ ]; then
+       msg+="<code>Ssh Udp     = 1-65350</code>\n"
+       msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
+       export UDP='msg+="\n━━━━━━━━━━━━━━━━━━━━━\n<b> SSH UDP-CUSTOM LINK <b>\n\n<b>${domain}:1-65350@${Login}:${Pass}<b>"'
+    else
+       msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
+       msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"   
+       export link='msg+="\n<code>Openvpn Udp = http://${ip_nya}:85/client-udp.ovpn</code>\n"'
+    fi
+    }
+    
     echo -e "SSH $Login $exp1" >> /usr/local/etc/ssh/user.txt;
 
     useradd -e $(date -d "$masaaktif days" +"%Y-%m-%d") -s /bin/false -M $Login
@@ -575,8 +575,8 @@ fi
     msg+="Ovpn Ws     = ${wsnone}\n"
     msg+="Ovpn Ws Tls = ${wstls}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn</code> $link\n"
-    msg+="<code>Openvpn Ssl = http://${IP_NYA}:85/client-ssl.ovpn</code>\n"
+    msg+="<code>Openvpn Tcp = http://${ip_nya}:85/client-tcp.ovpn</code>\n<code>$link</code>\n"
+    msg+="<code>Openvpn Ssl = http://${ip_nya}:85/client-ssl.ovpn</code>\n"
     msg+="<code>Badvpn      = 7100-7900</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
