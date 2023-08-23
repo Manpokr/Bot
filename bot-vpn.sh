@@ -1457,8 +1457,6 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     vlesslink4="vless://${uuid}@vlh2.${domain}:${xtls1}?security=tls%26encryption=none%26type=h2%26headerType=none%26path=%252Fvless-h2%26sni=bug.com#${user}"
     systemctl restart xray@vless.service
 
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-              --message_id ${callback_query_message_message_id[$id]}
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VLESS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
@@ -1796,6 +1794,8 @@ xtls_ext() {
 }
 
 trial_xt() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Xtls Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
