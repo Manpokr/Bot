@@ -2873,6 +2873,7 @@ while :; do
                     comando=(${message_text[$id]})
                     [[ "${comando[0]}" = "/free" ]] && freeReq
                     [[ "${comando[0]}" = "/claim" ]] && claimVoucher
+		    [[ "${comando[0]}" = "/menu" ]] && msg_welcome
                     [[ "${comando[0]}" = "/restart" ]] && restartReq
                     ;;
                 esac
@@ -3235,14 +3236,14 @@ while :; do
                     xtls_trial $CAD_ARQ
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    echo "hey ${message_text[$id]}" >>$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f1 $CAD_ARQ)
-			exp=$(cut -d' ' -f1 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        duration=30
-			exp=30
+                        duration=1
+			exp=1
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
