@@ -2598,11 +2598,11 @@ start_req() {
     pass=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     if [ "${config}" == "vmess" ]; then
         create_vmess $file_user
-    if [ "${config}" == "trialvmess" ]; then
+    elif [ "${config}" == "trialvmess" ]; then
         vmess_trial $file_user
     elif [ "${config}" == "vless" ]; then
         create_vless $file_user
-    if [ "${config}" == "trialvless" ]; then
+    elif [ "${config}" == "trialvless" ]; then
         vless_trial $file_user
     elif [ "${config}" == "xtls" ]; then
         create_xtls $file_user
