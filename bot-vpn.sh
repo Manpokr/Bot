@@ -1412,7 +1412,7 @@ vless_kota() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_vless() {
+trial_vl() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1651,7 +1651,7 @@ return 0
 fi
 }
 
-trial_vless() {
+create_vless() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";     
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1662,8 +1662,8 @@ trial_vless() {
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
 
-#    req_voucher $file_user
- #   req_limit
+    req_voucher $file_user
+    req_limit
     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
@@ -3132,7 +3132,7 @@ while :; do
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
-		    reseller_balance
+		  #  reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
         	        exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
