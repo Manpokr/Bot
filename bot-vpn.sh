@@ -3143,6 +3143,7 @@ while :; do
                         duration=30
 			exp=30
                     fi
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
                     echo "$user" >>$CAD_ARQ
 		    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
@@ -3157,7 +3158,7 @@ while :; do
                         msg="User      = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=vmesstrial_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Trojan Acc\n"
+                        msg+="Click Link To Confirm Trial-Vmess Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
@@ -3177,6 +3178,7 @@ while :; do
                         duration=30
 			exp=30
                     fi
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
                     echo "$user" >>$CAD_ARQ
 		    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -3191,7 +3193,7 @@ while :; do
                         msg="User      = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=vlesstrial_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Trojan Acc\n"
+                        msg+="Click Link To Confirm Trial-Vless Acc\n"
 
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
