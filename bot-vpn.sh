@@ -3145,7 +3145,7 @@ while :; do
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
                     echo "$user" >>$CAD_ARQ
-		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+		    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
@@ -3162,7 +3162,7 @@ while :; do
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
                             --parse_mode html
-			    
+		     fi    
 		    #vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    #echo "$vouch $exp" >>/root/multi/voucher
                   #  vmess_trial $CAD_ARQ
@@ -3179,7 +3179,7 @@ while :; do
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
                     echo "$user" >>$CAD_ARQ
-		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+		    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
@@ -3196,6 +3196,7 @@ while :; do
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "$msg" \
                             --parse_mode html
+                     fi
 		   # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		  #  echo "$vouch $exp" >>/root/multi/voucher
                   #  vless_trial $CAD_ARQ
