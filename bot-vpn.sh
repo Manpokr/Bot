@@ -2873,7 +2873,7 @@ while :; do
                     comando=(${message_text[$id]})
                     [[ "${comando[0]}" = "/free" ]] && freeReq
                     [[ "${comando[0]}" = "/claim" ]] && claimVoucher
-		    [[ "${comando[0]}" = "/menu" ]] && msg_welcome
+		   # [[ "${comando[0]}" = "/menu" ]] && msg_welcome
                     [[ "${comando[0]}" = "/restart" ]] && restartReq
                     ;;
                 esac
@@ -3236,11 +3236,12 @@ while :; do
                     xtls_trial $CAD_ARQ
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
-                    echo "hey ${message_text[$id]}" >>$CAD_ARQ
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+		   # expi=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
-			exp=$(cut -d' ' -f2 $CAD_ARQ)
+                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     else
                         duration=1
 			exp=1
