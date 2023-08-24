@@ -1655,7 +1655,8 @@ fi
 
 vless_trial() {
     file_user=$1
-    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";     
+   # user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";     
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
 
@@ -1664,8 +1665,8 @@ vless_trial() {
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
 
-  #  req_voucher $file_user
-   # req_limit
+    req_voucher $file_user
+    req_limit
     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
@@ -2073,9 +2074,9 @@ return 0
 fi
 }
 
-trial_xtls() {
+xtls_trial() {
     file_user=$1
-    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
+ #   user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2238,6 +2239,8 @@ trojan_ext() {
 }
 
 trial_tr() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Trojan Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -2475,7 +2478,7 @@ return 0
 fi
 }
 
-trial_trojan() {
+trojan_trial() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2595,8 +2598,12 @@ start_req() {
     pass=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     if [ "${config}" == "vmess" ]; then
         create_vmess $file_user
+    if [ "${config}" == "trialvmess" ]; then
+        vmess_trial $file_user
     elif [ "${config}" == "vless" ]; then
         create_vless $file_user
+    if [ "${config}" == "trialvless" ]; then
+        vless_trial $file_user
     elif [ "${config}" == "xtls" ]; then
         create_xtls $file_user
     elif [ "${config}" == "trojan" ]; then
@@ -3127,14 +3134,75 @@ while :; do
                     ext_trojan $CAD_ARQ
                     ;;
 		'👤 Create Vmess Trial 👤\n\n( Expired Days ) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-                    userfree=$(sed -n '2 p' $CAD_ARQ | cut -d' ' -f1)
-                   # reseller_balance
-                    trial_vm $CAD_ARQ
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+		    reseller_balance
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
+                    else
+                        duration=30
+			exp=30
+                    fi
+		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
+                    echo "$user" >>$CAD_ARQ
+		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else      
+                        echo "$vouch $exp" >>/root/multi/voucher
+			exp1=$(date -d +${duration}days +%Y-%m-%d)
+		        local msg
+                        msg="User      = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=vmesstrial_${user}_${vouch}\n\n"
+                        msg+="Click Link To Confirm Trojan Acc\n"
+
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "$msg" \
+                            --parse_mode html
+			    
+		    #vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		    #echo "$vouch $exp" >>/root/multi/voucher
+                  #  vmess_trial $CAD_ARQ
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
-		  #  reseller_balance
+		    reseller_balance
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
+                    else
+                        duration=30
+			exp=30
+                    fi
+		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
+                    echo "$user" >>$CAD_ARQ
+		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else      
+                        echo "$vouch $exp" >>/root/multi/voucher
+			exp1=$(date -d +${duration}days +%Y-%m-%d)
+		        local msg
+                        msg="User      = $user\n"
+                        msg+="<code>Expired = $exp1</code>\n"
+                        msg+="https://t.me/${get_botName}?start=vlesstrial_${user}_${vouch}\n\n"
+                        msg+="Click Link To Confirm Trojan Acc\n"
+
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "$msg" \
+                            --parse_mode html
+		   # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		  #  echo "$vouch $exp" >>/root/multi/voucher
+                  #  vless_trial $CAD_ARQ
+                    ;;
+		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')                   
+		    echo "${message_text[$id]}" >>$CAD_ARQ
+		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
         	        exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
@@ -3142,17 +3210,20 @@ while :; do
                     fi
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    echo "$vouch $exp" >>/root/multi/voucher
-                    vless_trial $CAD_ARQ
-                    ;;
-		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ
-                    reseller_balance
-                    trial_xt $CAD_ARQ
+                    xtls_trial $CAD_ARQ
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
-                    reseller_balance
-                    trial_tr $CAD_ARQ
+		    reseller_balance
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+        	        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                    else
+			exp=30
+                    fi
+		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		    echo "$vouch $exp" >>/root/multi/voucher
+                    trojan_trial $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
