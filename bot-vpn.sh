@@ -2585,7 +2585,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
 ShellBot.regHandleFunction --function trojan_del --callback_data _delconftrojan
 ShellBot.regHandleFunction --function trojan_ext --callback_data _extconftrojan
 ShellBot.regHandleFunction --function check_trojan --callback_data _cektrojan
-ShellBot.regHandleFunction --function trojan_trial --callback_data _trialtrojan
+ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrojan
 ShellBot.regHandleFunction --function back_ser --callback_data _backtrojan
 unset keyboardtr
 keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
@@ -2603,8 +2603,8 @@ start_req() {
         vmess_trial $file_user
     elif [ "${config}" == "vless" ]; then
         create_vless $file_user
-  #  elif [ "${config}" == "trialvless" ]; then
-#        vless_trial $file_user
+    elif [ "${config}" == "trialtrojan" ]; then
+        trojan_trial $file_user
     elif [ "${config}" == "xtls" ]; then
         create_xtls $file_user
     elif [ "${config}" == "trojan" ]; then
