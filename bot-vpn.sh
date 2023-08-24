@@ -1183,10 +1183,8 @@ fi
 trial_vmess() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-   # user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
@@ -1657,11 +1655,8 @@ fi
 vless_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-   # user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";     
-    #user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
@@ -2079,7 +2074,6 @@ fi
 xtls_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
- #   user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2285,11 +2279,8 @@ create_trojan() {
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
     
-    # // TR WS TLS
 sed -i '/#trojanws$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
-
-    # // TR GRPC
 sed -i '/#trojangrpc$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
 
@@ -2484,7 +2475,6 @@ fi
 trojan_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-   # user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
@@ -2518,13 +2508,10 @@ trojan_trial() {
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
     
-    # // TR WS TLS
-    sed -i '/#trojanws$/a\### '"$user $exp"'\
-      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
-
-    # // TR GRPC
-    sed -i '/#trojangrpc$/a\### '"$user $exp"'\
-      },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+sed -i '/#trojanws$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+sed -i '/#trojangrpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
 
     echo -e "TR $user $exp" >> /usr/local/etc/xray/user.txt;
 
@@ -2668,7 +2655,7 @@ restartReq() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "❌Access Deny❌\n" \
+            --text "⛔ Access Deny ⛔\n" \
             --parse_mode html
     fi
 }
@@ -2877,7 +2864,6 @@ while :; do
                     comando=(${message_text[$id]})
                     [[ "${comando[0]}" = "/free" ]] && freeReq
                     [[ "${comando[0]}" = "/claim" ]] && claimVoucher
-		   # [[ "${comando[0]}" = "/menu" ]] && msg_welcome
                     [[ "${comando[0]}" = "/restart" ]] && restartReq
                     ;;
                 esac
@@ -3154,7 +3140,7 @@ while :; do
                     reseller_balance
                     ext_trojan $CAD_ARQ
                     ;;
-		'👤 Create Vmess Trial 👤\n\n( Expired Days ) :')
+		'👤 Create Vmess Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
@@ -3185,7 +3171,7 @@ while :; do
                             --parse_mode html
 		    fi
                     ;;
-		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
+		'👤 Create Vless Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
@@ -3216,7 +3202,7 @@ while :; do
                             --parse_mode html
 		    fi
                     ;;
-		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')                   
+		'👤 Create Xtls Trial 👤\n\n( Expired Days=1 ) :')                   
 		    echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
@@ -3247,7 +3233,7 @@ while :; do
                             --parse_mode html
 		    fi
                     ;;
-		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
+		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
