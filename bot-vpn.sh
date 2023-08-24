@@ -3132,19 +3132,15 @@ while :; do
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
+		    reseller_balance
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+        	        exp=$(cut -d' ' -f2 $CAD_ARQ)
+                    else
+			exp=30
+                    fi
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist ❗❗\n" \
-                            --parse_mode html
-                        exit 1
-                    else      
-                        echo "$vouch $exp" >>/root/multi/voucher
-			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                    
-                   # reseller_balance
+		    echo "$vouch $exp" >>/root/multi/voucher
                     trial_vl $CAD_ARQ
-		    fi
                     ;;
 		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
