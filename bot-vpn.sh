@@ -995,11 +995,10 @@ EOF
     vmesslink2="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-none.json)";
     vmesslink3="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-grpc.json)";
     vmesslink4="vmess://$(base64 -w 0 /usr/local/etc/xray/$user-h2.json)";
-
     systemctl restart xray@vmess.service
-
+    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="▫▫▫▫︎▫︎▫︎▫︎▫▫▫▫︎▫︎▫︎▫︎▫▫▫▫︎▫︎▫︎▫︎▫▫▫▫︎▫︎▫︎▫︎▫▫▫▫︎▫︎▫︎▫︎▫▫▫▫︎▫︎▫︎▫︎\n<b>(✷‿✷)VMESS ACCOUNT(✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
