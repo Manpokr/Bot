@@ -3233,7 +3233,7 @@ while :; do
 		    echo "$userna" >>$CAD_ARQ
                     user=$(cut -d' ' -f1 $CAD_ARQ)
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-		    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
