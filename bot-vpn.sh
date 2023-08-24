@@ -3220,18 +3220,17 @@ while :; do
                     xtls_trial $CAD_ARQ
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    userna="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
+                    echo "${userna} ${message_text[$id]}" >>$CAD_ARQ
+                    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f1 $CAD_ARQ)
-			exp=$(cut -d' ' -f1 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
                         duration=30
 			exp=30
                     fi
-		    userna="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-		    echo "$userna" >>$CAD_ARQ
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
