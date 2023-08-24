@@ -579,8 +579,6 @@ del_exp() {
 }
 
 input_addssh() {
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]}
     file_user=$1
     req_limit
     Login=$(sed -n '1 p' $file_user | cut -d' ' -f1)
@@ -1664,8 +1662,8 @@ trial_vless() {
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
 
-    req_voucher $file_user
-    req_limit
+#    req_voucher $file_user
+ #   req_limit
     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
@@ -3134,8 +3132,19 @@ while :; do
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
-                    reseller_balance
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else      
+                        echo "$vouch $exp" >>/root/multi/voucher
+			exp1=$(date -d +${duration}days +%Y-%m-%d)
+                    
+                   # reseller_balance
                     trial_vl $CAD_ARQ
+		    fi
                     ;;
 		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
