@@ -3236,8 +3236,7 @@ while :; do
                     xtls_trial $CAD_ARQ
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days ) :')
-                    echo "${message_text[$id]}" >>$CAD_ARQ
-		   # expi=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
