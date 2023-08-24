@@ -2480,6 +2480,10 @@ fi
 
 trojan_trial() {
     file_user=$1
+    exp='1'
+    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c)
+    echo "$vouch $exp" >>/root/multi/voucher
+   # exp1=$(date -d +${duration}days +%Y-%m-%d)        
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
@@ -2584,7 +2588,7 @@ ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
 ShellBot.regHandleFunction --function trojan_del --callback_data _delconftrojan
 ShellBot.regHandleFunction --function trojan_ext --callback_data _extconftrojan
 ShellBot.regHandleFunction --function check_trojan --callback_data _cektrojan
-ShellBot.regHandleFunction --function trial_tr --callback_data _trialtrojan
+ShellBot.regHandleFunction --function trojan_trial --callback_data _trialtrojan
 ShellBot.regHandleFunction --function back_ser --callback_data _backtrojan
 unset keyboardtr
 keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
@@ -2598,12 +2602,12 @@ start_req() {
     pass=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     if [ "${config}" == "vmess" ]; then
         create_vmess $file_user
-    elif [ "${config}" == "trialvmess" ]; then
-        vmess_trial $file_user
+  #  elif [ "${config}" == "trialvmess" ]; then
+#        vmess_trial $file_user
     elif [ "${config}" == "vless" ]; then
         create_vless $file_user
-    elif [ "${config}" == "trialvless" ]; then
-        vless_trial $file_user
+  #  elif [ "${config}" == "trialvless" ]; then
+#        vless_trial $file_user
     elif [ "${config}" == "xtls" ]; then
         create_xtls $file_user
     elif [ "${config}" == "trojan" ]; then
@@ -2616,7 +2620,11 @@ start_req() {
         echo "$user" >$file_user
         input_voucher $file_user
     else
-        msg_welcome
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "Func Error Do Nothing\n" \
+            --parse_mode html
+        exit 1
+       # msg_welcome
     fi
 }
 
@@ -3171,7 +3179,7 @@ while :; do
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days ) :')
                     userna="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-                    echo "$userna ${message_text[$id]}" >>$CAD_ARQ
+                    echo "${message_text[$id]}" >>$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
