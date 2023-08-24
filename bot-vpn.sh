@@ -74,7 +74,7 @@ backReq() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
-            --text "❌Access Deny❌\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -579,6 +579,8 @@ del_exp() {
 }
 
 input_addssh() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     file_user=$1
     req_limit
     Login=$(sed -n '1 p' $file_user | cut -d' ' -f1)
