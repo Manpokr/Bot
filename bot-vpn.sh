@@ -1401,6 +1401,8 @@ vless_ext() {
 }
 
 trial_vl() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Vless Trial 👤\n\n( Expired Days ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
@@ -1651,7 +1653,7 @@ return 0
 fi
 }
 
-trial_vl() {
+vless_trial() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )";     
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -3140,7 +3142,7 @@ while :; do
                     fi
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    echo "$vouch $exp" >>/root/multi/voucher
-                    trial_vl $CAD_ARQ
+                    vless_trial $CAD_ARQ
                     ;;
 		'👤 Create Xtls Trial 👤\n\n( Expired Days ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
