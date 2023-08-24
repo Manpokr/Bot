@@ -2533,7 +2533,7 @@ trojan_trial() {
     systemctl restart xray@trojan.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN TRIAL ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -3223,8 +3223,8 @@ while :; do
                     echo "${message_text[$id]}" >>$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f1 $CAD_ARQ)
-			exp=$(cut -d' ' -f1 $CAD_ARQ)
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
                         duration=30
 			exp=30
