@@ -214,6 +214,13 @@ req_url() {
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User ssh-vpn 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
+	    
+     elif [[ ${callback_query_data[$id]} == _addtrojango ]]; then
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "👤 Create User Trojan Go 👤\n\n( Username Expired ) :" \
+            --reply_markup "$(ShellBot.ForceReply)"
     fi
 }
 
@@ -309,12 +316,12 @@ req_free() {
             --text "👤 Create User Trojan free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
 	    
-  #  elif [[ ${callback_query_data[$id]} == _freetrojango ]]; then
-     #   ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-     #         --message_id ${callback_query_message_message_id[$id]}
-	#ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-       #     --text "👤 Create User Trojan-Go free 👤\n\n( Username ) :" \
-        #    --reply_markup "$(ShellBot.ForceReply)"
+    elif [[ ${callback_query_data[$id]} == _freetrojango ]]; then
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "👤 Create User Trojan-Go free 👤\n\n( Username ) :" \
+            --reply_markup "$(ShellBot.ForceReply)"
     fi
 
 }
@@ -3181,6 +3188,7 @@ while :; do
                         duration=1
 			exp=1
                     fi
+		    vless_kota $CAD_ARQ
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
