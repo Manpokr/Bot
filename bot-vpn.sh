@@ -1232,7 +1232,7 @@ fi
 
 vmess_trial() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
@@ -1528,9 +1528,10 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = $limit_nya\n"
-    msg+="Port None    = ${none}\n"
-    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
+    msg+="<code>Port none             = ${none}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
+    msg+="Grpc Type    = Gun %26 Multi</code>\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
@@ -1703,14 +1704,13 @@ fi
 vless_trial() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	
-   # user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    #req_voucher $file_user
+    req_voucher $file_user
     req_limit
     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -1731,10 +1731,10 @@ vless_trial() {
     fi
     }
     
-    limit='10'
+    limit='0'
     if [[ $limit -gt 0 ]]; then
-       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
        export limit_nya="Unlimited"
     fi
@@ -1767,9 +1767,10 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = $limit_nya\n"
-    msg+="Port None    = ${none}\n"
-    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
+    msg+="<code>Port none             = ${none}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
+    msg+="Grpc Type    = Gun %26 Multi</code>\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
@@ -1947,8 +1948,8 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
     msg+="Subdomain            = ${domain}\n"    
-    msg+="Limit Quota          = ${limit_nya}\n"
-    msg+="Port Tls             = ${xtls}</code>\n"
+    msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls             = ${xtls}</code>\n"
     msg+="<code>Password %26 User Id = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
@@ -2120,7 +2121,7 @@ fi
 
 xtls_trial() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2524,9 +2525,9 @@ return 0
 fi
 }
 
-create_trojan() {
+trojan_trial() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
