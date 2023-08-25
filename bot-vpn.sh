@@ -3305,10 +3305,11 @@ while :; do
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-                 #   vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                  #  exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                  #  echo "$vouch $exp" >>/root/multi/voucher
-		    trojan_trial $CAD_ARQ
+		    reseller_balance
+                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    echo "$vouch $exp" >>/root/multi/voucher
+		    trojan_trial
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
