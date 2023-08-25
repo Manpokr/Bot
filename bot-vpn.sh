@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     B   PANEL MENU ADMIN</b>\n"
+        msg+="<b>     M  PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    B PANEL MENU ADMIN</b>\n"
+        msg+="<b>    MPANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -2532,11 +2532,11 @@ fi
 
 trojan_trial() {
     file_user=$1
-                      # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+  # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
      #duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
     # duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-        duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    #duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
 
   #  user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2546,8 +2546,8 @@ trojan_trial() {
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     
-   # req_voucher $file_user
-   # req_limit
+    req_voucher $file_user
+    req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
