@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     B  PANEL MENU ADMIN</b>\n"
+        msg+="<b>       PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    B PANEL MENU ADMIN</b>\n"
+        msg+="<b>     PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -1081,7 +1081,7 @@ EOF
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucher
+        sed -i "/$coupon/d" /root/multi/voucher
 }
 
 del_vmess() {
@@ -1555,7 +1555,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucher
+        sed -i "/$coupon/d" /root/multi/voucher
 }
 
 ext_vless() {
@@ -1964,7 +1964,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-    sed -i "/$coupon/d" /root/multi/voucher
+        sed -i "/$coupon/d" /root/multi/voucher
 
 }
 
@@ -2259,14 +2259,29 @@ trojan_del() {
 trojan_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "1" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ No Users Online ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Trojan 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+      return 0
+      fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ Access Denied ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+      return 0
+      fi
 }
 
 trial_tr() {
@@ -2277,7 +2292,7 @@ trial_tr() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-trojan_trial() {
+create_trojan() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2431,7 +2446,7 @@ del_trojan() {
     msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER TROJAN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    
+
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -2505,7 +2520,7 @@ return 0
 fi
 }
 
-create_trojan() {
+trojan_trial() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2548,7 +2563,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     echo -e "TR $user $exp" >> /usr/local/etc/xray/user.txt;
 
     trojanlink1="trojan://${uuid}@${domain}:${xtls1}?type=ws%26security=tls%26path=%2Ftrojan%26sni=bug.com#${user}";
-    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com&security=none%26type=ws%26path=%2Ftrojan-none#${user}";
+    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com%26security=none%26type=ws%26path=%2Ftrojan-none#${user}";
     trojanlink3="trojan://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=trojan-grpc%26sni=bug.com#${user}";
     trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%252Ftrojan-h2%26sni=bug.com#${user}";
  
