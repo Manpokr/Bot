@@ -932,6 +932,10 @@ create_vmess() {
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
     req_voucher $file_user
     req_limit
     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
@@ -943,7 +947,7 @@ create_vmess() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     limit='0'
     if [[ $limit -gt 0 ]]; then
@@ -957,16 +961,9 @@ create_vmess() {
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
-    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
-    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
-    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
 
-    # VM WS TLS 
 sed -i '/#vmess$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
-
-    # VM GRPC
 sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
@@ -1051,9 +1048,9 @@ EOF
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vmh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port Tls     = ${xtls}\n"
+    msg+="Subdomain H2 = vmh2.${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Alter Id     = 0\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
@@ -1079,7 +1076,7 @@ EOF
     msg+="<code> $vmesslink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
+    msg+="<code>Expired On    = $exp</code>\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -1264,11 +1261,8 @@ vmess_trial() {
     uuid=$(uuidgen);
     exp=$(date -d +${duration}days +%Y-%m-%d)
 
-    # VM WS TLS 
 sed -i '/#vmess$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
-
-    # VM GRPC
 sed -i '/#vmessgrpc$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/vmess.json
 
@@ -1354,9 +1348,9 @@ EOF
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vmh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port Tls     = ${xtls}\n"
+    msg+="Subdomain H2 = vmh2.${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Alter Id     = 0\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
@@ -1382,7 +1376,7 @@ EOF
     msg+="<code> $vmesslink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
+    msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -1482,7 +1476,7 @@ create_vless() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     warp-nya() {
       if [ -r /usr/local/etc/warp/warp-reg ]; then
@@ -1529,8 +1523,8 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}</code>\n"
     msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
-    msg+="<code>Port none    = ${none}\n"
-    msg+="Port Tls     = ${xtls}\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
+    msg+="Port none    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
@@ -1555,7 +1549,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="<code> $vlesslink3</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
+    msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -1761,39 +1755,39 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = vlh2.${domain}</code>\n"
     msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
-    msg+="<code>Port none    = ${none}\n"
-    msg+="Port Tls     = ${xtls}\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
+    msg+="Port none    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS TLS LINK\n"
     msg+="<code> $vlesslink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS LINK\n"
     msg+="<code> $vlesslink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS H2 TLS LINK\n"
     msg+="<code> $vlesslink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS GRPC TLS LINK\n"
     msg+="<code> $vlesslink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="Expired On    = $exp\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -1883,7 +1877,7 @@ create_xtls() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     limit='0'
     if [[ $limit -gt 0 ]]; then
@@ -1914,19 +1908,12 @@ create_xtls() {
 }
 EOF
 
-    # // VL XTLS
 sed -i '/#xtls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
-
-    # // TR TCP TLS
 sed -i '/#trojanws$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
-
-    # // VM TCP HTTP TLS
 sed -i '/#vmess$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
-
-    # // VL TCP HTTP TLS
 sed -i '/#vless$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
@@ -1943,12 +1930,12 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) XTLS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
-    msg+="Subdomain            = ${domain}\n"    
-    msg+="Limit Quota          = ${limit_nya}\n"
-    msg+="Port Tls             = ${xtls}\n"
+    msg+="Subdomain            = ${domain}</code>\n"    
+    msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls             = ${xtls}\n"
     msg+="Password %26 User Id = ${uuid}</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
@@ -2167,19 +2154,12 @@ xtls_trial() {
 }
 EOF
 
-    # // VL XTLS
 sed -i '/#xtls$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","flow": "'xtls-rprx-vision'","email": "'""$user""'"' /usr/local/etc/xray/config.json
-
-    # // TR TCP TLS
 sed -i '/#trojanws$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
-
-    # // VM TCP HTTP TLS
 sed -i '/#vmess$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
-
-    # // VL TCP HTTP TLS
 sed -i '/#vless$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
 
@@ -2196,34 +2176,34 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸XTLS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) XTLS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
-    msg+="Subdomain            = ${domain}\n"    
-    msg+="Limit Quota          = ${limit_nya}\n"
-    msg+="Port Tls             = ${xtls}\n"
+    msg+="Subdomain            = ${domain}</code>\n"    
+    msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls             = ${xtls}\n"
     msg+="Password %26 User Id = ${uuid}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS TCP TLS VISION LINK\n"
     msg+="<code> $vlesslink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS TCP HTTP TLS LINK\n"
     msg+="<code> $vlesslink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS TCP HTTP TLS LINK\n"
     msg+="<code> $vmesslink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN TCP TLS LINK\n"
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2296,7 +2276,7 @@ trial_tr() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-trojan_trial() {
+create_trojan() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2316,7 +2296,7 @@ trojan_trial() {
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         duration=$expadmin
     else
-        duration=3
+        duration=1
     fi
     limit='0'
     if [[ $limit -gt 0 ]]; then
@@ -2346,13 +2326,13 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg 
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) TROJAN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port Tls     = ${xtls}\n"
+    msg+="Subdomain H2 = vlh2.${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="Password     = ${uuid}</code>\n"
@@ -2574,37 +2554,37 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸TROJAN TRIAL ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="Limit Quota  = ${limit_nya}\n"
-    msg+="Port Tls     = ${xtls}\n"
+    msg+="Subdomain H2 = vlh2.${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="Password     = ${uuid}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key  a (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS TLS LINK\n"
     msg+="<code> $trojanlink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS LINK\n"
     msg+="<code> $trojanlink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN H2 TLS LINK\n"
     msg+="<code> $trojanlink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN GRPC TLS LINK\n"
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3111,7 +3091,7 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_vmess $CAD_ARQ
+                    vmess_trial $CAD_ARQ
                     ;;
                 '👤 Create User Vless free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
@@ -3123,13 +3103,13 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_xtls $CAD_ARQ
+                    xtls_trial $CAD_ARQ
                     ;;
                 '👤 Create User Trojan free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_trojan $CAD_ARQ
+                    trojan_trial $CAD_ARQ
                     ;;
                 '🗑 Remove User Vless 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
