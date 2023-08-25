@@ -696,7 +696,7 @@ input_addssh() {
     if [ -r /usr/local/etc/udp/ ]; then
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"  
-       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n\n"
+       export udp="━━━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n\n"
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
@@ -711,12 +711,12 @@ input_addssh() {
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸SSHVPN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SSHVPN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Myip        = ${ip_nya}\n"
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
     msg+="Password    = ${Pass}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Openssh     = ${ssh}\n"
     msg+="Dropbear    = ${drop}\n"
     msg+="Ssl-tls     =${ssl}</code>\n"
@@ -726,25 +726,25 @@ input_addssh() {
     msg+="Ssh Ws Tls  = ${wstls}\n"
     msg+="Ovpn Ws     = ${wsnone}\n"
     msg+="Ovpn Ws Tls = ${wstls}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Openvpn Tcp = http://${ip_nya}:85/client-tcp.ovpn</code>\n"
     msg+="$link"
     msg+="<code>Openvpn Ssl = http://${ip_nya}:85/client-ssl.ovpn</code>\n"
     msg+="<code>Badvpn      = 7100-7900</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
     msg+="Name Server   (NS)   = ${ns_nya}\n"
     msg+="Public Key    (KEY)  = ${pub_key}</code>\n"
     msg+="$udp"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS\n"
     msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS TLS\n"
     msg+="<code> GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp2</code>"
  
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -769,9 +769,9 @@ input_delssh() {
 	sed -i "/\b$user\b/d" /usr/local/etc/ssh/user.txt
  
 	local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER SSHVPN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) DELETE USER SSHVPN (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
       
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -812,9 +812,12 @@ input_extssh() {
         sed -i "s/SSH $user $exp/SSH $user $exp4/g" /usr/local/etc/ssh/user.txt
 
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER SSHVPN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) RENEW USER SSHVPN (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${User} ) Renewed Then Expired On ( $exp4 ) Days Added ( $Days Days )\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+	#msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER SSHVPN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+     #   msg+="User ( ${User} ) Renewed Then Expired On ( $exp4 ) Days Added ( $Days Days )\n"
+    #    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -854,7 +857,7 @@ req_ovpn() {
     if [ -r /usr/local/etc/udp/ ]; then
        msg+="<code>Ssh Udp     = 1-65350</code>\n"
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"  
-       export udp="━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n\n"
+       export udp="━━━━━━━━━━━━━━━━━━━━━━━\n<code>SSH UDP-CUSTOM LINK</code>\n<code> ${domain}:1-65350@${Login}:${Pass}</code>\n\n"
     else
        msg+="<code>Openvpn Tcp = ${ovpn}</code>\n"
        msg+="<code>Openvpn Udp = ${ovpn1}</code>\n"  
@@ -868,12 +871,12 @@ req_ovpn() {
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸SSHVPN ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SSHVPN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Myip        = ${ip_nya}\n"
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
     msg+="Password    = ${Pass}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Openssh     = ${ssh}\n"
     msg+="Dropbear    = ${drop}\n"
     msg+="Ssl-tls     =${ssl}</code>\n"
@@ -883,32 +886,31 @@ req_ovpn() {
     msg+="Ssh Ws Tls  = ${wstls}\n"
     msg+="Ovpn Ws     = ${wsnone}\n"
     msg+="Ovpn Ws Tls = ${wstls}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Openvpn Tcp = http://${IP_NYA}:85/client-tcp.ovpn</code>\n"
     msg+="$link"
     msg+="<code>Openvpn Ssl = http://${IP_NYA}:85/client-ssl.ovpn</code>\n"
     msg+="<code>Badvpn      = 7100-7900</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slow Dns Port (PORT) = ${xtls1}\n"
     msg+="Name Server   (NS)   = ${ns_nya}\n"
     msg+="Public Key    (KEY)  = ${pub_key}</code>\n"
     msg+="$udp"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS\n"
     msg+="<code> GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="PAYLOAD WS TLS\n"
     msg+="<code> GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp2</code>"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-
-    sed -i "/$coupon/d" /root/multi/voucher
+        sed -i "/$coupon/d" /root/multi/voucher
 }
 
 ##################-VMESS-ALL-MENU-#######
