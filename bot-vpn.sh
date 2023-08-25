@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     M   PANEL MENU ADMIN</b>\n"
+        msg+="<b>     B   PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    M PANEL MENU ADMIN</b>\n"
+        msg+="<b>    B PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -2547,7 +2547,7 @@ trojan_trial() {
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     
    # req_voucher $file_user
-    req_limit
+   # req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
