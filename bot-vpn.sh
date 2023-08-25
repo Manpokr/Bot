@@ -2,6 +2,14 @@
 # // Exporting maklumat rangkaian
 source /root/ip-detail.txt;
 export ip_nya="$IP";
+export isp_nya="$ISP";
+export region_nya="$REGIONAME";
+export region_nya="$REGION";
+export country_nya="$COUNTRY";
+export time_nya="$TIMEZONE";
+
+source /etc/os-release;
+export tipe_nya=$NAME
 
 source /etc/.maAsiss/.Shellbtsss
 get_Token=$(sed -n '1 p' /root/ResBotAuth | cut -d' ' -f2)
@@ -9,6 +17,8 @@ get_AdminID=$(sed -n '2 p' /root/ResBotAuth | cut -d' ' -f2)
 get_botName=$(sed -n '1 p' /root/multi/bot.conf | cut -d' ' -f2)
 get_limituser=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
 nameStore=$(grep -w "store_name" /root/multi/bot.conf | awk '{print $NF}')
+dom_nya=$(cat /usr/local/etc/xray/domain);
+uram_nya=$( free -m | awk 'NR==2 {print $3}' );
 res_price=5
 
 ShellBot.init --token $get_Token --monitor --return map --flush --log_file /root/log_bot
@@ -17,8 +27,20 @@ msg_welcome() {
     oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-        msg="Welcome $nameStore 🛂\n"
-	
+	msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> PANEL MENU </b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg+="<code>☆OS     = $tipe_nya\n"
+        msg+="☆ISP     = $isp_nya\n"
+        msg+="☆CITY    = $city_nya\n"
+        msg+="☆TIME    = $time_nya\n"
+	msg+="☆RAM     = $uram_nya\n"
+        msg+="☆IP VPS  = $ip_nya</code>\n"
+	msg+="☆DOMAIN  = $dom_nya</code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="Welcome $nameStore 🛂\n"
+	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+ 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard1" \
@@ -27,7 +49,15 @@ msg_welcome() {
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="Welcome To Bot Reseller 👥\n"
+        msg+="<b> RESELLER PANEL MENU </b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg+="<code>☆OS     = $tipe_nya\n"
+        msg+="☆ISP     = $isp_nya\n"
+        msg+="☆CITY    = $city_nya\n"
+        msg+="☆TIME    = $time_nya\n"
+	msg+="☆RAM     = $uram_nya\n"
+        msg+="☆IP VPS  = $ip_nya</code>\n"
+	msg+="☆DOMAIN  = $dom_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="Your Name Store = $nameStore"
         msg+="Your Id         = <code>${message_from_id}</code>\n"
@@ -49,7 +79,19 @@ backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-	msg="Welcome $nameStore 🛂\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> PANEL MENU </b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg+="<code>☆OS     = $tipe_nya\n"
+        msg+="☆ISP     = $isp_nya\n"
+        msg+="☆CITY    = $city_nya\n"
+        msg+="☆TIME    = $time_nya\n"
+	msg+="☆RAM     = $uram_nya\n"
+        msg+="☆IP VPS  = $ip_nya</code>\n"
+	msg+="☆DOMAIN  = $dom_nya</code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="Welcome $nameStore 🛂\n"
+	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -60,9 +102,17 @@ backReq() {
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="Welcome To Bot Reseller 👥\n"
+        msg+="<b> RESELLER PANEL MENU </b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="Your Name Store = $nameStore"
+	msg+="<code>☆OS     = $tipe_nya\n"
+        msg+="☆ISP     = $isp_nya\n"
+        msg+="☆CITY    = $city_nya\n"
+        msg+="☆TIME    = $time_nya\n"
+	msg+="☆RAM     = $uram_nya\n"
+        msg+="☆IP VPS  = $ip_nya</code>\n"
+	msg+="☆DOMAIN  = $dom_nya</code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="Your Name Store = $nameStore\n"
         msg+="Your Id         = <code>${message_from_id}</code>\n"
         msg+="Your Balance Is = $oribal"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
@@ -878,12 +928,11 @@ trial_vm() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "👤 Create Vmess Trial 👤\n\n( Expired Days ) :" \
+        --text "👤 Create Vmess Trial 👤\n\n( Expired Days=1 ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
 create_vmess() {
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} --message_id ${callback_query_message_message_id[$id]}
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1089,7 +1138,7 @@ ext_vmess() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
@@ -1279,7 +1328,7 @@ cat > /usr/local/etc/xray/$user-grpc.json << EOF
 EOF
 
 cat > /usr/local/etc/xray/$user-h2.json << EOF
-            {
+      {
       "v": "2",
       "ps": "${user}",
       "add": "vmh2.${domain}",
@@ -1410,7 +1459,7 @@ trial_vl() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "👤 Create Vless Trial 👤\n\n( Expired Days ) :" \
+        --text "👤 Create Vless Trial 👤\n\n( Expired Days=1 ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -1820,7 +1869,7 @@ trial_xt() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "👤 Create Xtls Trial 👤\n\n( Expired Days ) :" \
+        --text "👤 Create Xtls Trial 👤\n\n( Expired Days=1 ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -2246,7 +2295,7 @@ trial_tr() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "👤 Create Trojan Trial 👤\n\n( Expired Days ) :" \
+        --text "👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
