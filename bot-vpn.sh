@@ -17,6 +17,13 @@ get_botName=$(sed -n '1 p' /root/multi/bot.conf | cut -d' ' -f2)
 get_limituser=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
 nameStore=$(grep -w "store_name" /root/multi/bot.conf | awk '{print $NF}')
 dom_nya=$(cat /usr/local/etc/xray/domain);
+vl_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VL " | wc -l);
+vm_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VM " | wc -l);
+xt_nya=$(cat /usr/local/etc/xray/user.txt | grep "^XTLS " | wc -l);
+tr_nya=$(cat /usr/local/etc/xray/user.txt | grep "^TR " | wc -l);
+ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
+trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
+ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
 uram_nya=$( free -m | awk 'NR==2 {print $3}' );
 res_price=5
 
@@ -35,6 +42,14 @@ msg_welcome() {
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+        msg+="\n"
+        msg+="<code>Total Created :\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ VLESS        = $vl_nya\n"
+        msg+="⚡ VMESS        = $vm_nya\n"
+	msg+="⚡ TROJAN       = $tr_nya\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
@@ -55,6 +70,14 @@ msg_welcome() {
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+        msg+="\n"
+        msg+="<code>Total Created :\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ VLESS        = $vl_nya\n"
+        msg+="⚡ VMESS        = $vm_nya\n"
+	msg+="⚡ TROJAN       = $tr_nya\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
@@ -85,9 +108,17 @@ backReq() {
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+        msg+="\n"
+        msg+="<code>Total Created :\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ VLESS        = $vl_nya\n"
+        msg+="⚡ VMESS        = $vm_nya\n"
+	msg+="⚡ TROJAN       = $tr_nya\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="✨ Welcome $nameStore ✨\n"
-	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+        msg+="✨ WELCOME $nameStore ✨\n"
+	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -106,6 +137,14 @@ backReq() {
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+        msg+="\n"
+        msg+="<code>Total Created :\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ VLESS        = $vl_nya\n"
+        msg+="⚡ VMESS        = $vm_nya\n"
+	msg+="⚡ TROJAN       = $tr_nya\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
@@ -2780,7 +2819,73 @@ ShellBot.regHandleFunction --function back_ser --callback_data _backtrojan
 unset keyboardtr
 keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
 
+##################-ALL-TROJAN-GO-###############
 
+create_ssock() {
+}
+
+delete_ssock() {
+}
+
+renew_ssock() {
+}
+
+check_ssock() {
+}
+
+trial_ssock() {
+}
+
+#unset menuss
+#menuss=''
+#ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'CREATE ACC SS-22' --callback_data '_addss'
+#ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'DELETE ACC SS-22' --callback_data '_delconfss'
+#ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'RENEW ACC SS-22' --callback_data '_extconfss'
+#ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'CHECK ACC SS-22' --callback_data '_cekss'
+#ShellBot.InlineKeyboardButton --button 'menuss' --line 3 --text 'TRIAL ACC SS-22' --callback_data '_trialss'
+#ShellBot.InlineKeyboardButton --button 'menuss' --line 4 --text '🔙 BACK 🔙' --callback_data '_backss'
+#ShellBot.regHandleFunction --function req_url --callback_data _addss
+#ShellBot.regHandleFunction --function ssock_del --callback_data _delconfss
+#ShellBot.regHandleFunction --function ssock_ext --callback_data _extconfss
+#ShellBot.regHandleFunction --function ssock_cek --callback_data _cekss
+#ShellBot.regHandleFunction --function ssock_trl --callback_data _trialss
+#ShellBot.regHandleFunction --function back_ser --callback_data _backss
+#unset keyboardss
+#keyboardss="$(ShellBot.InlineKeyboardMarkup -b 'menuss')"
+
+##################-ALL-TROJAN-GO-###############
+
+create_ssock() {
+}
+
+delete_trgo() {
+}
+
+renew_trgo() {
+}
+
+check_trgo() {
+}
+
+trial_trgo() {
+}
+
+#unset menutrgo
+#menutrgo=''
+#ShellBot.InlineKeyboardButton --button 'menutrgo' --line 1 --text 'CREATE ACC TRGO' --callback_data '_addtrgo'
+#ShellBot.InlineKeyboardButton --button 'menutrgo' --line 1 --text 'DELETE ACC TRGO' --callback_data '_delconftrgo'
+#ShellBot.InlineKeyboardButton --button 'menutrgo' --line 2 --text 'RENEW ACC TRGO' --callback_data '_extconftrgo'
+#ShellBot.InlineKeyboardButton --button 'menutrgo' --line 2 --text 'CHECK ACC TRGO' --callback_data '_cektrgo'
+#ShellBot.InlineKeyboardButton --button 'menutrgo' --line 3 --text 'TRIAL ACC TRGO' --callback_data '_trialtrgo'
+#ShellBot.InlineKeyboardButton --button 'menutrgo' --line 4 --text '🔙 BACK 🔙' --callback_data '_backtrgo'
+#ShellBot.regHandleFunction --function req_url --callback_data _addtrgo
+#ShellBot.regHandleFunction --function trgo_del --callback_data _delconftrgo
+#ShellBot.regHandleFunction --function trgo_ext --callback_data _extconftrgo
+#ShellBot.regHandleFunction --function trgo_cek --callback_data _cektrgo
+#ShellBot.regHandleFunction --function trgo_trl --callback_data _trialtrgo
+#ShellBot.regHandleFunction --function back_ser --callback_data _backtrgo
+#unset keyboardtrgo
+#keyboardtrgo="$(ShellBot.InlineKeyboardMarkup -b 'menutrgo')"
 
 start_req() {
     file_user=$1
