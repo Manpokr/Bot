@@ -2532,6 +2532,7 @@ fi
 
 trojan_trial() {
     file_user=$1
+    
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
@@ -2661,8 +2662,8 @@ start_req() {
     elif [ "${config}" == "ovpn" ]; then
         req_ovpn $file_user
 	
-    elif [ "${config}" == "trialvmess" ]; then
-        vmess_trial $file_user
+ #   elif [ "${config}" == "trialvmess" ]; then
+#        vmess_trial $file_user
 	
     elif [ "${config}" == "trialvless" ]; then
         vless_trial $file_user
@@ -2670,8 +2671,8 @@ start_req() {
     elif [ "${config}" == "trialxtls" ]; then
         xtls_trial $file_user
 	
-    elif [ "${config}" == "trialtrojan" ]; then
-        trojan_trial $file_user
+  #  elif [ "${config}" == "trialtrojan" ]; then
+ #       trojan_trial $file_user
 	
     elif [ "${config}" == "free" ]; then
         freeReq $file_user
@@ -3200,6 +3201,9 @@ while :; do
                     ;;
 		'👤 Create Vmess Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
+                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    echo "$vouch $exp" >>/root/multi/voucher
 		    reseller_balance
                    # if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                        # duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
