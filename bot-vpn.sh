@@ -1235,7 +1235,9 @@ fi
 
 trial_vmess() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    User=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+   # Days=$(sed -n '2 p' $file_user | cut -d' ' -f1)
+  #  user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
@@ -1243,8 +1245,8 @@ trial_vmess() {
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
 
-    req_voucher $file_user
-    req_limit
+   # req_voucher $file_user
+    #req_limit
     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
