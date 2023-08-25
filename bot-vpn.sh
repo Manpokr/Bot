@@ -1236,8 +1236,9 @@ fi
 trial_vmess() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-	
- #   User=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+
+    exp=$(sed -n '1 p' $file_user | cut -d' ' -f1)
    # Days=$(sed -n '2 p' $file_user | cut -d' ' -f1)
   #  user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -3200,22 +3201,22 @@ while :; do
 		'👤 Create Vmess Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
-                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    else
-                        duration=1
-			exp=1
-                    fi
+                   # if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                       # duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+			#exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                 #   else
+                      #  duration=1
+			#exp=1
+                  #  fi
 		   # user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		  #  vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		#    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
                      #   ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             #--text "User Already Exist ❗❗\n" \
                        #     --parse_mode html
                        # exit 1
                     #else      
-                        echo "$vouch $exp" >>/root/multi/voucher
+                     #   echo "$vouch $exp" >>/root/multi/voucher
 			vmess_trial $CAD_ARQ
 			#exp1=$(date -d +${duration}days +%Y-%m-%d)
 		       # local msg
