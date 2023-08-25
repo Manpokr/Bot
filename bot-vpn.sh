@@ -2534,7 +2534,7 @@ trojan_trial() {
     file_user=$1
                       # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-	
+     duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
   #  user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
@@ -2551,11 +2551,11 @@ trojan_trial() {
             --parse_mode html
         exit 1
     fi
-    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        duration=$expadmin
-    else
-        duration=1
-    fi
+  #  if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+  #      duration=$expadmin
+  #  else
+  #      duration=1
+ #   fi
     limit='10'
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
