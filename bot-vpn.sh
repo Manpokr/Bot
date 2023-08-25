@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>                PANEL MENU ADMIN</b>\n"
+        msg+="<b>          PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>         PANEL MENU ADMIN</b>\n"
+        msg+="<b>      PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -3212,16 +3212,17 @@ while :; do
                         exit 1
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher
-			exp1=$(date -d +${duration}days +%Y-%m-%d)
-		        local msg
-                        msg="User        = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=trialvmess_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Trial-Vmess Acc\n"
+			vmess_trial $CAD_ARQ
+			#exp1=$(date -d +${duration}days +%Y-%m-%d)
+		       # local msg
+                       # msg="User        = $user\n"
+                       # msg+="<code>Expired = $exp1</code>\n"
+                     #   msg+="https://t.me/${get_botName}?start=trialvmess_${user}_${vouch}\n\n"
+                       # msg+="Click Link To Confirm Trial-Vmess Acc\n"
 
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
+                     #   ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                       #     --text "$msg" \
+                          #  --parse_mode html
 		    fi
                     ;;
 		'👤 Create Vless Trial 👤\n\n( Expired Days=1 ) :')
