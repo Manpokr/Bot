@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     N     PANEL MENU ADMIN</b>\n"
+        msg+="<b>     M   PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    N  PANEL MENU ADMIN</b>\n"
+        msg+="<b>    M PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -2530,11 +2530,14 @@ return 0
 fi
 }
 
-trojan_trial() {
+trial_trojan() {
     file_user=$1
                       # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-     duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+     #duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+    # duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+        duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+
   #  user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
@@ -2667,11 +2670,11 @@ start_req() {
  #   elif [ "${config}" == "trialvmess" ]; then
 #        vmess_trial $file_user
 	
-    elif [ "${config}" == "trialvless" ]; then
-        vless_trial $file_user
+ #   elif [ "${config}" == "trialvless" ]; then
+   #     vless_trial $file_user
 	
-    elif [ "${config}" == "trialxtls" ]; then
-        xtls_trial $file_user
+ #   elif [ "${config}" == "trialxtls" ]; then
+    #    xtls_trial $file_user
 	
   #  elif [ "${config}" == "trialtrojan" ]; then
  #       trojan_trial $file_user
@@ -3300,10 +3303,11 @@ while :; do
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "$vouch $exp" >>/root/multi/voucher
-		    trojan_trial $CAD_ARQ
+		    trial_trojan $CAD_ARQ
+                   # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                   # exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                  #  echo "$vouch $exp" >>/root/multi/voucher
+		  #  trojan_trial $CAD_ARQ
                 #    echo "${message_text[$id]}" >$CAD_ARQ
 		#    reseller_balance
                  #   if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
