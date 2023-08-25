@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>         PANEL MENU </b>\n"
+        msg+="<b>                PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>         PANEL MENU </b>\n"
+        msg+="<b>         PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -1049,7 +1049,7 @@ EOF
     systemctl restart xray@vmess.service
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n\n<b>(✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1091,7 +1091,8 @@ EOF
 
 del_vmess() {
     file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+  #  user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
@@ -1127,13 +1128,14 @@ del_vmess() {
 
 ext_vmess() {
     file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+   # user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
         masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
     else
         masaaktif=30
     fi
-    if ! grep -qw "^VM $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
@@ -2974,7 +2976,7 @@ while :; do
                     echo "$vouch $exp" >>/root/multi/voucher
 		    exp1=$(date -d +${duration}days +%Y-%m-%d)
                     local msg
-                    msg="User      = $user\n"
+                    msg="User        = $user\n"
                     msg+="<code>Expired = $exp1</code>\n"
                     msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
                     msg+="Click Link To Confirm OVPN Acc\n"
@@ -3004,7 +3006,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Vmess Acc\n"
@@ -3035,7 +3037,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Vless Acc\n"
@@ -3066,7 +3068,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
                         local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm bXtls Acc\n"
@@ -3097,7 +3099,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
 		        local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Trojan Acc\n"
@@ -3212,7 +3214,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
 		        local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=trialvmess_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Trial-Vmess Acc\n"
@@ -3232,7 +3234,6 @@ while :; do
                         duration=1
 			exp=1
                     fi
-		    vless_kota $CAD_ARQ
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -3244,7 +3245,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
 		        local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=trialvless_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Trial-Vless Acc\n"
@@ -3275,7 +3276,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
 		        local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=trialxtls_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Trial-Xtls Acc\n"
@@ -3306,7 +3307,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			exp1=$(date -d +${duration}days +%Y-%m-%d)
 		        local msg
-                        msg="User      = $user\n"
+                        msg="User        = $user\n"
                         msg+="<code>Expired = $exp1</code>\n"
                         msg+="https://t.me/${get_botName}?start=trialtrojan_${user}_${vouch}\n\n"
                         msg+="Click Link To Confirm Trial-Trojan Acc\n"
