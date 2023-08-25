@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     M   PANEL MENU ADMIN</b>\n"
+        msg+="<b>     N   PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    M PANEL MENU ADMIN</b>\n"
+        msg+="<b>    N PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -2530,7 +2530,7 @@ return 0
 fi
 }
 
-trial_trojan() {
+trojan_trial() {
     file_user=$1
                       # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
@@ -2546,19 +2546,19 @@ trial_trojan() {
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     
-  #  req_voucher $file_user
- #   req_limit
+    req_voucher $file_user
+    req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
             --parse_mode html
         exit 1
     fi
-  #  if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-  #      duration=$expadmin
-  #  else
-  #      duration=1
- #   fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=1
+    fi
     limit='10'
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
@@ -3303,40 +3303,10 @@ while :; do
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		    trial_trojan $CAD_ARQ
-                   # vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                   # exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                  #  echo "$vouch $exp" >>/root/multi/voucher
-		  #  trojan_trial $CAD_ARQ
-                #    echo "${message_text[$id]}" >$CAD_ARQ
-		#    reseller_balance
-                 #   if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                   #     duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-		#	exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-               #     else
-                #        duration=1
-		#	exp=1
-               #     fi
-		 #   user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-		    #vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-		  #  if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
-                      #  ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                       #     --text "User Already Exist ❗❗\n" \
-                       #     --parse_mode html
-                     #   exit 1
-                  #  else      
-                       # echo "$vouch $exp" >>/root/multi/voucher
-			#exp1=$(date -d +${duration}days +%Y-%m-%d)
-		       # local msg
-                       # msg="User        = $user\n"
-                      #  msg+="<code>Expired = $exp1</code>\n"
-                      #  msg+="https://t.me/${get_botName}?start=trialtrojan_${user}_${vouch}\n\n"
-                      #  msg+="Click Link To Confirm Trial-Trojan Acc\n"
-
-                      #  ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                       #     --text "$msg" \
-                          #  --parse_mode html
-		   # fi    
+                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    echo "$vouch $exp" >>/root/multi/voucher
+		    trojan_trial $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
