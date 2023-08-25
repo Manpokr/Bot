@@ -2540,6 +2540,7 @@ trojan_trial() {
     duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
 
   #  user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+  
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
@@ -2547,7 +2548,7 @@ trojan_trial() {
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     
-    req_voucher $file_user
+    #req_voucher $file_user
     req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3304,9 +3305,9 @@ while :; do
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "$vouch $exp" >>/root/multi/voucher
+                 #   vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                  #  exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                  #  echo "$vouch $exp" >>/root/multi/voucher
 		    trojan_trial $CAD_ARQ
                     ;;
                 'Create Reseller :')
