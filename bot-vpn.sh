@@ -67,7 +67,7 @@ msg_welcome() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${message_from_id}</code>\n" \
+            --text "⛔ ACCESS DENY ⛔\n\nTHIS IS YOUR ID = <code>${message_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -119,7 +119,7 @@ backReq() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
-            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --text "⛔ ACCESS DENY ⛔\n\nTHIS IS YOUR ID = <code>${callback_query_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -136,7 +136,7 @@ back_ser() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
-            --text "⛔ Access Deny ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --text "⛔ ACCESS DENY ⛔\n\nTHIS IS YOUR ID = <code>${callback_query_from_id}</code>\n" \
             --parse_mode html
     fi
 }
@@ -192,11 +192,11 @@ publicReq() {
         echo "on" >/root/multi/public
         echo "" >/root/multi/claimed
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "✅ Public Mode Is Online, Limit Is $limituser ✅"
+            --text "✅ PUBLIC MODE IS ONLINE, LIMIT IS $limituser ✅"
     else
         echo "off" >/root/multi/public
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "⛔ Public Mode Is Offline,Limit Is $limituser ⛔"
+            --text "⛔ PUBLIC MODE IS OFFLINE,LIMIT IS $limituser ⛔"
     fi
 }
 
@@ -496,13 +496,13 @@ balance_reseller() {
     echo "${User} $topup" >>/root/multi/reseller
     if [ "$(grep -wc ${User} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="$User New Balance Is $topup\n"
+        msg="$User NEW BALANCE IS $topup\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard6" \
             --parse_mode html
     else
-        msg="$User Is Not Reseller\n"
+        msg="$User IS NOT RESELLER\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard6" \
@@ -515,13 +515,13 @@ delete_reseller() {
     User=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${User} /root/multi/reseller)" != '0' ]; then
         sed -i "/${User}/d" /root/multi/reseller
-        msg="$User Successful Deleted\n"
+        msg="$User SUCCESSFUL DELETED ✅\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard6" \
             --parse_mode html
     else
-        msg="$User Is Not Reseller\n"
+        msg="$User IS NOT RESELLER\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard6" \
@@ -656,7 +656,7 @@ del_exp() {
         fi
     done
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Success Remove Expired User !\n" \
+        --text "SUCCESS REMOVE EXPIRED USER ✅\n" \
         --parse_mode html
 
 }
@@ -2792,17 +2792,17 @@ start_req() {
     elif [ "${config}" == "ovpn" ]; then
         req_ovpn $file_user
 	
-   # elif [ "${config}" == "trialvmess" ]; then
-    #    vmess_trial $file_user
+    elif [ "${config}" == "trialvmess" ]; then
+        vmess_trial $file_user
 	
-#    elif [ "${config}" == "trialvless" ]; then
-#        vless_trial $file_user
+    elif [ "${config}" == "trialvless" ]; then
+        vless_trial $file_user
 	
- #   elif [ "${config}" == "trialxtls" ]; then
-  #      xtls_trial $file_user
+    elif [ "${config}" == "trialxtls" ]; then
+        xtls_trial $file_user
 	
- #   elif [ "${config}" == "trialtrojan" ]; then
-#        trojan_trial $file_user
+    elif [ "${config}" == "trialtrojan" ]; then
+        trojan_trial $file_user
 	
     elif [ "${config}" == "free" ]; then
         freeReq $file_user
@@ -2821,12 +2821,12 @@ input_voucher() {
     voucher=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc $voucher /root/multi/voucher)" != '0' ]; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Valid Voucher\n" \
+            --text "VALID VOUCHER ✅\n" \
             --reply_markup "$keyboard8" \
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Not A Valid Voucher\n" \
+            --text "NOT A VALID VOUCHER ⛔\n" \
             --parse_mode html
         exit 1
     fi
@@ -2840,11 +2840,11 @@ restartReq() {
         systemctl restart xray.service
         systemctl restart dropbear
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Done Restart All Service" \
+            --text "DONE RESTART ALL SERVICE ✅" \
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "⛔ Access Deny ⛔\n" \
+            --text "⛔ ACCESS DENY ⛔\n" \
             --parse_mode html
     fi
 }
@@ -3249,19 +3249,19 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    vmess_trial $CAD_ARQ
+                    create_vmess $CAD_ARQ
                     ;;
                 '👤 Create User Vless free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    vless_trial $CAD_ARQ
+                    create_vless $CAD_ARQ
                     ;;
                 '👤 Create User Xtls free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    xtls_trial $CAD_ARQ
+                    create_xtls $CAD_ARQ
                     ;;
                 '👤 Create User Trojan free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
@@ -3402,33 +3402,10 @@ while :; do
 		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
-                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    else
-                        duration=1
-			exp=1
-                    fi
-		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
-		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "User Already Exist ❗❗\n" \
-                            --parse_mode html
-                        exit 1
-                    else      
-                        echo "$vouch $exp" >>/root/multi/voucher
-			exp1=$(date -d +${duration}days +%Y-%m-%d)
-		        local msg
-                        msg="User        = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=trialtrojan_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Trial-Trojan Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
-		    fi
+                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    echo "$vouch $exp" >>/root/multi/voucher
+		    trojan_trial $CAD_ARQ
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
