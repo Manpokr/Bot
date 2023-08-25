@@ -1044,7 +1044,7 @@ EOF
     systemctl restart xray@vmess.service
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1345,7 +1345,7 @@ EOF
     systemctl restart xray@vmess.service    
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) VMESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) VMESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1518,7 +1518,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) VLESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>   (✷‿✷) VLESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1756,7 +1756,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1931,7 +1931,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) XTLS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) XTLS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
     msg+="Subdomain            = ${domain}</code>\n"    
@@ -2177,7 +2177,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) XTLS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>     (✷‿✷) XTLS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
     msg+="Subdomain            = ${domain}</code>\n"    
@@ -2277,7 +2277,7 @@ trial_tr() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_trojan() {
+trojan_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2505,7 +2505,7 @@ return 0
 fi
 }
 
-trojan_trial() {
+create_trojan() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2555,7 +2555,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -3110,7 +3110,7 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    trojan_trial $CAD_ARQ
+                    create_trojan $CAD_ARQ
                     ;;
                 '🗑 Remove User Vless 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
