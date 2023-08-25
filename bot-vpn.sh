@@ -2257,6 +2257,7 @@ trojan_del() {
 }
 
 trojan_ext() {
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | wc -l)
