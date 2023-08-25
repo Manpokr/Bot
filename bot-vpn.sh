@@ -2657,8 +2657,8 @@ start_req() {
     elif [ "${config}" == "trialvmess" ]; then
         vmess_trial $file_user
 	
-   # elif [ "${config}" == "trialvless" ]; then
-       # vless_trial $file_user
+    elif [ "${config}" == "trialvless" ]; then
+        vless_trial $file_user
 	
     elif [ "${config}" == "trialxtls" ]; then
         xtls_trial $file_user
