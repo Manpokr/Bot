@@ -927,7 +927,7 @@ trial_vm() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-vmess_trial() {
+create_vmess() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1110,7 +1110,6 @@ del_vmess() {
     rm -f /etc/manternet/limit/vmess/ip/$user
     rm -f /etc/manternet/vmess/$user
     rm -f /etc/manternet/cache/vmess/$user
-
     systemctl restart xray@vmess.service
       
     local msg
@@ -1231,7 +1230,7 @@ return 0
 fi
 }
 
-create_vmess() {
+vmess_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2296,7 +2295,7 @@ trial_tr() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-create_trojan() {
+trojan_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2524,7 +2523,7 @@ return 0
 fi
 }
 
-trojan_trial() {
+create_trojan() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
