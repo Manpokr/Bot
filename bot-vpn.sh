@@ -1710,7 +1710,7 @@ vless_trial() {
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    req_voucher $file_user
+    #req_voucher $file_user
     req_limit
     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3117,7 +3117,7 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
-                    create_vless $CAD_ARQ
+                    vless_trial $CAD_ARQ
                     ;;
                 '👤 Create User Xtls free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
