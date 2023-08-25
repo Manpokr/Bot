@@ -27,16 +27,16 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>           PANEL MENU ADMIN</b>\n"
+        msg+="<b>          🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>☆ OS      = $tipe_nya\n"
-        msg+="☆ ISP     = $isp_nya\n"
-        msg+="☆ CITY    = $country_nya\n"
-	msg+="☆ RAM     = $uram_nya MB\n"
-        msg+="☆ IP VPS  = $ip_nya\n"
-	msg+="☆ DOMAIN  = $dom_nya</code>\n"
+	msg+="<code>⚡ OS      = $tipe_nya\n"
+        msg+="⚡ ISP     = $isp_nya\n"
+        msg+="⚡ CITY    = $country_nya\n"
+	msg+="⚡ RAM     = $uram_nya MB\n"
+        msg+="⚡ IP VPS  = $ip_nya\n"
+	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="  Welcome $nameStore\n"
+        msg+="✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -47,18 +47,18 @@ msg_welcome() {
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>        RESELLER PANEL MENU </b>\n"
+        msg+="<b>      🌀 RESELLER PANEL MENU 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>☆ OS      = $tipe_nya\n"
-        msg+="☆ ISP     = $isp_nya\n"
-        msg+="☆ CITY    = $country_nya\n"
-	msg+="☆ RAM     = $uram_nya MB\n"
-        msg+="☆ IP VPS  = $ip_nya\n"
-	msg+="☆ DOMAIN  = $dom_nya</code>\n"
-	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="Your Name Store = $nameStore"
-        msg+="Your Id         = <code>${message_from_id}</code>\n"
-        msg+="Your Balance Is = $oribal"
+	msg+="<code>⚡ OS      = $tipe_nya\n"
+        msg+="⚡ ISP     = $isp_nya\n"
+        msg+="⚡ CITY    = $country_nya\n"
+	msg+="⚡ RAM     = $uram_nya MB\n"
+        msg+="⚡ IP VPS  = $ip_nya\n"
+	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="⚡ YOUR NAME STORE = $nameStore\n"
+        msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
+        msg+="⚡ YOUR BALANCE IS = $oribal"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -76,18 +76,18 @@ backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>           PANEL MENU ADMIN</b>\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b>          🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>☆ OS      = $tipe_nya\n"
-        msg+="☆ ISP     = $isp_nya\n"
-        msg+="☆ CITY    = $country_nya\n"
-	msg+="☆ RAM     = $uram_nya MB\n"
-        msg+="☆ IP VPS  = $ip_nya\n"
-	msg+="☆ DOMAIN  = $dom_nya</code>\n"
+	msg+="<code>⚡ OS      = $tipe_nya\n"
+        msg+="⚡ ISP     = $isp_nya\n"
+        msg+="⚡ CITY    = $country_nya\n"
+	msg+="⚡ RAM     = $uram_nya MB\n"
+        msg+="⚡ IP VPS  = $ip_nya\n"
+	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="  Welcome $nameStore\n"
-	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="✨ Welcome $nameStore ✨\n"
+	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -98,18 +98,18 @@ backReq() {
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>        RESELLER PANEL MENU </b>\n"
+        msg+="<b>      🌀 RESELLER PANEL MENU 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>☆ OS      = $tipe_nya\n"
-        msg+="☆ ISP     = $isp_nya\n"
-        msg+="☆ CITY    = $country_nya\n"
-	msg+="☆ RAM     = $uram_nya MB\n"
-        msg+="☆ IP VPS  = $ip_nya\n"
-	msg+="☆ DOMAIN  = $dom_nya</code>\n"
+	msg+="<code>⚡ OS      = $tipe_nya\n"
+        msg+="⚡ ISP     = $isp_nya\n"
+        msg+="⚡ CITY    = $country_nya\n"
+	msg+="⚡ RAM     = $uram_nya MB\n"
+        msg+="⚡ IP VPS  = $ip_nya\n"
+	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="Your Name Store = $nameStore\n"
-        msg+="Your Id         = <code>${message_from_id}</code>\n"
-        msg+="Your Balance Is = $oribal"
+        msg+="⚡ YOUR NAME STORE = $nameStore\n"
+        msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
+        msg+="⚡ YOUR BALANCE IS = $oribal"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
  
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -152,7 +152,7 @@ freeReq() {
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "📴 Free Function Is Offline 📴\n" \
+            --text "📴 FREE FUNCTION IS OFFLINE 📴\n" \
             --parse_mode html
     fi
 }
@@ -192,11 +192,11 @@ publicReq() {
         echo "on" >/root/multi/public
         echo "" >/root/multi/claimed
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "✅ PUBLIC MODE IS ONLINE, LIMIT IS $limituser ✅"
+            --text "✅ PUBLIC MODE IS ONLINE ✅\n\n LIMIT IS $limituser ✅"
     else
         echo "off" >/root/multi/public
         ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-            --text "⛔ PUBLIC MODE IS OFFLINE,LIMIT IS $limituser ⛔"
+            --text "⛔ PUBLIC MODE IS OFFLINE ⛔\n\n LIMIT IS $limituser ⛔"
     fi
 }
 
@@ -383,12 +383,12 @@ req_limit() {
         echo "voucher"
     elif [ "$(grep -wc ${message_from_id[$id]} /root/multi/claimed)" != '0' ]; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Already Redeem" \
+            --text "ALREADY REDEEM" \
             --parse_mode html
         exit 1
     elif (($total >= $limituser)); then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Fully Redeem" \
+            --text "FULLY REDEEM" \
             --parse_mode html
         exit 1
     else
@@ -401,10 +401,10 @@ freelimitReq() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Your Current Free Limit Is $limituser" \
+        --text "YOUR CURRENT FREE LIMIT IS $limituser" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Change Limit:" \
+        --text "Change Limit :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -412,7 +412,7 @@ generatorReq() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Voucher Validity:" \
+        --text "🗓️ Voucher Validity 🗓️\n\n( days=1 ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -420,7 +420,7 @@ voucher_req() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Input Your Voucher:" \
+        --text "🏷️ Input Your Voucher 🏷️ :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -428,7 +428,7 @@ resellerReq() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Create Reseller :" \
+        --text "🫂 Create Reseller 🫂 :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -436,7 +436,7 @@ balRes() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
          --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Add Balance Reseller :" \
+        --text "💰 Add Balance Reseller 💰 :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -455,7 +455,7 @@ delRes() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Delete Reseller :" \
+        --text "📝 Delete Reseller 📝 :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
