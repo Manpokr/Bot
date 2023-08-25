@@ -27,7 +27,7 @@ msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>       PANEL MENU ADMIN</b>\n"
+        msg+="<b>           PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -36,7 +36,7 @@ msg_welcome() {
         msg+="☆ IP VPS  = $ip_nya\n"
 	msg+="☆ DOMAIN  = $dom_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="Welcome $nameStore\n"
+        msg+="  Welcome $nameStore\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -77,7 +77,7 @@ backReq() {
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     PANEL MENU ADMIN</b>\n"
+        msg+="<b>           PANEL MENU ADMIN</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>☆ OS      = $tipe_nya\n"
         msg+="☆ ISP     = $isp_nya\n"
@@ -86,7 +86,7 @@ backReq() {
         msg+="☆ IP VPS  = $ip_nya\n"
 	msg+="☆ DOMAIN  = $dom_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="Welcome $nameStore\n"
+        msg+="  Welcome $nameStore\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -145,15 +145,14 @@ back_ser() {
 freeReq() {
     if [ "$(cat /root/multi/public)" == "on" ]; then
         local msg
-        msg="Welcome ${message_from_first_name}\n"
-        msg+="Please Select Free Config Below\n"
+        msg+="SELECT AN OPTION BELOW =\n"
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard3" \
             --parse_mode html
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Free Function Is Close\n" \
+            --text "📴 Free Function Is Offline 📴\n" \
             --parse_mode html
     fi
 }
@@ -168,7 +167,7 @@ claimVoucher() {
 
 menu_ser() {
     local msg
-    msg="👨‍🔧 Menu Service 👨‍🔧\n"
+    msg="👨‍🔧 MENU SERVICE 👨‍🔧\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -178,8 +177,8 @@ menu_ser() {
 
 menuRes() {
     local msg
-    msg="Welcome ${callback_query_from_first_name}\n"
-    msg+="Menu Reseller\n"
+   # msg="Welcome ${callback_query_from_first_name}\n"
+    msg="MENU RESELLER ${callback_query_from_first_name}\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -209,7 +208,7 @@ req_voucher() {
     elif [ "${coupon}" == "free" ]; then
         if [ "$(cat /root/multi/public)" != "on" ]; then
             ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                --text "Public Is Off\n" \
+                --text "📴 PUBLIC MODE IS OFFLINE 📴\n" \
                 --parse_mode html
             exit 1
         else
@@ -217,7 +216,7 @@ req_voucher() {
         fi
     else
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "Already Claimed\n" \
+            --text "ALREADY CLAIMED ☑️\n" \
             --parse_mode html
         exit 1
     fi
@@ -552,7 +551,7 @@ reseller_balance() {
 ###############-SSH-VPN-ALL-############
 menu_ssh() {
     local msg
-    msg="🕴️ Welcome ${callback_query_from_first_name} Menu ssh-vpn 🕴️\n"
+    msg="SELECT AN OPTION BELOW =\n"
  #   msg+="Menu\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
@@ -569,30 +568,62 @@ add_ssh() {
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
-del_ssh() {
+del_ssh() {    
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User ssh-vpn 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
 ext_ssh() {
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User ssh-vpn 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
 del_exp() {
@@ -884,7 +915,7 @@ req_ovpn() {
 
 menu_vmess() {
     local msg
-    msg="🕴️ Menu Xray Vmess 🕴️\n"
+    msg="SELECT AN OPTION BELOW =\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -893,30 +924,61 @@ menu_vmess() {
 }
 
 vmess_del() {
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Vmess 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
-vmess_ext() {
+vmess_ext() {    
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Vmess 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
-
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
 trial_vm() {
@@ -1407,7 +1469,7 @@ keyboardvm="$(ShellBot.InlineKeyboardMarkup -b 'menuvm')"
 
 menu_vless() {
     local msg
-    msg="🕴️ Menu Xray Vless 🕴️\n"
+    msg="SELECT AN OPTION BELOW =\n"
   #  msg+="Menu SSH\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
@@ -1416,31 +1478,62 @@ menu_vless() {
         --parse_mode html
 }
 
-vless_del() {
+vless_del() {    
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Vless 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
-vless_ext() {
+vless_ext() {    
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Vless 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
-
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
 trial_vl() {
@@ -1818,7 +1911,7 @@ keyboardvl="$(ShellBot.InlineKeyboardMarkup -b 'menuvl')"
 
 menu_xtls() {
     local msg
-    msg="🕴️ Menu Xray Xtls 🕴️\n"
+    msg="SELECT AN OPTION BELOW =\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -1827,29 +1920,61 @@ menu_xtls() {
 }
 
 xtls_del() {
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Xtls 🗑\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
-xtls_ext() {
+xtls_ext() {   
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Xtls 📅\n\n( Username ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
 trial_xt() {
@@ -2244,16 +2369,32 @@ menu_trojan() {
 }
 
 trojan_del() {
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
-        --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "🗑 Remove User Trojan 🗑\n\n( Username ) :" \
-        --reply_markup "$(ShellBot.ForceReply)"
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+              --parse_mode html
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+              --text "🗑 Remove User Trojan 🗑\n\n( Username ) :" \
+              --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
 trojan_ext() {
@@ -2261,9 +2402,9 @@ trojan_ext() {
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
     alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | wc -l)
-    if [ "$cekk" = "0" ] || [ "$cekk" = "1" ]; then
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-                --text "⛔ No Users Online ⛔" \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
                 --parse_mode html
      return 0
      else	      
@@ -2279,7 +2420,7 @@ trojan_ext() {
       fi
       else
       ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
-            --text "⛔ Access Denied ⛔\n\nThis Is Your Id: <code>${callback_query_from_id}</code>\n" \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
             --parse_mode html
       return 0
       fi
