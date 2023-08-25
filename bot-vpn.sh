@@ -932,10 +932,8 @@ create_vmess() {
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
-    
     req_voucher $file_user
     req_limit
-
     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
@@ -1242,7 +1240,6 @@ trial_vmess() {
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-
     req_voucher $file_user
     req_limit
     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
@@ -1475,7 +1472,6 @@ create_vless() {
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-
     req_voucher $file_user
     req_limit
     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -1714,7 +1710,6 @@ vless_trial() {
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-
     req_voucher $file_user
     req_limit
     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
@@ -1877,7 +1872,6 @@ create_xtls() {
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-
     req_voucher $file_user
     req_limit
     if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
@@ -2126,13 +2120,11 @@ fi
 
 xtls_trial() {
     file_user=$1
-
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-  
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"; 
     req_voucher $file_user
     req_limit
     if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
@@ -2145,6 +2137,13 @@ xtls_trial() {
         duration=$expadmin
     else
         duration=1
+    fi
+    limit='10'
+    if [[ $limit -gt 0 ]]; then
+    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+       export limit_nya="Unlimited"
     fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
@@ -2305,8 +2304,7 @@ create_trojan() {
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
     req_voucher $file_user
     req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
@@ -2534,8 +2532,7 @@ trojan_trial() {
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";    
     req_voucher $file_user
     req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
