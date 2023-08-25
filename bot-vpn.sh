@@ -956,7 +956,7 @@ create_vmess() {
     else
        export limit_nya="Unlimited"
     fi
-    domain=$(cat /usr/local/etc/xray/domain);
+    domain=$(cat /usr/local/etc/xray/domain)
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
@@ -1044,7 +1044,7 @@ EOF
     systemctl restart xray@vmess.service
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1055,27 +1055,27 @@ EOF
     msg+="Alter Id     = 0\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS TLS LINK\n"
     msg+="<code> $vmesslink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS LINK\n"
     msg+="<code> $vmesslink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS H2 TLS LINK\n"
     msg+="<code> $vmesslink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS GRPC TLS LINK\n"
     msg+="<code> $vmesslink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
     
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -1256,6 +1256,7 @@ vmess_trial() {
     else
        export limit_nya="Unlimited"
     fi
+    domain=$(cat /usr/local/etc/xray/domain)
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
     pub_key=$(cat /etc/slowdns/server.pub);
     uuid=$(uuidgen);
@@ -1344,7 +1345,7 @@ EOF
     systemctl restart xray@vmess.service    
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) VMESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1355,27 +1356,27 @@ EOF
     msg+="Alter Id     = 0\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS TLS LINK\n"
     msg+="<code> $vmesslink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS WS LINK\n"
     msg+="<code> $vmesslink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS H2 TLS LINK\n"
     msg+="<code> $vmesslink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS GRPC TLS LINK\n"
     msg+="<code> $vmesslink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -1517,7 +1518,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VLESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) VLESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1528,27 +1529,27 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS TLS LINK\n"
     msg+="<code> $vlesslink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS WS LINK\n"
     msg+="<code> $vlesslink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS H2 TLS LINK\n"
     msg+="<code> $vlesslink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS GRPC TLS LINK\n"
     msg+="<code> $vlesslink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -1755,7 +1756,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1930,34 +1931,34 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) XTLS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) XTLS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
     msg+="Subdomain            = ${domain}</code>\n"    
     msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
     msg+="<code>Port Tls             = ${xtls}\n"
     msg+="Password %26 User Id = ${uuid}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key   (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS TCP TLS VISION LINK\n"
     msg+="<code> $vlesslink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VLESS TCP HTTP TLS LINK\n"
     msg+="<code> $vlesslink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="VMESS TCP HTTP TLS LINK\n"
     msg+="<code> $vmesslink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN TCP TLS LINK\n"
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2176,7 +2177,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) XTLS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) XTLS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
     msg+="Subdomain            = ${domain}</code>\n"    
@@ -2326,37 +2327,37 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg 
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) TROJAN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) TROJAN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}</code>\n"
+    msg+="Subdomain H2 = trh2.${domain}</code>\n"
     msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
     msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="Password     = ${uuid}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
     msg+="Name Server  (NS)   = ${ns_nya}\n"
     msg+="Public Key  a (KEY)  = ${pub_key}</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS TLS LINK\n"
     msg+="<code> $trojanlink1</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN WS LINK\n"
     msg+="<code> $trojanlink2</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN H2 TLS LINK\n"
     msg+="<code> $trojanlink4</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="TROJAN GRPC TLS LINK\n"
     msg+="<code> $trojanlink3</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -2554,11 +2555,11 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}</code>\n"
+    msg+="Subdomain H2 = trh2.${domain}</code>\n"
     msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
     msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
@@ -2634,17 +2635,17 @@ start_req() {
     elif [ "${config}" == "ovpn" ]; then
         req_ovpn $file_user
 	
-    elif [ "${config}" == "trialvmess" ]; then
-        vmess_trial $file_user
+   # elif [ "${config}" == "trialvmess" ]; then
+    #    vmess_trial $file_user
 	
-    elif [ "${config}" == "trialvless" ]; then
-        vless_trial $file_user
+#    elif [ "${config}" == "trialvless" ]; then
+#        vless_trial $file_user
 	
-    elif [ "${config}" == "trialxtls" ]; then
-        xtls_trial $file_user
+ #   elif [ "${config}" == "trialxtls" ]; then
+  #      xtls_trial $file_user
 	
-    elif [ "${config}" == "trialtrojan" ]; then
-        trojan_trial $file_user
+ #   elif [ "${config}" == "trialtrojan" ]; then
+#        trojan_trial $file_user
 	
     elif [ "${config}" == "free" ]; then
         freeReq $file_user
