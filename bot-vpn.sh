@@ -1350,7 +1350,7 @@ EOF
     systemctl restart xray@vmess.service    
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VMESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1523,15 +1523,15 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VLESS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VLESS ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
-    msg+="<code>Port none             = ${none}</code>\n"
-    msg+="<code>Port Tls     = ${xtls}\n"
-    msg+="Grpc Type    = Gun %26 Multi</code>\n"
+    msg+="Subdomain H2 = vlh2.${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port none    = ${none}\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
@@ -1730,8 +1730,7 @@ vless_trial() {
          SKIP=true
     fi
     }
-    
-    limit='0'
+    limit='10'
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1762,15 +1761,15 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸VLESS ACCOUNT🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
-    msg+="Subdomain H2 = vlh2.${domain}\n"
-    msg+="<code>Limit Quota          = ${limit_nya}</code>\n"
-    msg+="<code>Port none             = ${none}</code>\n"
-    msg+="<code>Port Tls     = ${xtls}\n"
-    msg+="Grpc Type    = Gun %26 Multi</code>\n"
+    msg+="Subdomain H2 = vlh2.${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port none    = ${none}\n"
+    msg+="Port Tls     = ${xtls}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${uuid}</code>\n"
     warp-nya
     msg+="━━━━━━━━━━━━━━━━━━━━━\n"
