@@ -3180,7 +3180,7 @@ while :; do
                 *)
                     :
                     comando=(${message_text[$id]})
-		   # [[ "${comando[0]}" = "/start" ]] && msg_welcome
+		    [[ "${comando[0]}" = "/start" ]] && msg_welcome
                     [[ "${comando[0]}" = "/free" ]] && freeReq
                     [[ "${comando[0]}" = "/claim" ]] && claimVoucher
                     [[ "${comando[0]}" = "/restart" ]] && restartReq
