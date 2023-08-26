@@ -287,29 +287,6 @@ req_voucher() {
     fi
 }
 
-voucher_nya() {
-    file_user=$1
-    #coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    coupon=$(sed -n '3 p' $file_user | cut -d' ' -f2)
-    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        echo "voucher"
-    elif [ "${coupon}" == "free" ]; then
-        if [ "$(cat /root/multi/public)" != "on" ]; then
-            ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                --text "📴 PUBLIC MODE IS OFFLINE 📴\n" \
-                --parse_mode html
-            exit 1
-        else
-            echo "free"
-        fi
-    else
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "ALREADY CLAIMED ✅\n" \
-            --parse_mode html
-        exit 1
-    fi
-}
-
 req_url() {
     ori=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [[ ${callback_query_data[$id]} == _addvmess ]]; then
