@@ -58,7 +58,7 @@ msg_welcome() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="✨ WELCOME $nameStore ✨\n"
+        msg+="  ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -142,7 +142,7 @@ backReq() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="✨ WELCOME $nameStore ✨\n"
+        msg+="  ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -268,6 +268,29 @@ publicReq() {
 req_voucher() {
     file_user=$1
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    coupon=$(sed -n '3 p' $file_user | cut -d' ' -f2)
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        echo "voucher"
+    elif [ "${coupon}" == "free" ]; then
+        if [ "$(cat /root/multi/public)" != "on" ]; then
+            ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                --text "📴 PUBLIC MODE IS OFFLINE 📴\n" \
+                --parse_mode html
+            exit 1
+        else
+            echo "free"
+        fi
+    else
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "ALREADY CLAIMED ✅\n" \
+            --parse_mode html
+        exit 1
+    fi
+}
+
+voucher_nya() {
+    file_user=$1
+    #coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     coupon=$(sed -n '3 p' $file_user | cut -d' ' -f2)
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         echo "voucher"
@@ -2732,7 +2755,8 @@ fi
 trojan_trial() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	    
-    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    coupon=$(sed -n '3 p' $file_user | cut -d' ' -f1)
+  #  coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2740,7 +2764,7 @@ trojan_trial() {
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";    
    # exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
          
-    req_voucher $file_user
+    voucher_nya $file_user
     req_limit
     #Login=$(sed -n '1 p' $file_user | cut -d' ' -f1)
    # Pass=$(sed -n '2 p' $file_user | cut -d' ' -f1)
