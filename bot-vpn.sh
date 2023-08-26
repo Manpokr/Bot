@@ -268,6 +268,7 @@ publicReq() {
 req_voucher() {
     file_user=$1
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    coupon=$(sed -n '3 p' $file_user | cut -d' ' -f2)
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
         echo "voucher"
     elif [ "${coupon}" == "free" ]; then
@@ -834,9 +835,9 @@ input_delssh() {
 	sed -i "/\b$user\b/d" /usr/local/etc/ssh/user.txt
  
 	local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) DELETE USER SSHVPN (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️DELETE USER SSHVPN✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -877,12 +878,9 @@ input_extssh() {
         sed -i "s/SSH $user $exp/SSH $user $exp4/g" /usr/local/etc/ssh/user.txt
 
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>(✷‿✷) RENEW USER SSHVPN (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️RENEW USER SSHVPN✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${User} ) Renewed Then Expired On ( $exp4 ) Days Added ( $Days Days )\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-	#msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER SSHVPN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
-     #   msg+="User ( ${User} ) Renewed Then Expired On ( $exp4 ) Days Added ( $Days Days )\n"
-    #    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
