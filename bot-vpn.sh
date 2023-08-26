@@ -2821,20 +2821,20 @@ keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
 
 ##################-ALL-TROJAN-GO-###############
 
-create_ssock() {
-}
+#create_ssock() {
+#}
 
-delete_ssock() {
-}
+#delete_ssock() {
+#}
 
-renew_ssock() {
-}
+#renew_ssock() {
+#}
 
-check_ssock() {
-}
+#check_ssock() {
+#}
 
-trial_ssock() {
-}
+#trial_ssock() {
+#}
 
 #unset menuss
 #menuss=''
@@ -2855,20 +2855,20 @@ trial_ssock() {
 
 ##################-ALL-TROJAN-GO-###############
 
-create_ssock() {
-}
+#create_ssock() {
+#}
 
-delete_trgo() {
-}
+#delete_trgo() {
+#}
 
-renew_trgo() {
-}
+#renew_trgo() {
+#}
 
-check_trgo() {
-}
+#check_trgo() {
+#}
 
-trial_trgo() {
-}
+#trial_trgo() {
+#}
 
 #unset menutrgo
 #menutrgo=''
