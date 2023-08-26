@@ -16,26 +16,32 @@ get_AdminID=$(sed -n '2 p' /root/ResBotAuth | cut -d' ' -f2)
 get_botName=$(sed -n '1 p' /root/multi/bot.conf | cut -d' ' -f2)
 get_limituser=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
 nameStore=$(grep -w "store_name" /root/multi/bot.conf | awk '{print $NF}')
-dom_nya=$(cat /usr/local/etc/xray/domain);
-vl_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VL " | wc -l);
-vm_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VM " | wc -l);
-xt_nya=$(cat /usr/local/etc/xray/user.txt | grep "^XTLS " | wc -l);
-tr_nya=$(cat /usr/local/etc/xray/user.txt | grep "^TR " | wc -l);
-ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
-trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
-ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
-uram_nya=$( free -m | awk 'NR==2 {print $3}' );
 res_price=5
 
 ShellBot.init --token $get_Token --monitor --return map --flush --log_file /root/log_bot
 
 msg_welcome() {
-    oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
+    oribal=$(grep ${message_from_id} /root/multi/reseller | awk '{print $2}')
+    source /root/ip-detail.txt;
+    source /etc/os-release;
+    ip_nya="$IP";
+    isp_nya="$ISP";
+    country_nya="$COUNTRY";
+    tipe_nya=$NAME
+    dom_nya=$(cat /usr/local/etc/xray/domain);
+    vl_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VL " | wc -l);
+    vm_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VM " | wc -l);
+    xt_nya=$(cat /usr/local/etc/xray/user.txt | grep "^XTLS " | wc -l);
+    tr_nya=$(cat /usr/local/etc/xray/user.txt | grep "^TR " | wc -l);
+    ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
+    trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
+    ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
+    uram_nya=$( free -m | awk 'NR==2 {print $3}' );
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>          🌀 PANEL MENU ADMIN 🌀</b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
         msg+="⚡ CITY    = $country_nya\n"
@@ -45,14 +51,15 @@ msg_welcome() {
         msg+="\n"
         msg+="<code>Total Created :\n"
         msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya\n"
 	msg+="⚡ VLESS        = $vl_nya\n"
         msg+="⚡ VMESS        = $vm_nya\n"
 	msg+="⚡ TROJAN       = $tr_nya\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="✨ WELCOME $nameStore ✨\n"
-	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -73,6 +80,7 @@ msg_welcome() {
         msg+="\n"
         msg+="<code>Total Created :\n"
         msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya\n"
 	msg+="⚡ VLESS        = $vl_nya\n"
         msg+="⚡ VMESS        = $vm_nya\n"
 	msg+="⚡ TROJAN       = $tr_nya\n"
@@ -98,10 +106,26 @@ msg_welcome() {
 backReq() {
     oribal=$(grep ${callback_query_from_id} /root/multi/reseller | awk '{print $2}')
     if [ "${callback_query_from_id[$id]}" == "$get_AdminID" ]; then
-        local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>          🌀 PANEL MENU ADMIN 🌀</b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+    source /root/ip-detail.txt;
+    source /etc/os-release;
+    ip_nya="$IP";
+    isp_nya="$ISP";
+    country_nya="$COUNTRY";
+    tipe_nya=$NAME
+    dom_nya=$(cat /usr/local/etc/xray/domain);
+    vl_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VL " | wc -l);
+    vm_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VM " | wc -l);
+    xt_nya=$(cat /usr/local/etc/xray/user.txt | grep "^XTLS " | wc -l);
+    tr_nya=$(cat /usr/local/etc/xray/user.txt | grep "^TR " | wc -l);
+    ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
+    trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
+    ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
+    uram_nya=$( free -m | awk 'NR==2 {print $3}' );
+     
+	local msg
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
         msg+="⚡ CITY    = $country_nya\n"
@@ -111,14 +135,15 @@ backReq() {
         msg+="\n"
         msg+="<code>Total Created :\n"
         msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya\n"
 	msg+="⚡ VLESS        = $vl_nya\n"
         msg+="⚡ VMESS        = $vm_nya\n"
 	msg+="⚡ TROJAN       = $tr_nya\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="✨ WELCOME $nameStore ✨\n"
-	msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -128,9 +153,9 @@ backReq() {
 	    
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>      🌀 RESELLER PANEL MENU 🌀</b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b>    🌀 RESELLER PANEL MENU 🌀</b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
         msg+="⚡ CITY    = $country_nya\n"
@@ -140,16 +165,17 @@ backReq() {
         msg+="\n"
         msg+="<code>Total Created :\n"
         msg+="⚡ SSH-VPN      = $ssh_nya\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya\n"
 	msg+="⚡ VLESS        = $vl_nya\n"
         msg+="⚡ VMESS        = $vm_nya\n"
 	msg+="⚡ TROJAN       = $tr_nya\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
         msg+="⚡ YOUR BALANCE IS = $oribal"
-	msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
+	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n\n"
  
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -2707,14 +2733,14 @@ trojan_trial() {
     file_user=$1
     user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	    
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-   # expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";    
    # exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
          
-    #req_voucher $file_user
+    req_voucher $file_user
     req_limit
     #Login=$(sed -n '1 p' $file_user | cut -d' ' -f1)
    # Pass=$(sed -n '2 p' $file_user | cut -d' ' -f1)
@@ -2730,7 +2756,7 @@ trojan_trial() {
         exit 1
     fi
     if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
-        duration=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+        duration=$expadmin
     else
         duration=1
     fi
@@ -3167,7 +3193,7 @@ while :; do
                 *)
                     :
                     comando=(${message_text[$id]})
-		    [[ "${comando[0]}" = "/start" ]] && msg_welcome
+		   # [[ "${comando[0]}" = "/start" ]] && msg_welcome
                     [[ "${comando[0]}" = "/free" ]] && freeReq
                     [[ "${comando[0]}" = "/claim" ]] && claimVoucher
                     [[ "${comando[0]}" = "/restart" ]] && restartReq
