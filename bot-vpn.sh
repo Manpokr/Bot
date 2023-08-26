@@ -1726,7 +1726,7 @@ ext_vless() {
     else
         masaaktif=30
     fi
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "$user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
@@ -1761,7 +1761,7 @@ ext_vless() {
 del_vless() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
+    if ! grep -qw "$user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
