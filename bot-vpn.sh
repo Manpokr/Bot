@@ -43,7 +43,7 @@ msg_welcome() {
         msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP   k  = $isp_nya\n"
+        msg+="⚡ ISP     = $isp_nya\n"
         msg+="⚡ CITY    = $country_nya\n"
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
@@ -127,7 +127,7 @@ backReq() {
         msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP    k = $isp_nya\n"
+        msg+="⚡ ISP     = $isp_nya\n"
         msg+="⚡ CITY    = $country_nya\n"
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
@@ -293,28 +293,28 @@ req_url() {
         ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User Vmess 👤\n\n( Username Expired ) :" \
+            --text "👤 Create User Vmess 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
 	    
     elif [[ ${callback_query_data[$id]} == _addvless ]]; then
        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
        ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User Vless 👤\n\n( Username Expired ) :" \
+            --text "👤 Create User Vless 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
 	    
     elif [[ ${callback_query_data[$id]} == _addxtls ]]; then
         ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User Xtls 👤\n\n( Username Expired ) :" \
+            --text "👤 Create User Xtls 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
 	    
     elif [[ ${callback_query_data[$id]} == _addtrojan ]]; then
         ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User Trojan 👤\n\n( Username Expired ) :" \
+            --text "👤 Create User Trojan 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
 	    
     elif [[ ${callback_query_data[$id]} == _voucherOVPN ]]; then
@@ -328,7 +328,7 @@ req_url() {
         ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User Trojan Go 👤\n\n( Username Expired ) :" \
+            --text "👤 Create User Trojan Go 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 }
@@ -3227,10 +3227,18 @@ while :; do
                     reseller_balance
                     input_extssh $CAD_ARQ
                     ;;
-                '👤 Create User ssh-vpn 👤\n\n( Username Expired ) :')
+	      . '👤 Create User ssh-vpn 👤\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    user=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$user" >>/tmp/userssh.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+                '🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    user=$(cat /tmp/userssh.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3239,22 +3247,22 @@ while :; do
 			exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    echo "$vouch $exp" >>/root/multi/voucher
-		    exp1=$(date -d +${duration}days +%Y-%m-%d)
-                    local msg
-                    msg="User        = $user\n"
-                    msg+="<code>Expired = $exp1</code>\n"
-                    msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
-                    msg+="Click Link To Confirm OVPN Acc\n"
-
-                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "$msg" \
-                        --parse_mode html
+                    if grep -E "^SSH $user" /usr/local/etc/ssh/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else
+                        echo "$vouch $exp" >>/root/multi/voucher
+			echo "start ovpn_${user}_${vouch}" >$CAD_ARQ
+                        rm -rf /tmp/userssh.txt
+                        req_ovpn $CAD_ARQ
+	            fi
                     ;;
-	        '👤 Create User Vmess 👤\n\n( Username Expired ) :')
+	        '👤 Create User Vmess 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "$user" >>/root/user.txt
+		    echo "$user" >>/tmp/uservmess.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3262,7 +3270,7 @@ while :; do
                 '🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /root/user.txt)
+                    user=$(cat /tmp/uservmess.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3279,14 +3287,14 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
 			echo "start vmess_${user}_${vouch}" >$CAD_ARQ
-                        rm -rf /root/user.txt
+                        rm -rf /tmp/uservmess.txt
                         create_vmess $CAD_ARQ
 	            fi
                     ;;
-	        '👤 Create User Vless 👤\n\n( Username Expired ) :')
+	        '👤 Create User Vless 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "$user" >>/root/user.txt
+		    echo "$user" >>/tmp/uservless.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vless 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3294,7 +3302,7 @@ while :; do
                 '🗓️ Create Expired Date Vless 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /root/user.txt)
+                    user=$(cat /tmp/uservless.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3311,14 +3319,22 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
 			echo "start vless_${user}_${vouch}" >$CAD_ARQ
-                        rm -rf /root/user.txt
+                        rm -rf /tmp/uservless.txt
                         create_vless $CAD_ARQ
 	            fi
-                    ;;                    
-		'👤 Create User Xtls 👤\n\n( Username Expired ) :')
+                    ;;
+	        '👤 Create User Xtls 👤\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    user=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$user" >>/tmp/userxtls.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "🗓️ Create Expired Date Xtls 🗓️\n\n( days=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+                '🗓️ Create Expired Date Xtls 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    user=$(cat /tmp/userxtls.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3332,24 +3348,25 @@ while :; do
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
-                    else       
+                    else
                         echo "$vouch $exp" >>/root/multi/voucher
-			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        local msg
-                        msg="User        = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm bXtls Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
-                    fi
-                    ;;
-                '👤 Create User Trojan 👤\n\n( Username Expired ) :')
+			echo "start xtls_${user}_${vouch}" >$CAD_ARQ
+                        rm -rf /tmp/userxtls.txt
+                        create_xtls $CAD_ARQ
+	            fi
+	            ;;
+                '👤 Create User Trojan 👤\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    user=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$user" >>/tmp/usertrojan.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+                '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    user=$(cat /tmp/usertrojan.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3363,20 +3380,13 @@ while :; do
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
-                    else      
+                    else
                         echo "$vouch $exp" >>/root/multi/voucher
-			exp1=$(date -d +${duration}days +%Y-%m-%d)
-		        local msg
-                        msg="User        = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Trojan Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
-                    fi
-                    ;;
+			echo "start trojan_${user}_${vouch}" >$CAD_ARQ
+                        rm -rf /tmp/usertrojan.txt
+                        create_trojan $CAD_ARQ
+	            fi
+	            ;;
                 '👤 Create User Vmess free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
@@ -3581,7 +3591,7 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     input_voucher $CAD_ARQ
                     ;;
-                'Voucher Validity:')
+                '🗓️ Voucher Validity 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
