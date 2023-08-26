@@ -1720,13 +1720,14 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 
 ext_vless() {
     file_user=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
         masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
     else
         masaaktif=30
     fi
-    if ! grep -qw "$user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
@@ -1760,8 +1761,9 @@ ext_vless() {
 
 del_vless() {
     file_user=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if ! grep -qw "$user" /usr/local/etc/xray/user.txt; then
+    if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
             --parse_mode html
