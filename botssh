@@ -5,6 +5,7 @@
 #	CANAL TELEGRAM:	http://t.me/Keting
 #====================================================
 
+# // Loading
 clear
 fun_bar() {
     comando[0]="$1"
@@ -33,17 +34,54 @@ fun_bar() {
     tput cnorm
 }
 
+# // Install Jq
+[[ ! -f /usr/bin/jq ]] && {
+   wget -q --no-check-certificate "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" -O /usr/bin/jq
+   chmod +x usr/bin/jq
+}
+
+# // Make Folder Bot                                                                                                                                                                                                                                                 
+dircreate() {                                                                                                                                                                                                                                                        
+    [[ ! -d /root/multi ]] && mkdir -p /root/multi && touch /root/multi/voucher && touch /root/multi/claimed && touch /root/multi/reseller && touch /root/multi/public && touch /root/multi/hist && echo "off" >/root/multi/public                                   
+    [[ ! -d /etc/.maAsiss ]] && mkdir -p /etc/.maAsiss                                                                                                                                                                                                               
+}
+
 fun_botOnOff() {
-    [[ $(ps x | grep "bot_plus" | grep -v grep | wc -l) = '0' ]] && {
+    dircreate
+    [[ $(ps x | grep "bot_run" | grep -v grep | wc -l) = '0' ]] && {
+        echo
+    [[ ! -f /root/multi/bot.conf ]] && {
         clear
-        echo -e "\E[44;1;37m             INSTALL BOT VPN                \E[0m\n"
-        echo -ne "\033[1;32mINPUT YOUR BOT TOKEN:\033[1;37m "
+        echo -e "\E[44;1;37m             BOT VPN INSTALLER               \E[0m\n"
+    [[ ! -f /root/ResBotAuth ]] && {
+        echo -ne "\033[1;32m  INPUT YOUR BOT TOKEN:\033[1;37m "
         read tokenbot
+        echo "Toket='$tokenbot'" > /root/ResBotAuth
 
-        echo ""
-        echo -ne "\033[1;32mINPUT YOUR TELEGRAM ID:\033[1;37m "
+        echo -ne "\033[1;32m  INPUT YOUR TELEGRAM ID:\033[1;37m "
         read iduser
+        echo "Admin_ID=$iduser" >> /root/ResBotAuth
+     }
+}
 
+        echo -ne "\033[1;32m  INPUT USERNAME BOT PANEL DONT USE '@' ( Ex: example_bot ) :\033[1;37m"
+        read admin_pnl
+        [[ -z $admin_pnl ]] && admin_pnl="errorvpn_bot"
+
+        echo -ne "\033[1;32m  LIMIT TRIAL FOR RESELLER CREATE USER TRIAL ( default:1 ) :\033[1;37m"
+        read limit_pnl
+        [[ -z $limit_pnl ]] && limit_pnl="1"
+ 
+        echo -ne "INPUT YOUR NAME STORE ( dafult: VPN-STORE ) :\033[1;37m"
+        read store_pnl
+        [[ -z $store_pnl ]] && store_pnl="VPN-STORE"
+
+echo ""
+cat <<-EOF >/root/multi/bot.conf
+admin_panel : $admin_pnl
+limite_trial : $limit_pnl
+store_name : $store_pnl
+EOF
         clear
         echo -e "\033[1;32mINSTALL BOT VPN API \033[0m\n"
 fun_bot1() {
@@ -53,7 +91,6 @@ fun_bot1() {
     [[ ! -e "/etc/.maAsiss/.Shellbtsss" ]] && {
 	     wget -qO- raw.githubusercontent.com/Manpokr/Bot/main/bot-api.sh >/etc/SSHPlus/ShellBot.sh
     }
-    cd /etc/SSHPlus
     screen -dmS bot_run run $tokenbot $iduser >/dev/null 2>&1
     [[ $(grep -wc "bot_run" /etc/autostart) = '0' ]] && {
              echo -e "ps x | grep 'bot_run' | grep -v 'grep' || sudo screen -dmS bot_run run $tokenbot $iduser && cd $HOME" >>/etc/autostart
@@ -98,10 +135,11 @@ fun_instbot() {
     echo -e "\n\033[1;32m3° \033[1;37m- \033[1;33mBOT \033[1;37m@MissRose_bot \033[1;33mE GET YOUR OWN ID BY \033[1;31mTYPE: \033[1;37m/id\033[0m"
     echo -e "\033[1;31m▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣\033[0m"
     echo ""
-    read -p "ENTER CONTINUEW ? [s/n]: " -e -i s resposta
-    [[ "$resposta" = 's' ]] && {
+    read -p "ENTER CONTINUEW ? ( y/n ): " -e -i s resposta
+    [[ "$resposta" = 'y' ]] && {
         fun_botOnOff
     } || {
+        echo
         echo -e "\n\033[1;31mRETURNING...\033[0m"
         sleep 2
         menu
