@@ -40,10 +40,10 @@ msg_welcome() {
     uram_nya=$( free -m | awk 'NR==2 {print $3}' );
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    X   🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP     = $isp_nya\n"
+        msg+="⚡ ISP   X  = $isp_nya\n"
         msg+="⚡ CITY    = $country_nya\n"
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
@@ -58,7 +58,7 @@ msg_welcome() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="    ✨ WELCOME $nameStore ✨\n"
+        msg+="     ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -124,10 +124,10 @@ backReq() {
      
 	local msg
         msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>  X     🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP     = $isp_nya\n"
+        msg+="⚡ ISP    X = $isp_nya\n"
         msg+="⚡ CITY    = $country_nya\n"
 	msg+="⚡ RAM     = $uram_nya MB\n"
         msg+="⚡ IP VPS  = $ip_nya\n"
@@ -142,7 +142,7 @@ backReq() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="    ✨ WELCOME $nameStore ✨\n"
+        msg+="     ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
