@@ -346,7 +346,7 @@ link_voucher() {
         local msg
         msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n\n"
+        msg+="https://t.me/${get_botName}?link=vmess_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm Vmess Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -3189,7 +3189,7 @@ while :; do
             fi
             if [[ ${message_entities_type[$id]} == bot_command ]]; then
                 echo "${message_text[$id]}" >$CAD_ARQ
-                if [ "$(awk '{print $1}' $CAD_ARQ)" = '/start' ]; then
+                if [ "$(awk '{print $1}' $CAD_ARQ)" = '/link' ]; then
                     start_req $CAD_ARQ
                 fi
             fi
