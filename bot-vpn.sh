@@ -3262,7 +3262,6 @@ while :; do
                 '🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-		   # user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     user=$(cat /root/user.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3280,13 +3279,22 @@ while :; do
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
 			echo "start vmess_${user}_${vouch}" >$CAD_ARQ
+                        rm -rf /root/user.txt
                         create_vmess $CAD_ARQ
 	            fi
                     ;;
-                '👤 Create User Vless 👤\n\n( Username Expired ) :')
+	        '👤 Create User Vless 👤\n\n( Username Expired ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    user=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$user" >>/root/user.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "🗓️ Create Expired Date Vless 🗓️\n\n( days=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+                '🗓️ Create Expired Date Vless 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    user=$(cat /root/user.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3300,19 +3308,12 @@ while :; do
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
                         exit 1
-                    else       
+                    else
                         echo "$vouch $exp" >>/root/multi/voucher
-			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        local msg
-                        msg="User        = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Vless Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
-                    fi
+			echo "start vless_${user}_${vouch}" >$CAD_ARQ
+                        rm -rf /root/user.txt
+                        create_vless $CAD_ARQ
+	            fi
                     ;;                    
 		'👤 Create User Xtls 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
