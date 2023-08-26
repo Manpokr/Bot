@@ -2498,8 +2498,8 @@ trial_tr() {
 
 create_trojan() {
     file_user=$1
-    user=$(grep 'link [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    coupon=$(grep 'link [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2518,7 +2518,7 @@ create_trojan() {
     else
         duration=1
     fi
-    limit='0'
+    limit=$(cat /tmp/quotatrojan.txt)
     if [[ $limit -gt 0 ]]; then
         echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
         export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2583,7 +2583,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
         --text "$msg" \
         --parse_mode html
         sed -i "/$coupon/d" /root/multi/voucher
-   
+        rm -rf /tmp/quotatrojan.txt
 }
 
 ext_trojan() {
@@ -2902,9 +2902,9 @@ keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
 
 start_req() {
     file_user=$1
-    config=$(grep 'link [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
-    user=$(grep 'link [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-    pass=$(grep 'link [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    config=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    pass=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     
     if [ "${config}" == "vmess" ]; then
         create_vmess $file_user
@@ -3180,7 +3180,6 @@ while :; do
                 *)
                     :
                     comando=(${message_text[$id]})
-		    [[ "${comando[0]}" = "/start" ]] && msg_welcome
                     [[ "${comando[0]}" = "/free" ]] && freeReq
                     [[ "${comando[0]}" = "/claim" ]] && claimVoucher
                     [[ "${comando[0]}" = "/restart" ]] && restartReq
@@ -3189,7 +3188,7 @@ while :; do
             fi
             if [[ ${message_entities_type[$id]} == bot_command ]]; then
                 echo "${message_text[$id]}" >$CAD_ARQ
-                if [ "$(awk '{print $1}' $CAD_ARQ)" = '/link' ]; then
+                if [ "$(awk '{print $1}' $CAD_ARQ)" = '/start' ]; then
                     start_req $CAD_ARQ
                 fi
             fi
@@ -3359,6 +3358,14 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "$user" >>/tmp/usertrojan.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "Limit Quota Trojan\n\n( example 1Gb=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+	         'Limit Quota Trojan\n\n( example 1Gb=1 ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    quota=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$quota" >>/tmp/quotatrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3599,7 +3606,7 @@ while :; do
                     local msg
                     msg="<code>Expired : $exp</code>\n"
                     msg+="Voucher : <code>$vouch</code>\n"
-                    msg+="<a href='https://t.me/${get_botName}?link=voucher_${vouch}'>Click Hereeee To Claim</a>\n"
+                    msg+="<a href='https://t.me/${get_botName}?start=voucher_${vouch}'>Click Here To Claim</a>\n"
 
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "$msg" \
