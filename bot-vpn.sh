@@ -124,7 +124,7 @@ backReq() {
      
 	local msg
         msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>  B     🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
