@@ -3260,10 +3260,10 @@ while :; do
                 '🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    user=$(cut -d' ' -f2 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
-			exp=$(cut -d' ' -f2 $CAD_ARQ)
+                        duration=$(cut -d' ' -f1 $CAD_ARQ)
+			exp=$(cut -d' ' -f1 $CAD_ARQ)
                     else
                         duration=30
 			exp=30
