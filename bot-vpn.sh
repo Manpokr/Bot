@@ -3599,7 +3599,7 @@ while :; do
                     local msg
                     msg="<code>Expired : $exp</code>\n"
                     msg+="Voucher : <code>$vouch</code>\n"
-                    msg+="<a href='https://t.me/${get_botName}?link=voucher_${vouch}'>Click Here To Claim</a>\n"
+                    msg+="<a href='https://t.me/${get_botName}?link=voucher_${vouch}'>Click Hereeee To Claim</a>\n"
 
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "$msg" \
