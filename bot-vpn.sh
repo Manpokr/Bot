@@ -40,7 +40,7 @@ msg_welcome() {
     uram_nya=$( free -m | awk 'NR==2 {print $3}' );
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    D   🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>    B   🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
@@ -124,7 +124,7 @@ backReq() {
      
 	local msg
         msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>  D     🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>  B     🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
@@ -1212,8 +1212,7 @@ EOF
 
 del_vmess() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-  #  user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Does Not Exist ❗❗\n" \
@@ -1248,8 +1247,7 @@ del_vmess() {
 
 ext_vmess() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-   # user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
         masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
     else
@@ -1717,7 +1715,6 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
 
 ext_vless() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
         masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
@@ -1746,7 +1743,7 @@ ext_vless() {
         systemctl restart xray@vless.service
       
         local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER VLESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️RENEW USER VLESS✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -1758,7 +1755,6 @@ ext_vless() {
 
 del_vless() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     if ! grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -1779,7 +1775,7 @@ del_vless() {
     systemctl restart xray@vless.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER VLESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️DELETE USER VLESS✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
@@ -3489,12 +3485,25 @@ while :; do
 		'👤 Create Vless Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
-                    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	    
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-		    echo "$vouch $exp" >>/root/multi/voucher
-		    echo "start trialvless_${user}_${vouch}" >$CAD_ARQ
-		    vless_trial $CAD_ARQ
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    else
+                        duration=1
+			exp=1
+                    fi
+		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else      
+                        echo "$vouch $exp" >>/root/multi/voucher			
+		        echo "start trialvless_${user}_${vouch}" >$CAD_ARQ
+		        vless_trial $CAD_ARQ
+		    fi
                     ;;
 		'👤 Create Xtls Trial 👤\n\n( Expired Days=1 ) :')                   
 		    echo "${message_text[$id]}" >$CAD_ARQ
