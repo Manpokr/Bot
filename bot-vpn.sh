@@ -1001,7 +1001,7 @@ vmess_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>💠💠💠DELETE VMESS ACCOUNT💠💠💠 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️DELETE VMESS ACCOUNT▪️▪️▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Vmess 🗑\n\n( Username ) :" \
@@ -1030,7 +1030,7 @@ vmess_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>💠💠💠RENEW VMESS ACCOUNT💠💠💠 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️RENEW VMESS ACCOUNT▪️▪️▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Vmess 📅\n\n( Username ) :" \
@@ -1235,7 +1235,7 @@ del_vmess() {
     systemctl restart xray@vmess.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔹🔹🔹DELETE USER VMESS🔹🔹🔹</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️DELETE USER VMESS▪️▪️▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
@@ -1554,7 +1554,7 @@ vless_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE VLESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Vless 🗑\n\n( Username ) :" \
@@ -1583,7 +1583,7 @@ vless_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VLESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW VLESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Vless 📅\n\n( Username ) :" \
@@ -3207,7 +3207,7 @@ while :; do
                         --text "🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
                     ;;
-             '🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :')
+                '🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     input_addssh $CAD_ARQ
@@ -3251,7 +3251,13 @@ while :; do
                         --text "$msg" \
                         --parse_mode html
                     ;;
-                '👤 Create User Vmess 👤\n\n( Username Expired ) :')
+	        '👤 Create User Vmess 👤\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+                '🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
                     user=$(cut -d' ' -f1 $CAD_ARQ)
@@ -3270,16 +3276,8 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			exp1=$(date -d +${duration}days +%Y-%m-%d)
-                        local msg
-                        msg="User        = $user\n"
-                        msg+="<code>Expired = $exp1</code>\n"
-                        msg+="https://t.me/${get_botName}?start=vmess_${user}_${vouch}\n\n"
-                        msg+="Click Link To Confirm Vmess Acc\n"
-
-                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                            --text "$msg" \
-                            --parse_mode html
+			echo "start vmess_${user}_${vouch}" >$CAD_ARQ
+                        create_vmess $CAD_ARQ
 	            fi
                     ;;
                 '👤 Create User Vless 👤\n\n( Username Expired ) :')
