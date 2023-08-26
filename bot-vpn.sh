@@ -636,7 +636,7 @@ add_ssh() {
 del_ssh() {    
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -647,7 +647,7 @@ del_ssh() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE SSHVPN ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User ssh-vpn 🗑\n\n( Username ) :" \
@@ -665,7 +665,7 @@ del_ssh() {
 ext_ssh() {
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/ssh/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/ssh/user.txt | grep -E "^SSH " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -676,7 +676,7 @@ ext_ssh() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW SSHVPN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW SSHVPN ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User ssh-vpn 📅\n\n( Username ) :" \
@@ -834,7 +834,7 @@ input_delssh() {
 	sed -i "/\b$user\b/d" /usr/local/etc/ssh/user.txt
  
 	local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️DELETE USER SSHVPN✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER SSHVPN▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
@@ -877,7 +877,7 @@ input_extssh() {
         sed -i "s/SSH $user $exp/SSH $user $exp4/g" /usr/local/etc/ssh/user.txt
 
         local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️RENEW USER SSHVPN✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER SSHVPN▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${User} ) Renewed Then Expired On ( $exp4 ) Days Added ( $Days Days )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
@@ -1001,7 +1001,7 @@ vmess_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️DELETE VMESS ACCOUNT▪️▪️▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE VMESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Vmess 🗑\n\n( Username ) :" \
@@ -1030,7 +1030,7 @@ vmess_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️RENEW VMESS ACCOUNT▪️▪️▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW VMESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Vmess 📅\n\n( Username ) :" \
@@ -1235,7 +1235,7 @@ del_vmess() {
     systemctl restart xray@vmess.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️DELETE USER VMESS▪️▪️▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER VMESS▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
@@ -1274,7 +1274,7 @@ ext_vmess() {
         systemctl restart xray@vmess.service
       
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️RENEW USER VMESS▪️▪️▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER VMESS▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
@@ -1543,7 +1543,7 @@ menu_vless() {
 vless_del() {    
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -1554,7 +1554,7 @@ vless_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE VLESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE VLESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Vless 🗑\n\n( Username ) :" \
@@ -1572,7 +1572,7 @@ vless_del() {
 vless_ext() {    
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VL " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -1583,7 +1583,7 @@ vless_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW VLESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW VLESS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Vless 📅\n\n( Username ) :" \
@@ -1743,7 +1743,7 @@ ext_vless() {
         systemctl restart xray@vless.service
       
         local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️RENEW USER VLESS✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER VLESS▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -1775,7 +1775,7 @@ del_vless() {
     systemctl restart xray@vless.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>✴️✴️✴️DELETE USER VLESS✴️✴️✴️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER VLESS▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
@@ -1984,7 +1984,7 @@ menu_xtls() {
 xtls_del() {
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -1995,7 +1995,7 @@ xtls_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE XTLS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Xtls 🗑\n\n( Username ) :" \
@@ -2013,7 +2013,7 @@ xtls_del() {
 xtls_ext() {   
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^XTLS " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -2024,7 +2024,7 @@ xtls_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW XTLS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW XTLS ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Xtls 📅\n\n( Username ) :" \
@@ -2184,7 +2184,7 @@ ext_xtls() {
         systemctl restart xray.service   
 	
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER XTLS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER XTLS▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -2217,7 +2217,7 @@ del_xtls() {
     systemctl restart xray.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER VLESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER VLESS▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed !</code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -2433,7 +2433,7 @@ menu_trojan() {
 trojan_del() {
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -2444,7 +2444,7 @@ trojan_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE TROJAN ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
               --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
               --text "🗑 Remove User Trojan 🗑\n\n( Username ) :" \
@@ -2462,7 +2462,7 @@ trojan_del() {
 trojan_ext() {
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^TR " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -2473,7 +2473,7 @@ trojan_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW TROJAN ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW TROJAN ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Trojan 📅\n\n( Username ) :" \
@@ -2615,7 +2615,7 @@ ext_trojan() {
         systemctl restart xray@trojan.service
       
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER TROJAN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER TROJAN▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -2647,7 +2647,7 @@ del_trojan() {
     systemctl restart xray@trojan.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER TROJAN🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER TROJAN▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 
@@ -3251,7 +3251,7 @@ while :; do
                         --text "$msg" \
                         --parse_mode html
                     ;;
-	        '👤 Create User Vmess 👤\n\n( Username ) :')
+	        '👤 Create User Vmess 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :" \
