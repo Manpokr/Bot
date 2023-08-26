@@ -1055,8 +1055,7 @@ trial_vm() {
 
 create_vmess() {
     file_user=$1
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-  #  user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
@@ -3261,8 +3260,8 @@ while :; do
                 '🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-		    user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    #user=$(cut -d' ' -f2 $CAD_ARQ)
+		   # user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    user=$(cut -d' ' -f1 $CAD_ARQ)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
