@@ -3253,6 +3253,8 @@ while :; do
                     ;;
 	        '👤 Create User Vmess 👤\n\n( Username Expired ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
+		    user=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$user" >>/root/user.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3261,7 +3263,7 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
 		   # user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    user=$(cat /root/user.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
