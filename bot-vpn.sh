@@ -3227,7 +3227,7 @@ while :; do
                     reseller_balance
                     input_extssh $CAD_ARQ
                     ;;
-	      . '👤 Create User ssh-vpn 👤\n\n( Username ) :')
+	        '👤 Create User ssh-vpn 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "$user" >>/tmp/userssh.txt
