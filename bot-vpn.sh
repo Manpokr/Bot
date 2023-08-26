@@ -1469,7 +1469,7 @@ EOF
     systemctl restart xray@vmess.service    
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) VMESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>   (✷‿✷) VMESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = ${ip_nya}\n"
     msg+="Subdomain    = ${domain}\n"
@@ -1911,7 +1911,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@vless.service
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>   (✷‿✷) VLESS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -2364,7 +2364,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     systemctl restart xray.service    
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>     (✷‿✷) XTLS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) XTLS TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks              = $user\n"
     msg+="Myip                 = $ip_nya\n"
     msg+="Subdomain            = ${domain}</code>\n"    
