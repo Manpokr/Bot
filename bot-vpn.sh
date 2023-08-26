@@ -40,7 +40,7 @@ msg_welcome() {
     uram_nya=$( free -m | awk 'NR==2 {print $3}' );
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>    B   🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>    X   🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
@@ -58,7 +58,7 @@ msg_welcome() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="  ✨ WELCOME $nameStore ✨\n"
+        msg+="    ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -124,7 +124,7 @@ backReq() {
      
 	local msg
         msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>  B     🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>  X     🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS      = $tipe_nya\n"
         msg+="⚡ ISP     = $isp_nya\n"
@@ -142,7 +142,7 @@ backReq() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="  ✨ WELCOME $nameStore ✨\n"
+        msg+="    ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
@@ -990,7 +990,7 @@ menu_vmess() {
 vmess_del() {
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -1001,7 +1001,7 @@ vmess_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>💠💠💠DELETE VMESS ACCOUNT💠💠💠 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "🗑 Remove User Vmess 🗑\n\n( Username ) :" \
@@ -1019,7 +1019,7 @@ vmess_del() {
 vmess_ext() {    
     if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
-    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | nl -s '• ' | sort | uniq)
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | awk '{print $2,$3}' | sort | uniq)
     cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^VM " | wc -l)
     if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
@@ -1030,7 +1030,7 @@ vmess_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW VMESS ACCOUNT🔸🔸🔸 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n$alluser\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>💠💠💠RENEW VMESS ACCOUNT💠💠💠 </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Vmess 📅\n\n( Username ) :" \
@@ -1235,7 +1235,7 @@ del_vmess() {
     systemctl restart xray@vmess.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸DELETE USER VMESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔹🔹🔹DELETE USER VMESS🔹🔹🔹</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>User ( ${user} ${exp} ) Has Been Removed ! </code>\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
       
@@ -1274,7 +1274,7 @@ ext_vmess() {
         systemctl restart xray@vmess.service
       
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🔸🔸🔸RENEW USER VMESS🔸🔸🔸</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️▪️▪️RENEW USER VMESS▪️▪️▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	
@@ -2546,7 +2546,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg 
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b> (✷‿✷) TROJAN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) TROJAN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -2775,7 +2775,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     systemctl restart xray@trojan.service
       
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>    (✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>   (✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
@@ -3494,7 +3494,7 @@ while :; do
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-		    if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
+		    if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                             --text "User Already Exist ❗❗\n" \
                             --parse_mode html
@@ -3508,22 +3508,48 @@ while :; do
 		'👤 Create Xtls Trial 👤\n\n( Expired Days=1 ) :')                   
 		    echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
-                    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	    
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-		    echo "$vouch $exp" >>/root/multi/voucher
-		    echo "start trialxtls_${user}_${vouch}" >$CAD_ARQ
-		    xtls_trial $CAD_ARQ
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    else
+                        duration=1
+			exp=1
+                    fi
+		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		    if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else      
+                        echo "$vouch $exp" >>/root/multi/voucher			
+		        echo "start trialxtls_${user}_${vouch}" >$CAD_ARQ
+		        xtls_trial $CAD_ARQ
+		    fi
                     ;;
 		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
-                    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"	    
-                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
-                    exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-		    echo "$vouch $exp" >>/root/multi/voucher
-		    echo "start trialtrojan_${user}_${vouch}" >$CAD_ARQ
-		    trojan_trial $CAD_ARQ
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    else
+                        duration=1
+			exp=1
+                    fi
+		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else      
+                        echo "$vouch $exp" >>/root/multi/voucher			
+		        echo "start trialtrojan_${user}_${vouch}" >$CAD_ARQ
+		        trojan_trial $CAD_ARQ
+	            fi
                     ;;
                 'Create Reseller :')
                     echo "${message_text[$id]}" >$CAD_ARQ
