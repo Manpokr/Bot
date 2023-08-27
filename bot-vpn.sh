@@ -355,15 +355,17 @@ link_voucher() {
           #  --parse_mode html
 	    
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
-        local msg
-        msg="User      = $user\n"
-        msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm Vless Acc\n"
+        echo "start vmess_${user}_${vouch}" >$CAD_ARQ
+	create_vless $CAD_ARQ
+	#local msg
+        #msg="User      = $user\n"
+       # msg+="<code>Expired = $exp1</code>\n"
+      #  msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
+        #msg+="Click Link To Confirm Vless Acc\n"
 
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$msg" \
-            --parse_mode html
+       # ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+           # --text "$msg" \
+          #  --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
         msg="User      = $user\n"
