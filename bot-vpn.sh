@@ -333,8 +333,8 @@ req_url() {
 }
 
 link_voucher() {
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-              --message_id ${callback_query_message_message_id[$id]}
+ #   ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+     #         --message_id ${callback_query_message_message_id[$id]}
     file_user=/tmp/cad.${callback_query_message_chat_id[$id]}
     vouch=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     duration=$(grep $vouch /root/multi/voucher | awk '{print $2}')
