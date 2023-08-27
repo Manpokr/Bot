@@ -343,6 +343,7 @@ link_voucher() {
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
         echo "start vmess_${user}_${vouch}" >$CAD_ARQ
+	create_vmess $CAD_ARQ
 	#local msg
      #   msg="User      = $user\n"
        # msg+="<code>Expired = $exp1</code>\n"
