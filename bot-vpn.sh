@@ -333,8 +333,8 @@ req_url() {
 }
 
 link_voucher() {
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-              --message_id ${callback_query_message_message_id[$id]}
+    #ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+      #        --message_id ${callback_query_message_message_id[$id]}
     file_user=/tmp/cad.${callback_query_message_chat_id[$id]}
     vouch=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     duration=$(grep $vouch /root/multi/voucher | awk '{print $2}')
@@ -355,7 +355,7 @@ link_voucher() {
           #  --parse_mode html
 	    
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
-        echo "start vless_${user}_${vouch}" >$CAD_ARQ
+        echo "start vless_${user}_${vouch}"
 	create_vless
 	#local msg
         #msg="User      = $user\n"
@@ -392,7 +392,7 @@ link_voucher() {
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm ssh-vpn Acc\n"
-
+q
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
