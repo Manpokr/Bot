@@ -49,14 +49,14 @@ msg_welcome() {
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
         msg+="\n"
-        msg+="<code>Total Created :\n"
-        msg+="⚡ SSH-VPN      = $ssh_nya\n"
-	msg+="⚡ XRAY XTLS    = $xt_nya\n"
-	msg+="⚡ VLESS        = $vl_nya\n"
-        msg+="⚡ VMESS        = $vm_nya\n"
-	msg+="⚡ TROJAN       = $tr_nya\n"
-        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
-	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
+        msg+="<code>Total Created : account\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya account\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
+	msg+="⚡ VLESS        = $vl_nya account\n"
+        msg+="⚡ VMESS        = $vm_nya account\n"
+	msg+="⚡ TROJAN       = $tr_nya account\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="     ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -78,14 +78,14 @@ msg_welcome() {
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
         msg+="\n"
-        msg+="<code>Total Created :\n"
-        msg+="⚡ SSH-VPN      = $ssh_nya\n"
-	msg+="⚡ XRAY XTLS    = $xt_nya\n"
-	msg+="⚡ VLESS        = $vl_nya\n"
-        msg+="⚡ VMESS        = $vm_nya\n"
-	msg+="⚡ TROJAN       = $tr_nya\n"
-        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
-	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
+        msg+="<code>Total Created : account\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya account\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
+	msg+="⚡ VLESS        = $vl_nya account\n"
+        msg+="⚡ VMESS        = $vm_nya account\n"
+	msg+="⚡ TROJAN       = $tr_nya account\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
@@ -133,14 +133,14 @@ backReq() {
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
         msg+="\n"
-        msg+="<code>Total Created :\n"
-        msg+="⚡ SSH-VPN      = $ssh_nya\n"
-	msg+="⚡ XRAY XTLS    = $xt_nya\n"
-	msg+="⚡ VLESS        = $vl_nya\n"
-        msg+="⚡ VMESS        = $vm_nya\n"
-	msg+="⚡ TROJAN       = $tr_nya\n"
-        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
-	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
+        msg+="<code>Total Created : account\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya account\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
+	msg+="⚡ VLESS        = $vl_nya account\n"
+        msg+="⚡ VMESS        = $vm_nya account\n"
+	msg+="⚡ TROJAN       = $tr_nya account\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="     ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -163,14 +163,14 @@ backReq() {
         msg+="⚡ IP VPS  = $ip_nya\n"
 	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
         msg+="\n"
-        msg+="<code>Total Created :\n"
-        msg+="⚡ SSH-VPN      = $ssh_nya\n"
-	msg+="⚡ XRAY XTLS    = $xt_nya\n"
-	msg+="⚡ VLESS        = $vl_nya\n"
-        msg+="⚡ VMESS        = $vm_nya\n"
-	msg+="⚡ TROJAN       = $tr_nya\n"
-        msg+="⚡ SHADOWSOCK22 = $ss_nya\n"
-	msg+="⚡ TROJAN-GO    = $trgo_nya</code>\n"
+        msg+="<code>Total Created : account\n"
+        msg+="⚡ SSH-VPN      = $ssh_nya account\n"
+	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
+	msg+="⚡ VLESS        = $vl_nya account\n"
+        msg+="⚡ VMESS        = $vm_nya account\n"
+	msg+="⚡ TROJAN       = $tr_nya account\n"
+        msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
+	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
@@ -323,11 +323,11 @@ req_url() {
             --text "👤 Create User ssh-vpn 👤\n\n( Username Expired ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
 	    
-     elif [[ ${callback_query_data[$id]} == _addtrojango ]]; then
+     elif [[ ${callback_query_data[$id]} == _addss ]]; then
         ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
               --message_id ${callback_query_message_message_id[$id]}
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-            --text "👤 Create User Trojan Go 👤\n\n( Username ) :" \
+            --text "👤 Create User Shadowaock22 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 }
@@ -362,6 +362,7 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
+	    
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
         msg="User      = $user\n"
@@ -372,6 +373,7 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
+	    
     elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
         local msg
         msg="User      = $user\n"
@@ -382,12 +384,24 @@ link_voucher() {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
+	    
     elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
         local msg
         msg="User      = $user\n"
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm ssh-vpn Acc\n"
+
+        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+	    
+    elif [[ ${callback_query_data[$id]} == _voucherss ]]; then
+        local msg
+        msg="User      = $user\n"
+        msg+="<code>Expired = $exp1</code>\n"
+        msg+="https://t.me/${get_botName}?start=ss_${user}_${vouch}\n\n"
+        msg+="Click Link To Confirm Shadowsock22 Acc\n"
 
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
@@ -429,6 +443,13 @@ req_free() {
               --message_id ${callback_query_message_message_id[$id]}
 	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
             --text "👤 Create User Trojan-Go free 👤\n\n( Username ) :" \
+            --reply_markup "$(ShellBot.ForceReply)"
+	    
+     elif [[ ${callback_query_data[$id]} == _freess ]]; then
+        ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+	ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+            --text "👤 Create User Shadowsock22 free 👤\n\n( Username ) :" \
             --reply_markup "$(ShellBot.ForceReply)"
     fi
 
@@ -617,7 +638,6 @@ reseller_balance() {
 menu_ssh() {
     local msg
     msg="SELECT AN OPTION BELOW =\n"
- #   msg+="Menu\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -1534,7 +1554,6 @@ keyboardvm="$(ShellBot.InlineKeyboardMarkup -b 'menuvm')"
 menu_vless() {
     local msg
     msg="SELECT AN OPTION BELOW =\n"
-  #  msg+="Menu SSH\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -1605,12 +1624,6 @@ trial_vl() {
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "👤 Create Vless Trial 👤\n\n( Expired Days=1 ) :" \
-        --reply_markup "$(ShellBot.ForceReply)"
-}
-
-vless_kota() {
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Limit Quota ( ex: 1= 1Gb ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -2429,7 +2442,7 @@ keyboardxt="$(ShellBot.InlineKeyboardMarkup -b 'menuxt')"
 
 menu_trojan() {
     local msg
-    msg="🕴️ Menu Xray Trojan 🕴️\n"
+    msg="SELECT AN OPTION BELOW =\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -2842,37 +2855,407 @@ keyboardtr="$(ShellBot.InlineKeyboardMarkup -b 'menutr')"
 
 ##################-ALL-TROJAN-GO-###############
 
-#create_ssock() {
-#}
+menu_ss() {
+    local msg
+    msg="SELECT AN OPTION BELOW =\n"
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]} \
+        --text "$msg" \
+        --reply_markup "$keyboardss" \
+        --parse_mode html
+}
 
-#delete_ssock() {
-#}
+ss_del() {
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^SS " | awk '{print $2,$3}' | sort | uniq)
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^SS " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE SSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+              --parse_mode html
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+              --text "🗑 Remove User Trojan 🗑\n\n( Username ) :" \
+              --reply_markup "$(ShellBot.ForceReply)"
+           return 0
+         fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
+}
 
-#renew_ssock() {
-#}
+ss_ext() {
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
+    cat /usr/local/etc/xray/user.txt >/tmp/cad.${message_from_id[$id]}
+    alluser=$(cat /usr/local/etc/xray/user.txt | grep -E "^SS " | awk '{print $2,$3}' | sort | uniq)
+    cekk=$(cat /usr/local/etc/xray/user.txt | grep -E "^SS " | wc -l)
+    if [ "$cekk" = "0" ] || [ "$cekk" = "0" ]; then
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ YOU DONT HAVE ANY USER YET ⛔" \
+                --parse_mode html
+     return 0
+     else	      
+     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW SSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --parse_mode html
+     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "📅 Renew User Shadowsock 📅\n\n( Username ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+      return 0
+      fi
+      else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+      return 0
+      fi
+}
 
-#check_ssock() {
-#}
+ss_tr() {
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+        --message_id ${callback_query_message_message_id[$id]}
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
+        --text "👤 Create Trojan Shadowsock 👤\n\n( Expired Days=1 ) :" \
+        --reply_markup "$(ShellBot.ForceReply)"
+}
 
-#trial_ssock() {
-#}
+create_ss() {
+    file_user=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
+    req_voucher $file_user
+    req_limit
+    if grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Already Exist ❗❗\n" \
+            --parse_mode html
+        exit 1
+    fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=1
+    fi
+    limit=$(cat /tmp/quotass.txt)
+    if [[ $limit -gt 0 ]]; then
+        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
+        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+        export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
+    exp=$(date -d +${duration}days +%Y-%m-%d)
+    
+sed -i '/#trojanws$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+sed -i '/#trojangrpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
 
-#unset menuss
-#menuss=''
-#ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'CREATE ACC SS-22' --callback_data '_addss'
-#ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'DELETE ACC SS-22' --callback_data '_delconfss'
-#ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'RENEW ACC SS-22' --callback_data '_extconfss'
-#ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'CHECK ACC SS-22' --callback_data '_cekss'
-#ShellBot.InlineKeyboardButton --button 'menuss' --line 3 --text 'TRIAL ACC SS-22' --callback_data '_trialss'
-#ShellBot.InlineKeyboardButton --button 'menuss' --line 4 --text '🔙 BACK 🔙' --callback_data '_backss'
-#ShellBot.regHandleFunction --function req_url --callback_data _addss
-#ShellBot.regHandleFunction --function ssock_del --callback_data _delconfss
-#ShellBot.regHandleFunction --function ssock_ext --callback_data _extconfss
-#ShellBot.regHandleFunction --function ssock_cek --callback_data _cekss
-#ShellBot.regHandleFunction --function ssock_trl --callback_data _trialss
-#ShellBot.regHandleFunction --function back_ser --callback_data _backss
-#unset keyboardss
-#keyboardss="$(ShellBot.InlineKeyboardMarkup -b 'menuss')"
+    echo -e "SS $user $exp" >> /usr/local/etc/xray/user.txt;
+
+    trojanlink1="trojan://${uuid}@${domain}:${xtls1}?type=ws%26security=tls%26path=%2Ftrojan%26sni=bug.com#${user}";
+    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com%26security=none%26type=ws%26path=%2Ftrojan-none#${user}";
+    trojanlink3="trojan://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=trojan-grpc%26sni=bug.com#${user}";
+    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%2Ftrojan-h2%26sni=bug.com#${user}";
+ 
+    systemctl restart xray@ss.service
+      
+    local msg 
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SHADOWSOCK22 ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
+    msg+="Subdomain    = ${domain}\n</code>"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="Password     = ${uuid}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key  a (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="SHADOWSOCK22 WS TLS LINK\n"
+    msg+="<code> $trojanlink1</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="SHADOWSOCK22 WS LINK\n"
+    msg+="<code> $trojanlink2</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="SHADOWSOCK22 GRPC TLS LINK\n"
+    msg+="<code> $trojanlink3</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Expired On    = $exp</code>\n"
+
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+        rm -rf /tmp/quotass.txt
+        sed -i "/$coupon/d" /root/multi/voucher
+}
+
+ext_ss() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+        masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
+    else
+        masaaktif=30
+    fi
+    if ! grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Does Not Exist ❗❗\n" \
+            --parse_mode html
+        exit 1
+    else
+        user=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $2}')
+        exp=$(grep -wE "$user" "/usr/local/etc/xray/user.txt" | awk '{print $3}')
+        now=$(date +%Y-%m-%d)
+        d1=$(date -d "$exp" +%s)
+        d2=$(date -d "$now" +%s)
+        exp2=$(((d1 - d2) / 86400))
+        exp3=$(($exp2 + $masaaktif))
+        exp4=$(date -d "$exp3 days" +"%Y-%m-%d")
+
+        sed -i "s/TR $user $exp/TR $user $exp4/g" /usr/local/etc/xray/user.txt
+        sed -i "s/### $user $exp/### $user $exp4/g" /usr/local/etc/xray/trojan.json
+
+        systemctl restart xray@ss.service
+      
+        local msg
+	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
+    fi
+}
+
+del_ss() {
+    file_user=$1
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
+    if ! grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Does Not Exist ❗❗\n" \
+            --parse_mode html
+        exit 1
+    fi
+    user="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $2}')"
+    exp="$(cat /usr/local/etc/xray/user.txt | grep -w "$user" | awk '{print $3}')"
+    
+    sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
+    sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/trojan.json
+    rm -f /etc/manternet/limit/trojan/quota/$user
+    rm -f /etc/manternet/limit/trojan/ip/$user
+    rm -f /etc/manternet/trojan/$user
+    rm -f /etc/manternet/cache/trojan/$user
+
+    systemctl restart xray@ss.service
+
+    local msg
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+}
+
+check_ss(){
+if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
+echo -n > /tmp/other.txt
+data=( `cat /usr/local/etc/xray/user.txt | grep 'SS' | cut -d ' ' -f 2 | sort | uniq`);
+echo -e "";
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
+echo -e "         🟢 SHADOWSOCK22 USER LOGIN 🟢 " >> /tmp/ss-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
+
+for akun in "${data[@]}"
+do
+if [[ -z "$akun" ]]; then
+akun="tidakada"
+fi
+
+echo -n > /tmp/ipss.txt
+data2=( `cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq`);
+for ip in "${data2[@]}"
+do
+
+jum=$(cat /var/log/xray/access.log | grep "$(date -d "0 days" +"%H:%M" )" | grep -w $akun | tail -n150 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -F $ip | sed 's/2402//g' | sort | uniq)
+if [[ "$jum" = "$ip" ]]; then
+echo "$jum" >> /tmp/ipss.txt
+else
+echo "$ip" >> /tmp/other.txt
+fi
+jum2=$(cat /tmp/ipss.txt)
+sed -i "/$jum2/d" /tmp/other.txt > /dev/null 2>&1
+done
+jum=$(cat /tmp/ipss.txt)
+if [[ -z "$jum" ]]; then
+echo > /dev/null
+else
+jum2=$(cat /tmp/ipss.txt | nl -s " • " )
+echo -e "  User = $akun" >> /tmp/ss-login
+echo -e "$jum2" >> /tmp/ss-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
+fi
+rm -rf /tmp/ipss.txt
+done
+rm -rf /tmp/other.txt
+rm -rf /tmp/ipss.txt
+msg=$(cat /tmp/ss-login)
+cekk=$(cat /tmp/ss-login | wc -l)
+if [ "$cekk" = "0" ] || [ "$cekk" = "3" ]; then
+ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+                --text "⛔ NO USERS ONLINE ⛔" \
+                --parse_mode html
+rm /tmp/ss-login
+return 0
+else
+ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
+ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+         --text "$msg" \
+         --parse_mode html
+rm /tmp/ss-login
+return 0
+fi
+else
+ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+return 0
+fi
+}
+
+
+ss_trial() {
+    file_user=$1
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
+    none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
+    xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
+    none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";   
+         
+    req_voucher $file_user
+    req_limit
+    if grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "User Already Exist ❗❗\n" \
+            --parse_mode html
+        exit 1
+    fi
+    if [ "$(grep -wc $coupon /root/multi/voucher)" != '0' ]; then
+        duration=$expadmin
+    else
+        duration=1
+    fi
+    limit=$(cat /tmp/quotass.txt)
+    if [[ $limit -gt 0 ]]; then
+        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
+        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    else
+        export limit_nya="Unlimited"
+    fi
+    domain=$(cat /usr/local/etc/xray/domain);
+    ns_nya=$(cat /usr/local/etc/xray/nsdomain);
+    pub_key=$(cat /etc/slowdns/server.pub);
+    uuid=$(uuidgen);
+    exp=$(date -d +${duration}days +%Y-%m-%d)
+    
+sed -i '/#trojanws$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+sed -i '/#trojangrpc$/a\### '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/trojan.json
+
+    echo -e "SS $user $exp" >> /usr/local/etc/xray/user.txt;
+
+    trojanlink1="trojan://${uuid}@${domain}:${xtls1}?type=ws%26security=tls%26path=%2Ftrojan%26sni=bug.com#${user}";
+    trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com%26security=none%26type=ws%26path=%2Ftrojan-none#${user}";
+    trojanlink3="trojan://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=trojan-grpc%26sni=bug.com#${user}";
+    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%252Ftrojan-h2%26sni=bug.com#${user}";
+ 
+    systemctl restart xray@ss.service
+      
+    local msg
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>   (✷‿✷) TROJAN TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Remarks      = $user\n"
+    msg+="Myip         = $ip_nya\n"
+    msg+="Subdomain    = ${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Port Tls     = ${xtls}\n"
+    msg+="Port None    = ${none}\n"
+    msg+="Grpc Type    = Gun %26 Multi\n"
+    msg+="Password     = ${uuid}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Slowdns Port (PORT) = ${xtls1}\n"
+    msg+="Name Server  (NS)   = ${ns_nya}\n"
+    msg+="Public Key  a (KEY)  = ${pub_key}</code>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="SHADOWSOCK22 WS TLS LINK\n"
+    msg+="<code> $trojanlink1</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="SHADOWSOCK22 WS LINK\n"
+    msg+="<code> $trojanlink2</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="SHADOWSOCK22 GRPC TLS LINK\n"
+    msg+="<code> $trojanlink3</code>\n"
+    msg+="\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<code>Expired On    = $exp</code>\n"
+    
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
+        --parse_mode html
+        rm -rf /tmp/quotass.txt
+        sed -i "/$coupon/d" /root/multi/voucher
+}
+
+unset menuss
+menuss=''
+ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'CREATE ACC SS-22' --callback_data '_addss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'DELETE ACC SS-22' --callback_data '_delconfss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'RENEW ACC SS-22' --callback_data '_extconfss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'CHECK ACC SS-22' --callback_data '_cekss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 3 --text 'TRIAL ACC SS-22' --callback_data '_trialss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 4 --text '🔙 BACK 🔙' --callback_data '_backss'
+ShellBot.regHandleFunction --function req_url --callback_data _addss
+ShellBot.regHandleFunction --function ss_del --callback_data _delconfss
+ShellBot.regHandleFunction --function ss_ext --callback_data _extconfss
+ShellBot.regHandleFunction --function ss_cek --callback_data _cekss
+ShellBot.regHandleFunction --function ss_trl --callback_data _trialss
+ShellBot.regHandleFunction --function back_ser --callback_data _backss
+unset keyboardss
+keyboardss="$(ShellBot.InlineKeyboardMarkup -b 'menuss')"
 
 ##################-ALL-TROJAN-GO-###############
 
@@ -2926,6 +3309,9 @@ start_req() {
     elif [ "${config}" == "trojan" ]; then
         create_trojan $file_user
 	
+    elif [ "${config}" == "ss" ]; then
+        create_ss $file_user
+	
     elif [ "${config}" == "ovpn" ]; then
         req_ovpn $file_user
 	
@@ -2939,6 +3325,9 @@ start_req() {
         xtls_trial $file_user
 	
     elif [ "${config}" == "trialtrojan" ]; then
+        trojan_trial $file_user
+	
+    elif [ "${config}" == "trialss" ]; then
         trojan_trial $file_user
 	
     elif [ "${config}" == "free" ]; then
@@ -3073,13 +3462,15 @@ ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'MENU SSH-VPN' -
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU VLESS' --callback_data '_menuvless'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'MENU VMESS' --callback_data '_menuvmess'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU TROJAN' --callback_data '_menutrojan'
-ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU XTLS' --callback_data '_menuxtls'
-ShellBot.InlineKeyboardButton --button 'menuxr' --line 4 --text '🔙 BACK 🔙' --callback_data '_backxray'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'MENU XTLS' --callback_data '_menuxtls'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU SS22' --callback_data '_menuss'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 3 --text '🔙 BACK 🔙' --callback_data '_backxray'
 ShellBot.regHandleFunction --function menu_ssh --callback_data _menussh
 ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless
 ShellBot.regHandleFunction --function menu_vmess --callback_data _menuvmess
 ShellBot.regHandleFunction --function menu_trojan --callback_data _menutrojan
 ShellBot.regHandleFunction --function menu_xtls --callback_data _menuxtls
+ShellBot.regHandleFunction --function menu_ss --callback_data _menuss
 ShellBot.regHandleFunction --function backReq --callback_data _backxray
 unset keyboardxr
 keyboardxr="$(ShellBot.InlineKeyboardMarkup -b 'menuxr')"
@@ -3090,10 +3481,14 @@ ShellBot.InlineKeyboardButton --button 'menu3' --line 1 --text 'VMESS' --callbac
 ShellBot.InlineKeyboardButton --button 'menu3' --line 1 --text 'VLESS' --callback_data '_freevless'
 ShellBot.InlineKeyboardButton --button 'menu3' --line 2 --text 'XTLS' --callback_data '_freextls'
 ShellBot.InlineKeyboardButton --button 'menu3' --line 2 --text 'TROJAN' --callback_data '_freetrojan'
+ShellBot.InlineKeyboardButton --button 'menu3' --line 2 --text 'SSHVPN' --callback_data '_freeovpn'
+ShellBot.InlineKeyboardButton --button 'menu3' --line 2 --text 'SS22' --callback_data '_freess'
 ShellBot.regHandleFunction --function req_free --callback_data _freevmess
 ShellBot.regHandleFunction --function req_free --callback_data _freevless
 ShellBot.regHandleFunction --function req_free --callback_data _freextls
 ShellBot.regHandleFunction --function req_free --callback_data _freetrojan
+ShellBot.regHandleFunction --function req_free --callback_data _freeovpn
+ShellBot.regHandleFunction --function req_free --callback_data _freess
 unset keyboard3
 keyboard3="$(ShellBot.InlineKeyboardMarkup -b 'menu3')"
 
@@ -3121,11 +3516,13 @@ ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text 'MENU VLESS' --ca
 ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text 'MENU VMESS' --callback_data '_menuvmess5'
 ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text 'MENU TROJAN' --callback_data '_menutrojan5'
 ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text 'MENU XTLS' --callback_data '_menuxtls5'
+ShellBot.InlineKeyboardButton --button 'menu5' --line 1 --text 'MENU SS22' --callback_data '_menuss5'
 ShellBot.regHandleFunction --function menu_ssh --callback_data _menussh5
 ShellBot.regHandleFunction --function menu_vless --callback_data _menuvless5
 ShellBot.regHandleFunction --function menu_vmess --callback_data _menuvmess5
 ShellBot.regHandleFunction --function menu_trojan --callback_data _menutrojan5
 ShellBot.regHandleFunction --function menu_xtls --callback_data _menuxtls5
+ShellBot.regHandleFunction --function menu_ss --callback_data _menuss5
 
 unset keyboard5
 keyboard5="$(ShellBot.InlineKeyboardMarkup -b 'menu5')"
@@ -3155,15 +3552,17 @@ keyboard7="$(ShellBot.InlineKeyboardMarkup -b 'menu7')"
 unset menu8
 menu8=''
 ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'VMESS' --callback_data '_vouchervmess'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'VLESS' --callback_data '_vouchervless'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'XTLS' --callback_data '_voucherxtls'
+ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'VLESS' --callback_data '_vouchervless'
+ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'XTLS' --callback_data '_voucherxtls'
 ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'TROJAN' --callback_data '_vouchertrojan'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 3 --text 'SSHVPN' --callback_data '_voucherovpn'
+ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'SSHVPN' --callback_data '_voucherovpn'
+ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'SS22' --callback_data '_voucherss'
 ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervmess
 ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervless
 ShellBot.regHandleFunction --function link_voucher --callback_data _voucherxtls
 ShellBot.regHandleFunction --function link_voucher --callback_data _vouchertrojan
 ShellBot.regHandleFunction --function link_voucher --callback_data _voucherovpn
+ShellBot.regHandleFunction --function link_voucher --callback_data _voucherss
 unset keyboard8
 keyboard8="$(ShellBot.InlineKeyboardMarkup -b 'menu8')"
 
@@ -3422,6 +3821,45 @@ while :; do
                         create_trojan $CAD_ARQ
 	            fi
 	            ;;
+	         '👤 Create User Shadowsock22 👤\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    reseller_balance
+		    echo "${message_text[$id]}" >>/tmp/userss.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📶 Limit Quota Shadowsock22 📶\n\n( example 1Gb=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+	         '📶 Limit Quota Shadowsock22 📶\n\n( example 1Gb=1 ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    echo "${message_text[$id]}" >>/tmp/quotass.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "🗓️ Create Expired Date Shadowsock22 🗓️\n\n( days=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+                '🗓️ Create Expired Date Shadowsock22 🗓️\n\n( days=1 ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    reseller_balance
+                    user=$(cat /tmp/userss.txt)
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        duration=$(cut -d' ' -f2 $CAD_ARQ)
+			exp=$(cut -d' ' -f2 $CAD_ARQ)
+                    else
+                        duration=30
+			exp=30
+                    fi
+                    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+                    if grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else
+                        echo "$vouch $exp" >>/root/multi/voucher
+			echo "start ss_${user}_${vouch}" >$CAD_ARQ
+                        rm -rf /tmp/userss.txt
+                        create_ss $CAD_ARQ
+	            fi
+	            ;;
                 '👤 Create User Vmess free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
@@ -3449,6 +3887,13 @@ while :; do
                     echo "start trojan_public${userfree}_free" >$CAD_ARQ
 		    echo "20" >>/tmp/quotatrojan.txt
                     create_trojan $CAD_ARQ
+                    ;;
+		 '👤 Create User Shadowsock free 👤\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    echo "start ss_public${userfree}_free" >$CAD_ARQ
+		    echo "20" >>/tmp/quotass.txt
+                    create_ss $CAD_ARQ
                     ;;
                 '🗑 Remove User Vless 🗑\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
@@ -3509,6 +3954,21 @@ while :; do
                     echo "${message_text[$id]}" >>$CAD_ARQ
                     reseller_balance
                     ext_trojan $CAD_ARQ
+                    ;;
+		 '🗑 Remove User Shadowsock22 🗑\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    del_ss $CAD_ARQ
+                    ;;
+                '📅 Renew User Shadowsock22 📅\n\n( Username ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📅 Extend User Shadowsock22 Days 📅\n\n( example: 1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+                    ;;
+                '📅 Extend User Shadowsock22 Days 📅\n\n( example: 1 ) :')
+                    echo "${message_text[$id]}" >>$CAD_ARQ
+                    reseller_balance
+                    ext_ss $CAD_ARQ
                     ;;
 		'👤 Create Vmess Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
@@ -3605,6 +4065,30 @@ while :; do
 	                echo "20" >>/tmp/quotatrojan.txt
 		        trojan_trial $CAD_ARQ
 	            fi
+                    ;;
+	        '👤 Create Shadowsock22 Trial 👤\n\n( Expired Days=1 ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    reseller_balance
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    else
+                        duration=1
+			exp=1
+                    fi
+		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
+		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
+		    if grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
+                        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                            --text "User Already Exist ❗❗\n" \
+                            --parse_mode html
+                        exit 1
+                    else      
+                        echo "$vouch $exp" >>/root/multi/voucher			
+		        echo "start trialss_${user}_${vouch}" >$CAD_ARQ
+	                echo "20" >>/tmp/quotass.txt
+		        ss_trial $CAD_ARQ
+		    fi
                     ;;
                 '🫂 Create Reseller 🫂 :')
                     echo "${message_text[$id]}" >$CAD_ARQ
