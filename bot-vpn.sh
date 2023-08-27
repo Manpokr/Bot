@@ -333,17 +333,16 @@ req_url() {
 }
 
 link_voucher() {
-    #ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-      #        --message_id ${callback_query_message_message_id[$id]}
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+             --message_id ${callback_query_message_message_id[$id]}
     file_user=/tmp/cad.${callback_query_message_chat_id[$id]}
     vouch=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     duration=$(grep $vouch /root/multi/voucher | awk '{print $2}')
     exp1=$(date -d +${duration}days +%Y-%m-%d)
-    user=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c4)
+  #  user=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c4)
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
-        echo "start vmess_${user}_${vouch}" >$CAD_ARQ
-	create_vmess
+	create_vmess >$CAD_ARQ
 	#local msg
      #   msg="User      = $user\n"
        # msg+="<code>Expired = $exp1</code>\n"
@@ -355,17 +354,15 @@ link_voucher() {
           #  --parse_mode html
 	    
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
-        echo "start vless_${user}_${vouch}"
-	create_vless
-	#local msg
-        #msg="User      = $user\n"
-       # msg+="<code>Expired = $exp1</code>\n"
-      #  msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
-        #msg+="Click Link To Confirm Vless Acc\n"
+	local msg
+        msg="User      = $user\n"
+        msg+="<code>Expired = $exp1</code>\n"
+        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
+        msg+="Click Link To Confirm Vless Acc\n"
 
-       # ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-           # --text "$msg" \
-          #  --parse_mode html
+        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+            --text "$msg" \
+            --parse_mode html
     elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
         local msg
         msg="User      = $user\n"
@@ -392,7 +389,7 @@ link_voucher() {
         msg+="<code>Expired = $exp1</code>\n"
         msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
         msg+="Click Link To Confirm ssh-vpn Acc\n"
-q
+
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
             --text "$msg" \
             --parse_mode html
@@ -2759,10 +2756,10 @@ trojan_trial() {
     fi
     limit=$(cat /tmp/quotatrojan.txt)
     if [[ $limit -gt 0 ]]; then
-       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
+        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
-       export limit_nya="Unlimited"
+        export limit_nya="Unlimited"
     fi
     domain=$(cat /usr/local/etc/xray/domain);
     ns_nya=$(cat /usr/local/etc/xray/nsdomain);
@@ -3639,9 +3636,12 @@ while :; do
                     ;;
                 '🗓️ Voucher Validity 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
+		    user=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c4)
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "$vouch $exp" >>/root/multi/voucher
+		   # echo "start vmess_${user}_${vouch}" >$CAD_ARQ
+                   # echo "start vless_${user}_${vouch}" >$CAD_ARQ
                     local msg
                     msg="<code>Expired : $exp</code>\n"
                     msg+="Voucher : <code>$vouch</code>\n"
@@ -3650,6 +3650,8 @@ while :; do
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "$msg" \
                         --parse_mode html
+	            echo "start vmess_${user}_${vouch}" >$CAD_ARQ
+                    echo "start vless_${user}_${vouch}" >$CAD_ARQ
                     ;;
                 'Change Limit :')
                     echo "${message_text[$id]}" >$CAD_ARQ
