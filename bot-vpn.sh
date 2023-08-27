@@ -2923,7 +2923,7 @@ ss_ext() {
       fi
 }
 
-ss_tr() {
+ss_trl() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
@@ -3251,7 +3251,7 @@ ShellBot.InlineKeyboardButton --button 'menuss' --line 4 --text '🔙 BACK 🔙'
 ShellBot.regHandleFunction --function req_url --callback_data _addss
 ShellBot.regHandleFunction --function ss_del --callback_data _delconfss
 ShellBot.regHandleFunction --function ss_ext --callback_data _extconfss
-ShellBot.regHandleFunction --function ss_cek --callback_data _cekss
+ShellBot.regHandleFunction --function check_ss --callback_data _cekss
 ShellBot.regHandleFunction --function ss_trl --callback_data _trialss
 ShellBot.regHandleFunction --function back_ser --callback_data _backss
 unset keyboardss
