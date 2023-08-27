@@ -333,8 +333,8 @@ req_url() {
 }
 
 link_voucher() {
- #   ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-     #         --message_id ${callback_query_message_message_id[$id]}
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
+              --message_id ${callback_query_message_message_id[$id]}
     file_user=/tmp/cad.${callback_query_message_chat_id[$id]}
     vouch=$(sed -n '1 p' $file_user | cut -d' ' -f1)
     duration=$(grep $vouch /root/multi/voucher | awk '{print $2}')
@@ -343,7 +343,7 @@ link_voucher() {
 
     if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
         echo "start vmess_${user}_${vouch}" >$CAD_ARQ
-	create_vmess $CAD_ARQ
+	create_vmess
 	#local msg
      #   msg="User      = $user\n"
        # msg+="<code>Expired = $exp1</code>\n"
@@ -355,8 +355,8 @@ link_voucher() {
           #  --parse_mode html
 	    
     elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
-        echo "start vmess_${user}_${vouch}" >$CAD_ARQ
-	create_vless $CAD_ARQ
+        echo "start vless_${user}_${vouch}" >$CAD_ARQ
+	create_vless
 	#local msg
         #msg="User      = $user\n"
        # msg+="<code>Expired = $exp1</code>\n"
@@ -1649,8 +1649,8 @@ create_vless() {
     }
     limit=$(cat /tmp/quotavless.txt)
     if [[ $limit -gt 0 ]]; then
-       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
        export limit_nya="Unlimited"
     fi
@@ -3239,8 +3239,8 @@ while :; do
                     ;;
 	        '👤 Create User ssh-vpn 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		    user=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "$user" >>/tmp/userssh.txt $CAD_ARQ
+		    reseller_balance
+		    echo "${message_text[$id]}" >>/tmp/userssh.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3271,16 +3271,14 @@ while :; do
                     ;;
 	        '👤 Create User Vmess 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		    user=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "$user" >>/tmp/uservmess.txt $CAD_ARQ
+		    echo "${message_text[$id]}" >>/tmp/uservmess.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "📶 Limit Quota Vmess 📶\n\n( example 1Gb=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
 	        '📶 Limit Quota Vmess 📶\n\n( example 1Gb=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		    quota=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "$quota" >>/tmp/quotavmess.txt $CAD_ARQ
+		    echo "${message_text[$id]}" >>/tmp/quotavmess.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3311,16 +3309,15 @@ while :; do
                     ;;
 	        '👤 Create User Vless 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		    user=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "$user" >>/tmp/uservless.txt $CAD_ARQ
+		    reseller_balance
+		    echo "${message_text[$id]}" >>/tmp/uservless.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "📶 Limit Quota Vless 📶\n\n( example 1Gb=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
 	         '📶 Limit Quota Vless 📶\n\n( example 1Gb=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		    quota=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "$quota" >>/tmp/quotavless.txt $CAD_ARQ
+		    echo "${message_text[$id]}" >>/tmp/quotavless.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vless 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3351,7 +3348,7 @@ while :; do
                     ;;
 	        '👤 Create User Xtls 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		  #  user=$(cut -d' ' -f1 $CAD_ARQ)
+		    reseller_balance
 		    echo "${message_text[$id]}" >>/tmp/userxtls.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "📶 Limit Quota Xtls 📶\n\n( example 1Gb=1 ) :" \
@@ -3359,7 +3356,6 @@ while :; do
 	            ;;
 	         '📶 Limit Quota Xtls 📶\n\n( example 1Gb=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		    #quota=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "${message_text[$id]}" >>/tmp/quotaxtls.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Xtls 🗓️\n\n( days=1 ) :" \
