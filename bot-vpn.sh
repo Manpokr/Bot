@@ -1075,7 +1075,7 @@ create_vmess() {
     else
         duration=1
     fi
-    limit='0'
+    limit=$(cat /tmp/quotavmess.txt)
     if [[ $limit -gt 0 ]]; then
     echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1207,6 +1207,7 @@ EOF
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
+	rm -rf /tmp/quotavmess.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -1373,7 +1374,7 @@ vmess_trial() {
     else
         duration=1
     fi
-    limit='10'
+    limit=$(cat /tmp/quotavmess.txt)
     if [[ $limit -gt 0 ]]; then
     echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1506,6 +1507,7 @@ EOF
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
+	rm -rf /tmp/quotavmess.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
