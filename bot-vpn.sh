@@ -995,6 +995,23 @@ req_ovpn() {
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
+unset menu4
+menu4=''
+ShellBot.InlineKeyboardButton --button 'menu4' --line 1 --text 'CREATE USER' --callback_data '_addssh'
+ShellBot.InlineKeyboardButton --button 'menu4' --line 1 --text 'DELETE USER' --callback_data '_delssh'
+ShellBot.InlineKeyboardButton --button 'menu4' --line 2 --text 'DELETE EXPIRED' --callback_data '_delexp'
+ShellBot.InlineKeyboardButton --button 'menu4' --line 2 --text 'EXTEND USER' --callback_data '_extssh'
+ShellBot.InlineKeyboardButton --button 'menu4' --line 2 --text 'VOUCHER SSH-VPN' --callback_data '_voucherOVPN'
+ShellBot.InlineKeyboardButton --button 'menu4' --line 3 --text '🔙 BACK 🔙' --callback_data '_back4'
+ShellBot.regHandleFunction --function add_ssh --callback_data _addssh
+ShellBot.regHandleFunction --function del_ssh --callback_data _delssh
+ShellBot.regHandleFunction --function del_exp --callback_data _delexp
+ShellBot.regHandleFunction --function ext_ssh --callback_data _extssh
+ShellBot.regHandleFunction --function req_url --callback_data _voucherOVPN
+ShellBot.regHandleFunction --function backReq --callback_data _back4
+unset keyboard4
+keyboard4="$(ShellBot.InlineKeyboardMarkup -b 'menu4')"
+
 ##################-VMESS-ALL-MENU-#######
 
 menu_vmess() {
@@ -1537,8 +1554,8 @@ ShellBot.InlineKeyboardButton --button 'menuvm' --line 1 --text 'CREATE ACC VMES
 ShellBot.InlineKeyboardButton --button 'menuvm' --line 1 --text 'DELETE ACC VMESS' --callback_data '_delconfvmess'
 ShellBot.InlineKeyboardButton --button 'menuvm' --line 2 --text 'RENEW ACC VMESS' --callback_data '_extconfvmess'
 ShellBot.InlineKeyboardButton --button 'menuvm' --line 2 --text 'CHECK ACC VMESS' --callback_data '_cekvmess'
-ShellBot.InlineKeyboardButton --button 'menuvm' --line 3 --text 'TRIAL ACC VMESS' --callback_data '_trialvmess'
-ShellBot.InlineKeyboardButton --button 'menuvm' --line 4 --text '🔙 BACK 🔙' --callback_data '_backvmess'
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 2 --text 'TRIAL ACC VMESS' --callback_data '_trialvmess'
+ShellBot.InlineKeyboardButton --button 'menuvm' --line 3 --text '🔙 BACK 🔙' --callback_data '_backvmess'
 ShellBot.regHandleFunction --function req_url --callback_data _addvmess
 ShellBot.regHandleFunction --function vmess_del --callback_data _delconfvmess
 ShellBot.regHandleFunction --function vmess_ext --callback_data _extconfvmess
@@ -1975,8 +1992,8 @@ ShellBot.InlineKeyboardButton --button 'menuvl' --line 1 --text 'CREATE ACC VLES
 ShellBot.InlineKeyboardButton --button 'menuvl' --line 1 --text 'DELETE ACC VLESS' --callback_data '_delconfvless'
 ShellBot.InlineKeyboardButton --button 'menuvl' --line 2 --text 'RENEW ACC VLESS' --callback_data '_extconfvless'
 ShellBot.InlineKeyboardButton --button 'menuvl' --line 2 --text 'CHECK ACC VLESS' --callback_data '_cekvless'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 3 --text 'TRIAL ACC VLESS' --callback_data '_trialvless'
-ShellBot.InlineKeyboardButton --button 'menuvl' --line 4 --text '🔙 BACK 🔙' --callback_data '_backvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 2 --text 'TRIAL ACC VLESS' --callback_data '_trialvless'
+ShellBot.InlineKeyboardButton --button 'menuvl' --line 3 --text '🔙 BACK 🔙' --callback_data '_backvless'
 ShellBot.regHandleFunction --function req_url --callback_data _addvless
 ShellBot.regHandleFunction --function vless_del --callback_data _delconfvless
 ShellBot.regHandleFunction --function vless_ext --callback_data _extconfvless
@@ -2426,8 +2443,8 @@ ShellBot.InlineKeyboardButton --button 'menuxt' --line 1 --text 'CREATE ACC XTLS
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 1 --text 'DELETE ACC XTLS' --callback_data '_delconfxtls'
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 2 --text 'RENEW ACC XTLS' --callback_data '_extconfxtls'
 ShellBot.InlineKeyboardButton --button 'menuxt' --line 2 --text 'CHECK ACC XTLS' --callback_data '_cekxtls'
-ShellBot.InlineKeyboardButton --button 'menuxt' --line 3 --text 'TRIAL ACC XTLS' --callback_data '_trialxtls'
-ShellBot.InlineKeyboardButton --button 'menuxt' --line 4 --text '🔙 BACK 🔙' --callback_data '_backxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 2 --text 'TRIAL ACC XTLS' --callback_data '_trialxtls'
+ShellBot.InlineKeyboardButton --button 'menuxt' --line 3 --text '🔙 BACK 🔙' --callback_data '_backxtls'
 ShellBot.regHandleFunction --function req_url --callback_data _addxtls
 ShellBot.regHandleFunction --function xtls_del --callback_data _delconfxtls
 ShellBot.regHandleFunction --function xtls_ext --callback_data _extconfxtls
@@ -2842,8 +2859,8 @@ ShellBot.InlineKeyboardButton --button 'menutr' --line 1 --text 'CREATE ACC TROJ
 ShellBot.InlineKeyboardButton --button 'menutr' --line 1 --text 'DELETE ACC TROJAN' --callback_data '_delconftrojan'
 ShellBot.InlineKeyboardButton --button 'menutr' --line 2 --text 'RENEW ACC TROJAN' --callback_data '_extconftrojan'
 ShellBot.InlineKeyboardButton --button 'menutr' --line 2 --text 'CHECK ACC TROJAN' --callback_data '_cektrojan'
-ShellBot.InlineKeyboardButton --button 'menutr' --line 3 --text 'TRIAL ACC TROJAN' --callback_data '_trialtrojan'
-ShellBot.InlineKeyboardButton --button 'menutr' --line 4 --text '🔙 BACK 🔙' --callback_data '_backtrojan'
+ShellBot.InlineKeyboardButton --button 'menutr' --line 2 --text 'TRIAL ACC TROJAN' --callback_data '_trialtrojan'
+ShellBot.InlineKeyboardButton --button 'menutr' --line 3 --text '🔙 BACK 🔙' --callback_data '_backtrojan'
 ShellBot.regHandleFunction --function req_url --callback_data _addtrojan
 ShellBot.regHandleFunction --function trojan_del --callback_data _delconftrojan
 ShellBot.regHandleFunction --function trojan_ext --callback_data _extconftrojan
@@ -3243,11 +3260,11 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
 unset menuss
 menuss=''
 ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'CREATE ACC SS-22' --callback_data '_addss'
-ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'DELETE ACC SS-22' --callback_data '_delconfss'
-ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'RENEW ACC SS-22' --callback_data '_extconfss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 1 --text 'DELETE ACC SS-22' --callback_data '_delconfss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'RENEW ACC SS-22' --callback_data '_extconfss'
 ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'CHECK ACC SS-22' --callback_data '_cekss'
-ShellBot.InlineKeyboardButton --button 'menuss' --line 3 --text 'TRIAL ACC SS-22' --callback_data '_trialss'
-ShellBot.InlineKeyboardButton --button 'menuss' --line 4 --text '🔙 BACK 🔙' --callback_data '_backss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 2 --text 'TRIAL ACC SS-22' --callback_data '_trialss'
+ShellBot.InlineKeyboardButton --button 'menuss' --line 3 --text '🔙 BACK 🔙' --callback_data '_backss'
 ShellBot.regHandleFunction --function req_url --callback_data _addss
 ShellBot.regHandleFunction --function ss_del --callback_data _delconfss
 ShellBot.regHandleFunction --function ss_ext --callback_data _extconfss
@@ -3437,8 +3454,8 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ OPEN SERV
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 STATUS SERVICE 🟢️️' --callback_data '_stsserv'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '👨‍🦱 RESELLER 👨‍🦱' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🏷️ VOUCHER GENERATOR 🏷️' --callback_data '_voucherGenerator'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🌐 PUBLIC MODE 🌐' --callback_data '_publicMode'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🌐 PUBLIC MODE 🌐' --callback_data '_publicMode'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
@@ -3458,11 +3475,11 @@ keyboardsts="$(ShellBot.InlineKeyboardMarkup -b 'menusts')"
 
 unset menuxr
 menuxr=''
-ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'MENU SSH-VPN' --callback_data '_menussh'
-ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU VLESS' --callback_data '_menuvless'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU SSH-VPN' --callback_data '_menussh'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'MENU VLESS' --callback_data '_menuvless'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'MENU VMESS' --callback_data '_menuvmess'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU TROJAN' --callback_data '_menutrojan'
-ShellBot.InlineKeyboardButton --button 'menuxr' --line 1 --text 'MENU XTLS' --callback_data '_menuxtls'
+ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU XTLS' --callback_data '_menuxtls'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 2 --text 'MENU SS22' --callback_data '_menuss'
 ShellBot.InlineKeyboardButton --button 'menuxr' --line 3 --text '🔙 BACK 🔙' --callback_data '_backxray'
 ShellBot.regHandleFunction --function menu_ssh --callback_data _menussh
@@ -3491,23 +3508,6 @@ ShellBot.regHandleFunction --function req_free --callback_data _freeovpn
 ShellBot.regHandleFunction --function req_free --callback_data _freess
 unset keyboard3
 keyboard3="$(ShellBot.InlineKeyboardMarkup -b 'menu3')"
-
-unset menu4
-menu4=''
-ShellBot.InlineKeyboardButton --button 'menu4' --line 1 --text 'CREATE USER' --callback_data '_addssh'
-ShellBot.InlineKeyboardButton --button 'menu4' --line 1 --text 'DELETE USER' --callback_data '_delssh'
-ShellBot.InlineKeyboardButton --button 'menu4' --line 2 --text 'DELETE EXPIRED' --callback_data '_delexp'
-ShellBot.InlineKeyboardButton --button 'menu4' --line 2 --text 'EXTEND USER' --callback_data '_extssh'
-ShellBot.InlineKeyboardButton --button 'menu4' --line 3 --text 'VOUCHER SSH-VPN' --callback_data '_voucherOVPN'
-ShellBot.InlineKeyboardButton --button 'menu4' --line 4 --text '🔙 BACK 🔙' --callback_data '_back4'
-ShellBot.regHandleFunction --function add_ssh --callback_data _addssh
-ShellBot.regHandleFunction --function del_ssh --callback_data _delssh
-ShellBot.regHandleFunction --function del_exp --callback_data _delexp
-ShellBot.regHandleFunction --function ext_ssh --callback_data _extssh
-ShellBot.regHandleFunction --function req_url --callback_data _voucherOVPN
-ShellBot.regHandleFunction --function backReq --callback_data _back4
-unset keyboard4
-keyboard4="$(ShellBot.InlineKeyboardMarkup -b 'menu4')"
 
 unset menu5
 menu5=''
@@ -3552,10 +3552,10 @@ keyboard7="$(ShellBot.InlineKeyboardMarkup -b 'menu7')"
 unset menu8
 menu8=''
 ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'VMESS' --callback_data '_vouchervmess'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'VLESS' --callback_data '_vouchervless'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'XTLS' --callback_data '_voucherxtls'
+ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'VLESS' --callback_data '_vouchervless'
+ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'XTLS' --callback_data '_voucherxtls'
 ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'TROJAN' --callback_data '_vouchertrojan'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'SSHVPN' --callback_data '_voucherovpn'
+ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'SSHVPN' --callback_data '_voucherovpn'
 ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'SS22' --callback_data '_voucherss'
 ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervmess
 ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervless
