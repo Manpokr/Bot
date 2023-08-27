@@ -1641,7 +1641,7 @@ create_vless() {
          SKIP=true
     fi
     }
-    limit='0'
+    limit=$(cat /tmp/quotavless.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1710,6 +1710,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
+        rm -rf /tmp/quotavless.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -1880,7 +1881,7 @@ vless_trial() {
          SKIP=true
     fi
     }
-    limit='10'
+    limit=$(cat /tmp/quotavless.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1948,6 +1949,7 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
+        rm -rf /tmp/quotavless.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -2067,7 +2069,7 @@ create_xtls() {
     else
         duration=1
     fi
-    limit='0'
+    limit=$(cat /tmp/quotaxtls.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2151,6 +2153,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
+        rm -rf /tmp/quotaxtls.txt
         sed -i "/$coupon/d" /root/multi/voucher
 
 }
@@ -2313,7 +2316,7 @@ xtls_trial() {
     else
         duration=1
     fi
-    limit='10'
+    limit=$(cat /tmp/quotaxtls.txt)
     if [[ $limit -gt 0 ]]; then
     echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2397,6 +2400,7 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
+        rm -rf /tmp/quotaxtls.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -2582,8 +2586,8 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        sed -i "/$coupon/d" /root/multi/voucher
         rm -rf /tmp/quotatrojan.txt
+        sed -i "/$coupon/d" /root/multi/voucher
 }
 
 ext_trojan() {
@@ -2747,7 +2751,7 @@ trojan_trial() {
     else
         duration=1
     fi
-    limit='10'
+    limit=$(cat /tmp/quotatrojan.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$userna
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$userna) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2811,6 +2815,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
+        rm -rf /tmp/quotatrojan.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -3263,6 +3268,14 @@ while :; do
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "$user" >>/tmp/uservmess.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📶 Limit Quota Vmess 📶\n\n( example 1Gb=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+	        '📶 Limit Quota Vmess 📶\n\n( example 1Gb=1 ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    quota=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$quota" >>/tmp/quotavmess.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
@@ -3294,6 +3307,14 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "$user" >>/tmp/uservless.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📶 Limit Quota Vless 📶\n\n( example 1Gb=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+	         '📶 Limit Quota Vless 📶\n\n( example 1Gb=1 ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    quota=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$quota" >>/tmp/quotavless.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Vless 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3327,6 +3348,14 @@ while :; do
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "$user" >>/tmp/userxtls.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+                        --text "📶 Limit Quota Xtls 📶\n\n( example 1Gb=1 ) :" \
+                        --reply_markup "$(ShellBot.ForceReply)"
+	            ;;
+	         '📶 Limit Quota Xtls 📶\n\n( example 1Gb=1 ) :')
+                    echo "${message_text[$id]}" >$CAD_ARQ
+		    quota=$(cut -d' ' -f1 $CAD_ARQ)
+		    echo "$quota" >>/tmp/quotaxtls.txt
+                    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Xtls 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
@@ -3359,10 +3388,10 @@ while :; do
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "$user" >>/tmp/usertrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-                        --text "Limit Quota Trojan\n\n( example 1Gb=1 ) :" \
+                        --text "📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
-	         'Limit Quota Trojan\n\n( example 1Gb=1 ) :')
+	        '📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    quota=$(cut -d' ' -f1 $CAD_ARQ)
 		    echo "$quota" >>/tmp/quotatrojan.txt
@@ -3398,24 +3427,28 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start vmess_public${userfree}_free" >$CAD_ARQ
+		    echo "20" >>/tmp/quotavmess.txt
                     create_vmess $CAD_ARQ
                     ;;
                 '👤 Create User Vless free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
+                    echo "start vless_public${userfree}_free" >$CAD_ARQ
+		    echo "20" >>/tmp/quotavless.txt
                     create_vless $CAD_ARQ
                     ;;
                 '👤 Create User Xtls free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
+                    echo "start xtls_public${userfree}_free" >$CAD_ARQ
+		    echo "20" >>/tmp/quotaxtls.txt
                     create_xtls $CAD_ARQ
                     ;;
                 '👤 Create User Trojan free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
+                    echo "start trojan_public${userfree}_free" >$CAD_ARQ
+		    echo "20" >>/tmp/quotatrojan.txt
                     create_trojan $CAD_ARQ
                     ;;
                 '🗑 Remove User Vless 🗑\n\n( Username ) :')
@@ -3498,6 +3531,7 @@ while :; do
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
 		        echo "start trialvmess_${user}_${vouch}" >$CAD_ARQ
+	                echo "20" >>/tmp/quotavmess.txt
 		        vmess_trial $CAD_ARQ
 		    fi
                     ;;
@@ -3521,7 +3555,8 @@ while :; do
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
 		        echo "start trialvless_${user}_${vouch}" >$CAD_ARQ
-		        vless_trial $CAD_ARQ
+		        echo "20" >>/tmp/quotavless.txt
+	                vless_trial $CAD_ARQ
 		    fi
                     ;;
 		'👤 Create Xtls Trial 👤\n\n( Expired Days=1 ) :')                   
@@ -3544,6 +3579,7 @@ while :; do
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
 		        echo "start trialxtls_${user}_${vouch}" >$CAD_ARQ
+	                echo "20" >>/tmp/quotaxtls.txt
 		        xtls_trial $CAD_ARQ
 		    fi
                     ;;
@@ -3567,6 +3603,7 @@ while :; do
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
 		        echo "start trialtrojan_${user}_${vouch}" >$CAD_ARQ
+	                echo "20" >>/tmp/quotatrojan.txt
 		        trojan_trial $CAD_ARQ
 	            fi
                     ;;
