@@ -2535,7 +2535,11 @@ trial_tr() {
 
 create_trojan() {
     file_user=$1
-    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
+    limit=$(sed -n '2 p' $file_user | cut -d' ' -f2)
+  #  limite=$(sed -n '3 p' $file_user | cut -d' ' -f2)
+    
+   # user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
@@ -3782,25 +3786,27 @@ while :; do
 	            fi
 	            ;;
                 '👤 Create User Trojan 👤\n\n( Username ) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
+                    echo "Name: ${message_text[$id]}" >$CAD_ARQ
 		  #  user=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "${message_text[$id]}" >>/tmp/usertrojan.txt
+                  #  echo "Name: ${message_text[$id]}" >$CAD_ARQ
+		   # echo "Name: ${message_text[$id]}" >>/tmp/usertrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
 	        '📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
-		  #  quota=$(cut -d' ' -f1 $CAD_ARQ)
-		    echo "${message_text[$id]}" >>/tmp/quotatrojan.txt
+                    echo "Limit: ${message_text[$id]}" >$CAD_ARQ
+		  #  quota=$(cu -d' ' -f1 $CAD_ARQ)
+		    #echo "${message_text[$id]}" >>/tmp/quotatrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
                 '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
-                    echo "${message_text[$id]}" >$CAD_ARQ
+                    echo "Exp: ${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /tmp/usertrojan.txt)
+		    user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
+                    #user=$(cat /tmp/usertrojan.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
