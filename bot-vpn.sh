@@ -2641,6 +2641,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
         --text "$msg" \
         --parse_mode html
         rm -rf /tmp/quotatrojan.txt
+	rm -rf /tmp/usertrojan.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -2870,6 +2871,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
         --text "$msg" \
         --parse_mode html
         rm -rf /tmp/quotatrojan.txt
+	rm -rf /tmp/usertrojan.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -4064,13 +4066,13 @@ while :; do
 		'👤 Create Trojan Trial 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
-                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then                      
 			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     else
-                        duration=1
 			exp=1
                     fi
+		    echo "20" >>/tmp/quotatrojan.txt
+		    limit=$(sed -n '1 p' /tmp/quotatrojan.txt | cut -d' ' -f1)
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
@@ -4080,8 +4082,8 @@ while :; do
                         exit 1
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
-		        echo "start trialtrojan_${user}_${vouch}" >$CAD_ARQ
-	                echo "20" >>/tmp/quotatrojan.txt
+		        echo "start trialtrojan_${user}_${vouch}_${limit}" >$CAD_ARQ
+	                rm -rf /tmp/quotatrojan.txt
 		        trojan_trial $CAD_ARQ
 	            fi
                     ;;
