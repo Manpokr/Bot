@@ -2544,6 +2544,13 @@ create_trojan() {
     
    # user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    
+    limit1=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
+    limit2=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '5p')
+    limit3=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '6p')
+    limit4=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
+    limit5=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2595,9 +2602,11 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = trh2.${domain}</code>\n"
-    msg+="<code>Limit Quota  = ${limit}</code>\n"
+    msg+="<code>Limit Quota  = ${limit1}</code>\n"
     msg+="<code>Limit Quota  = ${limit2}</code>\n"
     msg+="<code>Limit Quota  = ${limit3}</code>\n"
+    msg+="<code>Limit Quota  = ${limit4}</code>\n"
+    msg+="<code>Limit Quota  = ${limit5}</code>\n"
     msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
