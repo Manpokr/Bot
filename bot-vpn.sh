@@ -1645,7 +1645,6 @@ trial_vl() {
 }
 
 create_vless() {
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} --message_id ${callback_query_message_message_id[$id]}
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -1740,6 +1739,8 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
+    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} --message_id ${callback_query_message_message_id[$id]}
+        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
