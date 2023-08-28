@@ -489,7 +489,7 @@ freelimitReq() {
         --text "YOUR CURRENT FREE LIMIT IS $limituser" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📝 Change Limit 📝:" \
+        --text "📝 Change Limit 📝 :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -532,7 +532,7 @@ allRes() {
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━\n 🟢 Reseller 🟢 \n━━━━━━━━━━━━━━━━━━━━━\n\n$result\n\n━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━\n 🟢 Reseller 🟢 \n━━━━━━━━━━━━━━━━━━━━━\n$result\n━━━━━━━━━━━━━━━━━━━━━\n" \
         --reply_markup "$keyboard6" \
         --parse_mode html
 }
@@ -2535,29 +2535,17 @@ trial_tr() {
 
 create_trojan() {
     file_user=$1
-   # userna=$(sed -n '1 p' $file_user | cut -d' ' -f2)
- #   data=$(sed -n '2 p' $file_user | cut -d' ' -f2)
-    user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
-    limit1=$(sed -n '2 p' $file_user | cut -d' ' -f2)
-   limit2=$(sed -n '3 p' $file_user | cut -d' ' -f2)
-    limit3=$(sed -n '4 p' $file_user | cut -d' ' -f2)
-    limit4=$(sed -n '4 p' $file_user | cut -d' ' -f2)
-   # user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+    limit1=$(sed -n '1 p' /tmp/quotatrojan.txt | cut -d' ' -f2)
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
+    user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
-    
-   # limit1=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
-    #limit2=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '5p')
-    #limit3=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '6p')
-   # limit4=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
-   # limit5=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
-
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
-   # req_voucher $file_user
-    #req_limit
+    req_voucher $file_user
+    req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
@@ -2602,12 +2590,9 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = trh2.${domain}</code>\n"
+    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
     msg+="<code>Limit Quota  = ${limit1}</code>\n"
-    msg+="<code>Limit Quota  = ${limit2}</code>\n"
-    msg+="<code>Limit Quota  = ${limit3}</code>\n"
-    msg+="<code>Limit Quota  = ${limit4}</code>\n"
-    msg+="<code>Limit Quota  = ${limit5}</code>\n"
-    msg+="<code>Limit Quota  = ${coupon}</code>\n"
+    msg+="<code>Limit Quota  = ${limit}</code>\n"
     msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
@@ -2645,7 +2630,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
 ext_trojan() {
     file_user=$1
     user=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
+    if [ "$(grep -wc ${message_from_id} /root/multi/resellr)" = '0' ]; then
         masaaktif=$(sed -n '2 p' $file_user | cut -d' ' -f1)
     else
         masaaktif=30
@@ -3802,9 +3787,9 @@ while :; do
 	            ;;
                 '👤 Create User Trojan 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		  #  user=$(cut -d' ' -f1 $CAD_ARQ)
+		   # user=$(cut -d' ' -f1 $CAD_ARQ)
                   #  echo "Name: ${message_text[$id]}" >$CAD_ARQ
-		   # echo "Name: ${message_text[$id]}" >>/tmp/usertrojan.txt
+		    echo "${message_text[$id]}" >>/tmp/usertrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3812,7 +3797,7 @@ while :; do
 	        '📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		  #  quota=$(cu -d' ' -f1 $CAD_ARQ)
-		    #echo "${message_text[$id]}" >>/tmp/quotatrojan.txt
+		    echo "${message_text[$id]}" >>/tmp/quotatrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :" \
                         --reply_markup "$(ShellBot.ForceReply)"
@@ -3820,15 +3805,8 @@ while :; do
                 '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-		    user=$(cut -d' ' -f1 $CAD_ARQ)
-                    limit=$(cut -d' ' -f2 $CAD_ARQ)
-		    test=$(cut -d' ' -f3 $CAD_ARQ)
-                     test1=$(cut -d' ' -f4 $CAD_ARQ)
-		  
-                    test2=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-		    #user=$(cut -d' ' -f2 $CAD_ARQ)
-		  #  user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
-                    #user=$(cat /tmp/usertrojan.txt)
+                    user=$(cat /tmp/usertrojan.txt)
+		    limit=$(cat /tmp/quotatrojan.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
@@ -3844,8 +3822,8 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			#echo "start trojan_${user}_${vouch}_${limit}_${test}_${test1}_${test2}" >$CAD_ARQ
-                       # rm -rf /tmp/usertrojan.txt
+			echo "start trojan_${user}_${vouch}_${limit}" >$CAD_ARQ
+                        rm -rf /tmp/usertrojan.txt
                         create_trojan $CAD_ARQ
 	            fi
 	            ;;
