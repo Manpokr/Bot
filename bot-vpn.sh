@@ -3805,7 +3805,9 @@ while :; do
                 '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
                     echo "Exp: ${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-		    user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
+		    user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+		    #user=$(cut -d' ' -f2 $CAD_ARQ)
+		  #  user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
                     #user=$(cat /tmp/usertrojan.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
                         duration=$(cut -d' ' -f2 $CAD_ARQ)
