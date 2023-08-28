@@ -4121,9 +4121,11 @@ while :; do
                 '📝 Change Limit Config 📝\n\n( example =1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     freelim=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    sed -i "/Limit/d" /root/multi/bot.conf
-		    sed -i "/Limit/" /root/multi/bot.conf
-                    echo "Limit: $freelim" >>/root/multi/bot.conf
+		    freelama=$(sed -n '2 p' /root/multi/bot.conf | cut -d' ' -f2)
+                  #  sed -i "/Limit/d" /root/multi/bot.conf
+		    sed -i "s/Limit: ${freelama}/Limit: ${freelim}/g" /root/multi/bot.conf
+		   # sed -i "/Limit/" /root/multi/bot.conf
+                  #  echo "Limit: $freelim" >>/root/multi/bot.conf
                     local msg
                     msg="Successful Change Limit Config To $freelim ✅"
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
