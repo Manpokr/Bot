@@ -2535,6 +2535,8 @@ trial_tr() {
 
 create_trojan() {
     file_user=$1
+   # userna=$(sed -n '1 p' $file_user | cut -d' ' -f2)
+ #   data=$(sed -n '2 p' $file_user | cut -d' ' -f2)
     user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
     limit=$(sed -n '2 p' $file_user | cut -d' ' -f2)
   #  limite=$(sed -n '3 p' $file_user | cut -d' ' -f2)
@@ -2559,7 +2561,7 @@ create_trojan() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotatrojan.txt)
+   # limit=$(cat /tmp/quotatrojan.txt)
     if [[ $limit -gt 0 ]]; then
         echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
         export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -3803,9 +3805,10 @@ while :; do
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
                 '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
-                    echo "Exp: ${message_text[$id]}" >$CAD_ARQ
+                    echo "Valid: ${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-		    user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+		    user=$(cut -d' ' -f1 $CAD_ARQ)
+		   # user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 		    #user=$(cut -d' ' -f2 $CAD_ARQ)
 		  #  user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
                     #user=$(cat /tmp/usertrojan.txt)
