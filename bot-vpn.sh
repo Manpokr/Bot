@@ -1115,6 +1115,7 @@ create_vmess() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')"
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')"
@@ -1133,7 +1134,6 @@ create_vmess() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotavmess.txt)
     if [[ $limit -gt 0 ]]; then
     echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1265,7 +1265,6 @@ EOF
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-	rm -rf /tmp/quotavmess.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -1415,6 +1414,7 @@ vmess_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -1433,7 +1433,6 @@ vmess_trial() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotavmess.txt)
     if [[ $limit -gt 0 ]]; then
     echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1566,7 +1565,6 @@ EOF
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-	rm -rf /tmp/quotavmess.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -1670,6 +1668,7 @@ create_vless() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -1695,7 +1694,6 @@ create_vless() {
          SKIP=true
     fi
     }
-    limit=$(cat /tmp/quotavless.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -1764,7 +1762,6 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotavless.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -1910,6 +1907,7 @@ vless_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -1935,7 +1933,6 @@ vless_trial() {
          SKIP=true
     fi
     }
-    limit=$(cat /tmp/quotavless.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2003,7 +2000,6 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotavless.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -2107,6 +2103,7 @@ create_xtls() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
@@ -2123,7 +2120,6 @@ create_xtls() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotaxtls.txt)
     if [[ $limit -gt 0 ]]; then
        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2207,7 +2203,6 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotaxtls.txt
         sed -i "/$coupon/d" /root/multi/voucher
 
 }
@@ -2354,6 +2349,7 @@ xtls_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"; 
@@ -2370,7 +2366,6 @@ xtls_trial() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotaxtls.txt)
     if [[ $limit -gt 0 ]]; then
     echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2454,7 +2449,6 @@ sed -i '/#vless$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotaxtls.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -2640,8 +2634,6 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotatrojan.txt
-	rm -rf /tmp/usertrojan.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -2792,8 +2784,7 @@ trojan_trial() {
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";   
-         
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";          
     req_voucher $file_user
     req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
@@ -2870,8 +2861,6 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotatrojan.txt
-	rm -rf /tmp/usertrojan.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -2975,6 +2964,7 @@ create_ss() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2993,7 +2983,6 @@ create_ss() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotass.txt)
     if [[ $limit -gt 0 ]]; then
         echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/ss/quota/$user
         export limit_nya=$(printf `echo $(cat /etc/manternet/limit/ss/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -3052,7 +3041,6 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotass.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -3198,12 +3186,12 @@ ss_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
-    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";   
-         
+    xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";         
     req_voucher $file_user
     req_limit
     if grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
@@ -3217,7 +3205,6 @@ ss_trial() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotass.txt)
     if [[ $limit -gt 0 ]]; then
         echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
         export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -3276,7 +3263,6 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
-        rm -rf /tmp/quotass.txt
         sed -i "/$coupon/d" /root/multi/voucher
 }
 
@@ -3667,14 +3653,12 @@ while :; do
                 '🗓️ Create Expired Date ssh-vpn 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /tmp/userssh.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        duration=30
 			exp=30
                     fi
+		    user=$(sed -n '1 p' /tmp/userssh.txt | cut -d' ' -f1)
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^SSH $user" /usr/local/etc/ssh/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3705,14 +3689,13 @@ while :; do
                 '🗓️ Create Expired Date Vmess 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /tmp/uservmess.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        duration=30
 			exp=30
                     fi
+		    user=$(sed -n '1 p' /tmp/uservmess.txt | cut -d' ' -f1)
+                    limit=$(sed -n '1 p' /tmp/quotavmess.txt | cut -d' ' -f1)
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^VM $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3721,8 +3704,9 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			echo "start vmess_${user}_${vouch}" >$CAD_ARQ
+			echo "start vmess_${user}_${vouch}_${limit}" >$CAD_ARQ
                         rm -rf /tmp/uservmess.txt
+			rm -rf /tmp/quotavmess.txt
                         create_vmess $CAD_ARQ
 	            fi
                     ;;
@@ -3744,14 +3728,13 @@ while :; do
                 '🗓️ Create Expired Date Vless 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /tmp/uservless.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        duration=30
 			exp=30
                     fi
+		    user=$(sed -n '1 p' /tmp/uservless.txt | cut -d' ' -f1)
+                    limit=$(sed -n '1 p' /tmp/quotavless.txt | cut -d' ' -f1)
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^VL $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3760,8 +3743,9 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			echo "start vless_${user}_${vouch}" >$CAD_ARQ
+			echo "start vless_${user}_${vouch}_${limit}" >$CAD_ARQ
                         rm -rf /tmp/uservless.txt
+			rm -rf /tmp/quotavless.txt
                         create_vless $CAD_ARQ
 	            fi
                     ;;
@@ -3783,14 +3767,13 @@ while :; do
                 '🗓️ Create Expired Date Xtls 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /tmp/userxtls.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        duration=30
 			exp=30
                     fi
+		    user=$(sed -n '1 p' /tmp/userxtls.txt | cut -d' ' -f1)
+                    limit=$(sed -n '1 p' /tmp/quotaxtls.txt | cut -d' ' -f1)
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^XTLS $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3799,8 +3782,9 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			echo "start xtls_${user}_${vouch}" >$CAD_ARQ
+			echo "start xtls_${user}_${vouch}_${limit}" >$CAD_ARQ
                         rm -rf /tmp/userxtls.txt
+			rm -rf /tmp/quotaxtls.txt
                         create_xtls $CAD_ARQ
 	            fi
 	            ;;
@@ -3821,13 +3805,13 @@ while :; do
                 '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-		    user=$(sed -n '1 p' /tmp/usertrojan.txt | cut -d' ' -f1)
-                    limit=$(sed -n '1 p' /tmp/quotatrojan.txt | cut -d' ' -f1)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
 			exp=30
                     fi
+		    user=$(sed -n '1 p' /tmp/usertrojan.txt | cut -d' ' -f1)
+                    limit=$(sed -n '1 p' /tmp/quotatrojan.txt | cut -d' ' -f1)
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3860,14 +3844,13 @@ while :; do
                 '🗓️ Create Expired Date Shadowsock22 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /tmp/userss.txt)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        duration=30
 			exp=30
                     fi
+		    user=$(sed -n '1 p' /tmp/userss.txt | cut -d' ' -f1)
+                    limit=$(sed -n '1 p' /tmp/quotass.txt | cut -d' ' -f1)
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
                     if grep -E "^SS $user" /usr/local/etc/xray/user.txt; then
                         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3876,44 +3859,40 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			echo "start ss_${user}_${vouch}" >$CAD_ARQ
+			echo "start ss_${user}_${vouch}_${limit}" >$CAD_ARQ
                         rm -rf /tmp/userss.txt
+			rm -rf /tmp/quotass.txt
                         create_ss $CAD_ARQ
 	            fi
 	            ;;
                 '👤 Create User Vmess free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vmess_public${userfree}_free" >$CAD_ARQ
-		    echo "20" >>/tmp/quotavmess.txt
+                    echo "start vmess_public${userfree}_free_50" >$CAD_ARQ
                     create_vmess $CAD_ARQ
                     ;;
                 '👤 Create User Vless free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start vless_public${userfree}_free" >$CAD_ARQ
-		    echo "20" >>/tmp/quotavless.txt
+                    echo "start vless_public${userfree}_free_50" >$CAD_ARQ
                     create_vless $CAD_ARQ
                     ;;
                 '👤 Create User Xtls free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start xtls_public${userfree}_free" >$CAD_ARQ
-		    echo "20" >>/tmp/quotaxtls.txt
+                    echo "start xtls_public${userfree}_free_50" >$CAD_ARQ
                     create_xtls $CAD_ARQ
                     ;;
                 '👤 Create User Trojan free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start trojan_public${userfree}_free" >$CAD_ARQ
-		    echo "20" >>/tmp/quotatrojan.txt
+                    echo "start trojan_public${userfree}_free_50" >$CAD_ARQ
                     create_trojan $CAD_ARQ
                     ;;
 		 '👤 Create User Shadowsock free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
-                    echo "start ss_public${userfree}_free" >$CAD_ARQ
-		    echo "20" >>/tmp/quotass.txt
+                    echo "start ss_public${userfree}_free_50" >$CAD_ARQ
                     create_ss $CAD_ARQ
                     ;;
                 '🗑 Remove User Vless 🗑\n\n( Username ) :')
@@ -3995,10 +3974,8 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     else
-                        duration=1
 			exp=1
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
@@ -4010,8 +3987,7 @@ while :; do
                         exit 1
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
-		        echo "start trialvmess_${user}_${vouch}" >$CAD_ARQ
-	                echo "20" >>/tmp/quotavmess.txt
+		        echo "start trialvmess_${user}_${vouch}_50" >$CAD_ARQ
 		        vmess_trial $CAD_ARQ
 		    fi
                     ;;
@@ -4019,10 +3995,8 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     else
-                        duration=1
 			exp=1
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
@@ -4034,8 +4008,7 @@ while :; do
                         exit 1
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
-		        echo "start trialvless_${user}_${vouch}" >$CAD_ARQ
-		        echo "20" >>/tmp/quotavless.txt
+		        echo "start trialvless_${user}_${vouch}_50" >$CAD_ARQ
 	                vless_trial $CAD_ARQ
 		    fi
                     ;;
@@ -4043,10 +4016,8 @@ while :; do
 		    echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     else
-                        duration=1
 			exp=1
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
@@ -4058,8 +4029,7 @@ while :; do
                         exit 1
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
-		        echo "start trialxtls_${user}_${vouch}" >$CAD_ARQ
-	                echo "20" >>/tmp/quotaxtls.txt
+		        echo "start trialxtls_${user}_${vouch}_50" >$CAD_ARQ
 		        xtls_trial $CAD_ARQ
 		    fi
                     ;;
@@ -4071,8 +4041,6 @@ while :; do
                     else
 			exp=1
                     fi
-		    echo "20" >>/tmp/quotatrojan.txt
-		    limit=$(sed -n '1 p' /tmp/quotatrojan.txt | cut -d' ' -f1)
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
 		    vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
 		    if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
@@ -4082,8 +4050,7 @@ while :; do
                         exit 1
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
-		        echo "start trialtrojan_${user}_${vouch}_${limit}" >$CAD_ARQ
-	                rm -rf /tmp/quotatrojan.txt
+		        echo "start trialtrojan_${user}_${vouch}_50" >$CAD_ARQ
 		        trojan_trial $CAD_ARQ
 	            fi
                     ;;
@@ -4091,10 +4058,8 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 			exp=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     else
-                        duration=1
 			exp=1
                     fi
 		    user="Trial-$( </dev/urandom tr -dc 0-9A-Z | head -c4 )"
@@ -4106,8 +4071,7 @@ while :; do
                         exit 1
                     else      
                         echo "$vouch $exp" >>/root/multi/voucher			
-		        echo "start trialss_${user}_${vouch}" >$CAD_ARQ
-	                echo "20" >>/tmp/quotass.txt
+		        echo "start trialss_${user}_${vouch}_50" >$CAD_ARQ
 		        ss_trial $CAD_ARQ
 		    fi
                     ;;
@@ -4148,7 +4112,7 @@ while :; do
 		    local msg
                     msg="<code>Expired = $exp1</code>\n"
                     msg+="Voucher = <code>$vouch</code>\n"
-                    msg+="<a href='https://t.me/${get_botName}?start=voucher_${vouch}'>Click Here To Claim</a>\n"
+                    msg+="<a href='https://t.me/${get_botName}?start=voucher_${vouch}_50'>Click Here To Claim</a>\n"
 
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "$msg" \
@@ -4158,6 +4122,7 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     freelim=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     sed -i "/Limit/d" /root/multi/bot.conf
+		    sed -i "/Limit/" /root/multi/bot.conf
                     echo "Limit: $freelim" >>/root/multi/bot.conf
                     local msg
                     msg="Successful Change Limit Config To $freelim ✅"
