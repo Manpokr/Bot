@@ -2556,10 +2556,9 @@ trial_tr() {
 
 create_trojan() {
     file_user=$1
-    limit1=$(sed -n '1 p' /tmp/quotatrojan.txt | cut -d' ' -f2)
-    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2578,7 +2577,6 @@ create_trojan() {
     else
         duration=1
     fi
-   # limit=$(cat /tmp/quotatrojan.txt)
     if [[ $limit -gt 0 ]]; then
         echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
         export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -2612,8 +2610,6 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = trh2.${domain}</code>\n"
     msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
-    msg+="<code>Limit Quota  = ${limit1}</code>\n"
-    msg+="<code>Limit Quota  = ${limit}</code>\n"
     msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
@@ -2790,6 +2786,7 @@ trojan_trial() {
     file_user=$1
     user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
+    limit=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
@@ -2809,7 +2806,6 @@ trojan_trial() {
     else
         duration=1
     fi
-    limit=$(cat /tmp/quotatrojan.txt)
     if [[ $limit -gt 0 ]]; then
         echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
         export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
@@ -3808,8 +3804,6 @@ while :; do
 	            ;;
                 '👤 Create User Trojan 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		   # user=$(cut -d' ' -f1 $CAD_ARQ)
-                  #  echo "Name: ${message_text[$id]}" >$CAD_ARQ
 		    echo "${message_text[$id]}" >>/tmp/usertrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :" \
@@ -3817,7 +3811,6 @@ while :; do
 	            ;;
 	        '📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
-		  #  quota=$(cu -d' ' -f1 $CAD_ARQ)
 		    echo "${message_text[$id]}" >>/tmp/quotatrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :" \
@@ -3826,13 +3819,11 @@ while :; do
                 '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
-                    user=$(cat /tmp/usertrojan.txt)
-		    limit=$(cat /tmp/quotatrojan.txt)
+		    user=$(sed -n '1 p' /tmp/usertrojan.txt | cut -d' ' -f1)
+                    limit=$(sed -n '1 p' /tmp/quotatrojan.txt | cut -d' ' -f1)
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
-                        duration=$(cut -d' ' -f2 $CAD_ARQ)
 			exp=$(cut -d' ' -f2 $CAD_ARQ)
                     else
-                        duration=30
 			exp=30
                     fi
                     vouch=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c8)
@@ -3845,6 +3836,7 @@ while :; do
                         echo "$vouch $exp" >>/root/multi/voucher
 			echo "start trojan_${user}_${vouch}_${limit}" >$CAD_ARQ
                         rm -rf /tmp/usertrojan.txt
+			rm -rf /tmp/quotatrojan.txt
                         create_trojan $CAD_ARQ
 	            fi
 	            ;;
