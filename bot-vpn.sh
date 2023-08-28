@@ -1676,8 +1676,8 @@ create_vless() {
     }
     limit=$(cat /tmp/quotavless.txt)
     if [[ $limit -gt 0 ]]; then
-       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
        export limit_nya="Unlimited"
     fi
@@ -1916,8 +1916,8 @@ vless_trial() {
     }
     limit=$(cat /tmp/quotavless.txt)
     if [[ $limit -gt 0 ]]; then
-       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+       echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vless/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vless/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
        export limit_nya="Unlimited"
     fi
@@ -2351,8 +2351,8 @@ xtls_trial() {
     fi
     limit=$(cat /tmp/quotaxtls.txt)
     if [[ $limit -gt 0 ]]; then
-    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/vmess/quota/$user
-       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/vmess/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+    echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/xtls/quota/$user
+       export limit_nya=$(printf `echo $(cat /etc/manternet/limit/xtls/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
        export limit_nya="Unlimited"
     fi
@@ -2972,8 +2972,8 @@ create_ss() {
     fi
     limit=$(cat /tmp/quotass.txt)
     if [[ $limit -gt 0 ]]; then
-        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/trojan/quota/$user
-        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/trojan/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
+        echo -e "$[$limit * 1024 * 1024 * 1024]" > /etc/manternet/limit/ss/quota/$user
+        export limit_nya=$(printf `echo $(cat /etc/manternet/limit/ss/quota/$user) | numfmt --to=iec-i --suffix=B --format="%.1f" | column -t`)
     else
         export limit_nya="Unlimited"
     fi
