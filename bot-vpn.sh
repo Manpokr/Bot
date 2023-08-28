@@ -52,7 +52,7 @@ msg_welcome() {
         msg+="<code>Total Created : account\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
 	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
-	msg+="⚡ VLESS     j   = $vl_nya account\n"
+	msg+="⚡ VLESS        = $vl_nya account\n"
         msg+="⚡ VMESS        = $vm_nya account\n"
 	msg+="⚡ TROJAN       = $tr_nya account\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
@@ -137,7 +137,7 @@ backReq() {
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
 	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
 	msg+="⚡ VLESS        = $vl_nya account\n"
-        msg+="⚡ VMESS     b   = $vm_nya account\n"
+        msg+="⚡ VMESS        = $vm_nya account\n"
 	msg+="⚡ TROJAN       = $tr_nya account\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
@@ -1240,8 +1240,7 @@ EOF
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-        --message_id ${callback_query_message_message_id[$id]}
+    
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
@@ -1264,7 +1263,8 @@ del_vmess() {
     sed -i "/\b$user\b/d" /usr/local/etc/xray/user.txt
     sed -i "/^### $user $exp/,/^},{/d" /usr/local/etc/xray/vmess.json
     rm -f /usr/local/etc/xray/$user-tls.json;
-    rm -f /usr/local/etc/xray/$user-none.json;
+    rm -f /usr
+    /local/etc/xray/$user-none.json;
     rm -f /usr/local/etc/xray/$user-grpc.json;
     rm -f /usr/local/etc/xray/$user-h2.json;
     rm -f /etc/manternet/limit/vmess/quota/$user
@@ -1740,8 +1740,6 @@ sed -i '/#vlessgrpc$/a\### '"$user $exp"'\
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} --message_id ${callback_query_message_message_id[$id]}
-        --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
