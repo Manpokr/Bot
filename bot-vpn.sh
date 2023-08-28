@@ -2607,6 +2607,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="<code>Limit Quota  = ${limit3}</code>\n"
     msg+="<code>Limit Quota  = ${limit4}</code>\n"
     msg+="<code>Limit Quota  = ${limit5}</code>\n"
+    msg+="<code>Limit Quota  = ${coupon}</code>\n"
     msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
@@ -3817,12 +3818,14 @@ while :; do
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
                 '🗓️ Create Expired Date Trojan 🗓️\n\n( days=1 ) :')
-                    echo "Valid: ${message_text[$id]}" >$CAD_ARQ
+                    echo "${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
                     limit=$(cut -d' ' -f2 $CAD_ARQ)
 		    test=$(cut -d' ' -f3 $CAD_ARQ)
-		   # user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
+                     test1=$(cut -d' ' -f4 $CAD_ARQ)
+		  
+                    test2=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 		    #user=$(cut -d' ' -f2 $CAD_ARQ)
 		  #  user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
                     #user=$(cat /tmp/usertrojan.txt)
@@ -3841,7 +3844,7 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			echo "start trojan_${user}_${vouch}_${limit}_${test}" >$CAD_ARQ
+			echo "start trojan_${user}_${vouch}_${limit}_${test}_${test1}_${test2}" >$CAD_ARQ
                         rm -rf /tmp/usertrojan.txt
                         create_trojan $CAD_ARQ
 	            fi
