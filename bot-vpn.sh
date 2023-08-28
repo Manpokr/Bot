@@ -2538,26 +2538,26 @@ create_trojan() {
    # userna=$(sed -n '1 p' $file_user | cut -d' ' -f2)
  #   data=$(sed -n '2 p' $file_user | cut -d' ' -f2)
     user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
-    limit=$(sed -n '2 p' $file_user | cut -d' ' -f2)
+    limit1=$(sed -n '2 p' $file_user | cut -d' ' -f2)
    limit2=$(sed -n '3 p' $file_user | cut -d' ' -f2)
     limit3=$(sed -n '4 p' $file_user | cut -d' ' -f2)
-    
+    limit4=$(sed -n '4 p' $file_user | cut -d' ' -f2)
    # user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
     
-    limit1=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
-    limit2=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '5p')
-    limit3=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '6p')
-    limit4=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
-    limit5=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
+   # limit1=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '4p')
+    #limit2=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '5p')
+    #limit3=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '6p')
+   # limit4=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '1p')
+   # limit5=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
 
     expadmin=$(grep $coupon /root/multi/voucher | awk '{print $2}')
     none="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2|sed 's/ //g')";
     xtls="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2|sed 's/ //g')";
     none1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS NTLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')";
     xtls1="$(cat ~/log-install.txt | grep -w "XRAY VLESS WS TLS" | cut -d: -f2 | awk '{print $1}' | sed 's/,//g' | sed 's/ //g')"
-    req_voucher $file_user
-    req_limit
+   # req_voucher $file_user
+    #req_limit
     if grep -E "^TR $user" /usr/local/etc/xray/user.txt; then
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "User Already Exist ❗❗\n" \
@@ -3844,8 +3844,8 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			echo "start trojan_${user}_${vouch}_${limit}_${test}_${test1}_${test2}" >$CAD_ARQ
-                        rm -rf /tmp/usertrojan.txt
+			#echo "start trojan_${user}_${vouch}_${limit}_${test}_${test1}_${test2}" >$CAD_ARQ
+                       # rm -rf /tmp/usertrojan.txt
                         create_trojan $CAD_ARQ
 	            fi
 	            ;;
