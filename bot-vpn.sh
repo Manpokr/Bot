@@ -242,7 +242,7 @@ menu_ser() {
 
 menuRes() {
     local msg
-    msg="MENU RESELLER ${callback_query_from_first_name}\n"
+    msg="🫂 MENU RESELLER 🫂${callback_query_from_first_name}\n"
     ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]} \
         --text "$msg" \
@@ -489,7 +489,7 @@ freelimitReq() {
         --text "YOUR CURRENT FREE LIMIT IS $limituser" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "Change Limit :" \
+        --text "📝 Change Limit 📝:" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -541,7 +541,7 @@ delRes() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📝 Delete Reseller 📝 :" \
+        --text "🗑️ Delete Reseller 🗑️ :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
