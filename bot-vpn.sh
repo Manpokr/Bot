@@ -3791,7 +3791,7 @@ while :; do
 	            fi
 	            ;;
                 '👤 Create User Trojan 👤\n\n( Username ) :')
-                    echo "Name: ${message_text[$id]}" >$CAD_ARQ
+                    echo "${message_text[$id]}" >$CAD_ARQ
 		  #  user=$(cut -d' ' -f1 $CAD_ARQ)
                   #  echo "Name: ${message_text[$id]}" >$CAD_ARQ
 		   # echo "Name: ${message_text[$id]}" >>/tmp/usertrojan.txt
@@ -3800,7 +3800,7 @@ while :; do
                         --reply_markup "$(ShellBot.ForceReply)"
 	            ;;
 	        '📶 Limit Quota Trojan 📶\n\n( example 1Gb=1 ) :')
-                    echo "Limit: ${message_text[$id]}" >$CAD_ARQ
+                    echo "${message_text[$id]}" >$CAD_ARQ
 		  #  quota=$(cu -d' ' -f1 $CAD_ARQ)
 		    #echo "${message_text[$id]}" >>/tmp/quotatrojan.txt
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3811,6 +3811,8 @@ while :; do
                     echo "Valid: ${message_text[$id]}" >$CAD_ARQ
                     reseller_balance
 		    user=$(cut -d' ' -f1 $CAD_ARQ)
+                    limit=$(cut -d' ' -f2 $CAD_ARQ)
+		    test=$(cut -d' ' -f3 $CAD_ARQ)
 		   # user=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
 		    #user=$(cut -d' ' -f2 $CAD_ARQ)
 		  #  user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
@@ -3830,7 +3832,7 @@ while :; do
                         exit 1
                     else
                         echo "$vouch $exp" >>/root/multi/voucher
-			echo "start trojan_${user}_${vouch}" >$CAD_ARQ
+			echo "start trojan_${user}_${vouch}_${limit}_${test}" >$CAD_ARQ
                         rm -rf /tmp/usertrojan.txt
                         create_trojan $CAD_ARQ
 	            fi
