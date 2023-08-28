@@ -2539,7 +2539,8 @@ create_trojan() {
  #   data=$(sed -n '2 p' $file_user | cut -d' ' -f2)
     user=$(sed -n '1 p' $file_user | cut -d' ' -f2)
     limit=$(sed -n '2 p' $file_user | cut -d' ' -f2)
-  #  limite=$(sed -n '3 p' $file_user | cut -d' ' -f2)
+   limit2=$(sed -n '3 p' $file_user | cut -d' ' -f2)
+    limit3=$(sed -n '4 p' $file_user | cut -d' ' -f2)
     
    # user=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '2p')
     coupon=$(grep 'start [^_]*' $file_user | grep -o '[^_]*' | cut -d' ' -f2 | sed -n '3p')
@@ -2594,7 +2595,9 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n"
     msg+="Subdomain H2 = trh2.${domain}</code>\n"
-    msg+="<code>Limit Quota  = ${limit_nya}</code>\n"
+    msg+="<code>Limit Quota  = ${limit}</code>\n"
+    msg+="<code>Limit Quota  = ${limit2}</code>\n"
+    msg+="<code>Limit Quota  = ${limit3}</code>\n"
     msg+="<code>Port Tls     = ${xtls}\n"
     msg+="Port None    = ${none}\n"
     msg+="Grpc Type    = Gun %26 Multi\n"
