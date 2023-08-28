@@ -28,8 +28,9 @@ msg_welcome() {
     ip_nya="$IP";
     isp_nya="$ISP";
     country_nya="$COUNTRY";
-    tipe_nya=$NAME
+    tipe_nya=$NAME;
     dom_nya=$(cat /usr/local/etc/xray/domain);
+    # // Getting User Information
     vl_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VL " | wc -l);
     vm_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VM " | wc -l);
     xt_nya=$(cat /usr/local/etc/xray/user.txt | grep "^XTLS " | wc -l);
@@ -37,17 +38,25 @@ msg_welcome() {
     ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
     trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
     ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
-    uram_nya=$( free -m | awk 'NR==2 {print $3}' );
+    # // Getting Ram Information
+    total_ram="$( free -m | awk 'NR==2 {print $2}' )";
+    uram_nya="$( free -m | awk 'NR==2 {print $3}' )";
+    # // Getting CPU Information
+    cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+    cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
+    cpu_usage+=" %"
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP     = $isp_nya\n"
-        msg+="⚡ CITY    = $country_nya\n"
-	msg+="⚡ RAM     = $uram_nya MB\n"
-        msg+="⚡ IP VPS  = $ip_nya\n"
-	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+	msg+="<code>⚡ OS        = $tipe_nya\n"
+        msg+="⚡ ISP       = $isp_nya\n"
+        msg+="⚡ CITY      = $country_nya\n"
+	msg+="⚡ USE RAM   = $uram_nya MB\n"
+        msg+="⚡ TOTAL RAM = $total_ram MB\n"
+	msg+="⚡ CPU USE   = $cpu_usage\n"
+        msg+="⚡ IP VPS    = $ip_nya\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
         msg+="\n"
         msg+="<code>Total Created : account\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
@@ -71,12 +80,14 @@ msg_welcome() {
 	msg="━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<b>      🌀 RESELLER PANEL MENU 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP     = $isp_nya\n"
-        msg+="⚡ CITY    = $country_nya\n"
-	msg+="⚡ RAM     = $uram_nya MB\n"
-        msg+="⚡ IP VPS  = $ip_nya\n"
-	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+	msg+="<code>⚡ OS        = $tipe_nya\n"
+        msg+="⚡ ISP       = $isp_nya\n"
+        msg+="⚡ CITY      = $country_nya\n"
+	msg+="⚡ USE RAM   = $uram_nya MB\n"
+        msg+="⚡ TOTAL RAM = $total_ram MB\n"
+	msg+="⚡ CPU USE   = $cpu_usage\n"
+        msg+="⚡ IP VPS    = $ip_nya\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
         msg+="\n"
         msg+="<code>Total Created : account\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
@@ -113,6 +124,7 @@ backReq() {
     country_nya="$COUNTRY";
     tipe_nya=$NAME
     dom_nya=$(cat /usr/local/etc/xray/domain);
+    # // Getting User Information
     vl_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VL " | wc -l);
     vm_nya=$(cat /usr/local/etc/xray/user.txt | grep "^VM " | wc -l);
     xt_nya=$(cat /usr/local/etc/xray/user.txt | grep "^XTLS " | wc -l);
@@ -120,18 +132,25 @@ backReq() {
     ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
     trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
     ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
-    uram_nya=$( free -m | awk 'NR==2 {print $3}' );
-     
+    # // Getting Ram Information
+    total_ram="$( free -m | awk 'NR==2 {print $2}' )";
+    uram_nya="$( free -m | awk 'NR==2 {print $3}' )";
+    # // Getting CPU Information
+    cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+    cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
+    cpu_usage+=" %"
 	local msg
         msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<b>       🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP     = $isp_nya\n"
-        msg+="⚡ CITY    = $country_nya\n"
-	msg+="⚡ RAM     = $uram_nya MB\n"
-        msg+="⚡ IP VPS  = $ip_nya\n"
-	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+	msg+="<code>⚡ OS        = $tipe_nya\n"
+        msg+="⚡ ISP       = $isp_nya\n"
+        msg+="⚡ CITY      = $country_nya\n"
+	msg+="⚡ USE RAM   = $uram_nya MB\n"
+        msg+="⚡ TOTAL RAM = $total_ram MB\n"
+	msg+="⚡ CPU USE   = $cpu_usage\n"
+        msg+="⚡ IP VPS    = $ip_nya\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
         msg+="\n"
         msg+="<code>Total Created : account\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
@@ -156,12 +175,14 @@ backReq() {
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="<b>    🌀 RESELLER PANEL MENU 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-	msg+="<code>⚡ OS      = $tipe_nya\n"
-        msg+="⚡ ISP     = $isp_nya\n"
-        msg+="⚡ CITY    = $country_nya\n"
-	msg+="⚡ RAM     = $uram_nya MB\n"
-        msg+="⚡ IP VPS  = $ip_nya\n"
-	msg+="⚡ DOMAIN  = $dom_nya</code>\n"
+	msg+="<code>⚡ OS        = $tipe_nya\n"
+        msg+="⚡ ISP       = $isp_nya\n"
+        msg+="⚡ CITY      = $country_nya\n"
+	msg+="⚡ USE RAM   = $uram_nya MB\n"
+        msg+="⚡ TOTAL RAM = $total_ram MB\n"
+	msg+="⚡ CPU USE   = $cpu_usage\n"
+        msg+="⚡ IP VPS    = $ip_nya\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
         msg+="\n"
         msg+="<code>Total Created : account\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
@@ -486,10 +507,10 @@ freelimitReq() {
     ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "YOUR CURRENT FREE LIMIT IS $limituser" \
+        --text "YOUR CURRENT FREE LIMIT IS: $limituser" \
         --parse_mode html
     ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "📝 Change Limit 📝 :" \
+        --text "📝 Change Limit Config 📝\n\n( example =1 ) :" \
         --reply_markup "$(ShellBot.ForceReply)"
 }
 
@@ -3458,8 +3479,8 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ OPEN SERV
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '🟢 STATUS SERVICE 🟢️️' --callback_data '_stsserv'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '👨‍🦱 RESELLER 👨‍🦱' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🏷️ VOUCHER GENERATOR 🏷️' --callback_data '_voucherGenerator'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🌐 PUBLIC MODE 🌐' --callback_data '_publicMode'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🌐 PUBLIC MODE 🌐' --callback_data '_publicMode'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
@@ -4139,7 +4160,7 @@ while :; do
                         --text "$msg" \
                         --parse_mode html
                     ;;
-                '📝 Change Limit Config 📝 :')
+                '📝 Change Limit Config 📝\n\n( example =1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     freelim=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     sed -i "/Limit/d" /root/multi/bot.conf
