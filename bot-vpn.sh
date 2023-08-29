@@ -3261,8 +3261,8 @@ sed -i '/#ssgrpc$/a\### '"$user $exp"'\
     msg+="<code> ${sslink1}</code>\n"
     msg+="\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<code>Expired On    = $exp</code>\n
-    
+    msg+="<code>Expired On    = $exp</code>\n"
+
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
         --parse_mode html
