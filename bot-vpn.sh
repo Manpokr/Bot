@@ -353,83 +353,6 @@ req_url() {
     fi
 }
 
-link_voucher() {
-    ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
-             --message_id ${callback_query_message_message_id[$id]}
-    file_user=/tmp/cad.${callback_query_message_chat_id[$id]}
-    vouch=$(sed -n '1 p' $file_user | cut -d' ' -f1)
-    duration=$(grep $vouch /root/multi/voucher | awk '{print $2}')
-    exp1=$(date -d +${duration}days +%d-%m-%Y)
-    user=$(tr </dev/urandom -dc a-zA-Z0-9 | head -c4)
-
-    if [[ ${callback_query_data[$id]} == _vouchervmess ]]; then
-	local msg
-        msg="User      = $user\n"
-        msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?link=vmess_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm Vmess Acc\n"
-
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-             --text "$msg" \
-            --parse_mode html
-	    
-    elif [[ ${callback_query_data[$id]} == _vouchervless ]]; then
-	local msg
-        msg="User      = $user\n"
-        msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=vless_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm Vless Acc\n"
-
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$msg" \
-            --parse_mode html
-	    
-    elif [[ ${callback_query_data[$id]} == _voucherxtls ]]; then
-        local msg
-        msg="User      = $user\n"
-        msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=xtls_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm Xtls Acc\n"
-
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$msg" \
-            --parse_mode html
-	    
-    elif [[ ${callback_query_data[$id]} == _vouchertrojan ]]; then
-        local msg
-        msg="User      = $user\n"
-        msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=trojan_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm Trojan Acc\n"
-
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$msg" \
-            --parse_mode html
-	    
-    elif [[ ${callback_query_data[$id]} == _voucherovpn ]]; then
-        local msg
-        msg="User      = $user\n"
-        msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=ovpn_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm ssh-vpn Acc\n"
-
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$msg" \
-            --parse_mode html
-	    
-    elif [[ ${callback_query_data[$id]} == _voucherss ]]; then
-        local msg
-        msg="User      = $user\n"
-        msg+="<code>Expired = $exp1</code>\n"
-        msg+="https://t.me/${get_botName}?start=ss_${user}_${vouch}\n\n"
-        msg+="Click Link To Confirm Shadowsock22 Acc\n"
-
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$msg" \
-            --parse_mode html
-    fi
-}
-
 req_free() {
     if [[ ${callback_query_data[$id]} == _freevmess ]]; then
         ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
@@ -2908,7 +2831,7 @@ ss_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>\▪️🔹▪️DELETE SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
               --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
               --text "🗑 Remove User Shadowsock22 🗑\n\n( Username ) :" \
@@ -2937,7 +2860,7 @@ ss_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>\▪️🔹▪️RENEW SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Shadowsock 📅\n\n( Username ) :" \
@@ -3073,9 +2996,9 @@ ext_ss() {
         systemctl restart xray@ss.service
 
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -3108,9 +3031,9 @@ del_ss() {
     systemctl restart xray@ss.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -3962,7 +3885,7 @@ while :; do
                     echo "${message_text[$id]}" >$CAD_ARQ
                     del_ss $CAD_ARQ
                     ;;
-                '📅 Renew User Shadowsock22 📅\n\n( Username ) :')
+                '📅 Renew User Shadowsock 📅\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "📅 Extend User Shadowsock22 Days 📅\n\n( example: 1 ) :" \
