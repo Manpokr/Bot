@@ -41,6 +41,8 @@ msg_welcome() {
     # // Getting Ram Information
     total_ram="$( free -m | awk 'NR==2 {print $2}' )";
     uram_nya="$( free -m | awk 'NR==2 {print $3}' )";
+    uram_nya+=" Mb";
+    total_ram+=" Mb";
     # // Getting CPU Information
     cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
     cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
@@ -52,8 +54,8 @@ msg_welcome() {
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
-	msg+="⚡ USE RAM   = $uram_nya MB\n"
-        msg+="⚡ TOTAL RAM = $total_ram MB\n"
+	msg+="⚡ USE RAM   = $uram_nya\n"
+        msg+="⚡ TOTAL RAM = $total_ram\n"
 	msg+="⚡ CPU USE   = $cpu_usage\n"
         msg+="⚡ IP VPS    = $ip_nya\n"
 	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
@@ -135,6 +137,8 @@ backReq() {
     # // Getting Ram Information
     total_ram="$( free -m | awk 'NR==2 {print $2}' )";
     uram_nya="$( free -m | awk 'NR==2 {print $3}' )";
+    uram_nya+=" Mb";
+    total_ram+=" Mb";
     # // Getting CPU Information
     cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
     cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
