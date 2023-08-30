@@ -3006,7 +3006,7 @@ sed -i '/#ssgrpc$/a\### '"$user $exp"'\
     link="http://${ip_nya}:85/${user}-tls";
     link0="http://${ip_nya}:85/${user}-none";
     link1="http://${ip_nya}:85/${user}-grpc";
-    sslink="ss://${base641}@${domain}:${xtls1}?path=%2Fshadowsock%26security=tls%26host=${domain}%26type=ws%26sni=bug.com#${user}"
+    sslink="ss://${base641}@${domain}:${xtls1}?path=<code>%2Fshadowsock</code>%26security=tls%26host=${domain}%26type=ws%26sni=bug.com#${user}"
     sslink1="ss://${base641}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=shadowsock-grpc%26sni=bug.com#${user}"
     sslink2="ss://${base641}@${domain}:${none1}?path=%2Fshadowsock-none%26security=none%26host=${domain}%26type=ws%26sni=bug.com#${user}"
     
