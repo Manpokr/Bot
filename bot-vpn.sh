@@ -3538,8 +3538,7 @@ while :; do
                 *)
                     :
                     comando=(${message_text[$id]})
-		    [[ "${comando[0]}" = "/start" ]] && msg_welcome
-                 #   [[ "${comando[0]}" = "/free" ]] && freeReq
+                    [[ "${comando[0]}" = "/free" ]] && freeReq
                     [[ "${comando[0]}" = "/claim" ]] && claimVoucher
                     [[ "${comando[0]}" = "/restart" ]] && restartReq
                     ;;
@@ -3547,7 +3546,7 @@ while :; do
             fi
             if [[ ${message_entities_type[$id]} == bot_command ]]; then
                 echo "${message_text[$id]}" >$CAD_ARQ
-                if [ "$(awk '{print $1}' $CAD_ARQ)" = '/free' ]; then
+                if [ "$(awk '{print $1}' $CAD_ARQ)" = '/start' ]; then
                     start_req $CAD_ARQ
                 fi
             fi
@@ -4055,7 +4054,7 @@ while :; do
 		    local msg
                     msg="<code>Expired = $exp1</code>\n"
                     msg+="Voucher = <code>$vouch</code>\n"
-                    msg+="<a href='https://t.me/${get_botName}?start=voucher_${vouch}_50'>Click Here To Claim</a>\n"
+                    msg+="<a href='https://t.me/${get_botName}?voucher_${vouch}_50'>Click Here To Claim</a>\n"
 
                     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
                         --text "$msg" \
