@@ -3484,22 +3484,22 @@ ShellBot.regHandleFunction --function voucher_req --callback_data _claimvoucher
 unset keyboard7
 keyboard7="$(ShellBot.InlineKeyboardMarkup -b 'menu7')"
 
-unset menu8
-menu8=''
-ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'VMESS' --callback_data '_vouchervmess'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'VLESS' --callback_data '_vouchervless'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'XTLS' --callback_data '_voucherxtls'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 3 --text 'TROJAN' --callback_data '_vouchertrojan'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 3 --text 'SSHVPN' --callback_data '_voucherovpn'
-ShellBot.InlineKeyboardButton --button 'menu8' --line 4 --text 'SS22' --callback_data '_voucherss'
-ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervmess
-ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervless
-ShellBot.regHandleFunction --function link_voucher --callback_data _voucherxtls
-ShellBot.regHandleFunction --function link_voucher --callback_data _vouchertrojan
-ShellBot.regHandleFunction --function link_voucher --callback_data _voucherovpn
-ShellBot.regHandleFunction --function link_voucher --callback_data _voucherss
-unset keyboard8
-keyboard8="$(ShellBot.InlineKeyboardMarkup -b 'menu8')"
+#unset menu8
+#menu8=''
+#ShellBot.InlineKeyboardButton --button 'menu8' --line 1 --text 'VMESS' --callback_data '_vouchervmess'
+#ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'VLESS' --callback_data '_vouchervless'
+#ShellBot.InlineKeyboardButton --button 'menu8' --line 2 --text 'XTLS' --callback_data '_voucherxtls'
+#ShellBot.InlineKeyboardButton --button 'menu8' --line 3 --text 'TROJAN' --callback_data '_vouchertrojan'
+#ShellBot.InlineKeyboardButton --button 'menu8' --line 3 --text 'SSHVPN' --callback_data '_voucherovpn'
+#ShellBot.InlineKeyboardButton --button 'menu8' --line 4 --text 'SS22' --callback_data '_voucherss'
+#ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervmess
+#ShellBot.regHandleFunction --function link_voucher --callback_data _vouchervless
+#ShellBot.regHandleFunction --function link_voucher --callback_data _voucherxtls
+#ShellBot.regHandleFunction --function link_voucher --callback_data _vouchertrojan
+#ShellBot.regHandleFunction --function link_voucher --callback_data _voucherovpn
+#ShellBot.regHandleFunction --function link_voucher --callback_data _voucherss
+#unset keyboard8
+#keyboard8="$(ShellBot.InlineKeyboardMarkup -b 'menu8')"
 
 while :; do
     ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 35
