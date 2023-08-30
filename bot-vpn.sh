@@ -4057,7 +4057,7 @@ while :; do
 		        trojan_trial $CAD_ARQ
 	            fi
                     ;;
-	        '👤 Create Shadowsock22 Trial 👤\n\n( Expired Days=1 ) :')
+	        '👤 Create Trojan Shadowsock 👤\n\n( Expired Days=1 ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
 		    reseller_balance
                     if [ "$(grep -wc ${message_from_id} /root/multi/reseller)" = '0' ]; then
