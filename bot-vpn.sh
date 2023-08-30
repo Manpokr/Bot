@@ -2831,7 +2831,7 @@ ss_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE SHADOWSOCK22 ACCOUNT▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
               --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
               --text "🗑 Remove User Shadowsock22 🗑\n\n( Username ) :" \
@@ -2860,7 +2860,7 @@ ss_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW SHADOWSOCK22 ACCOUNT▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Shadowsock 📅\n\n( Username ) :" \
@@ -3045,9 +3045,9 @@ if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
 echo -n > /tmp/other.txt
 data=( `cat /usr/local/etc/xray/user.txt | grep 'SS' | cut -d ' ' -f 2 | sort | uniq`);
 echo -e "";
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
-echo -e "         🟢 SHADOWSOCK22 USER LOGIN 🟢 " >> /tmp/ss-login
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
+echo -e "🟢 SHADOWSOCK22 USER LOGIN 🟢" >> /tmp/ss-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
 
 for akun in "${data[@]}"
 do
@@ -3076,7 +3076,7 @@ else
 jum2=$(cat /tmp/ipss.txt | nl -s " • " )
 echo -e "  User = $akun" >> /tmp/ss-login
 echo -e "$jum2" >> /tmp/ss-login
-echo -e "━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
+echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━" >> /tmp/ss-login
 fi
 rm -rf /tmp/ipss.txt
 done
@@ -3312,11 +3312,22 @@ input_voucher() {
 
 restartReq() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
-        systemctl restart stunnel4
-        systemctl restart xray.service
-        systemctl restart xray@n
-        systemctl restart xray.service
-        systemctl restart dropbear
+        systemctl restart stunnel5.service
+	systemctl restart dropbear.service
+	systemctl restart openssh.service
+        systemctl restart openvpn.service
+        systemctl restart server-sldns.service
+	systemctl restart nginx.service
+	systemctl restart haproxy.service
+        systemctl restart ws-epro.service
+        systemctl restart xray.service.service
+        systemctl restart xray@none.service
+        systemctl restart xray@vless.service
+        systemctl restart xray@vmess.service
+        systemctl restart xray@trojan.service
+        systemctl restart xray@ss.service
+        systemctl restart trojan-go.service
+    
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "DONE RESTART ALL SERVICE ✅" \
             --parse_mode html
@@ -3376,6 +3387,7 @@ sta_tus() {
         msg+="Ovpn Ws Tls       = $stsepro\n"
         msg+="Ovpn Ws None      = $stsepro</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	
 	ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
            --message_id ${callback_query_message_message_id[$id]} \
            --text "$msg" \
