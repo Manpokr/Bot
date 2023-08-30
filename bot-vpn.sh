@@ -2820,7 +2820,7 @@ sed -i '/#trojangrpc$/a\### '"$user $exp"'\
     trojanlink1="trojan://${uuid}@${domain}:${xtls1}?type=ws%26security=tls%26path=%2Ftrojan%26sni=bug.com#${user}";
     trojanlink2="trojan://${uuid}@${domain}:${none1}?host=bug.com%26security=none%26type=ws%26path=%2Ftrojan-none#${user}";
     trojanlink3="trojan://${uuid}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=trojan-grpc%26sni=bug.com#${user}";
-    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%252Ftrojan-h2%26sni=bug.com#${user}";
+    trojanlink4="trojan://${uuid}@trh2.${domain}:${xtls1}?security=tls%26type=h2%26headerType=none%26path=%2Ftrojan-h2%26sni=bug.com#${user}";
  
     systemctl restart xray@trojan.service
       
@@ -3006,9 +3006,9 @@ sed -i '/#ssgrpc$/a\### '"$user $exp"'\
     link="http://${ip_nya}:85/${user}-tls";
     link0="http://${ip_nya}:85/${user}-none";
     link1="http://${ip_nya}:85/${user}-grpc";
-    sslink="ss://${base641}@${domain}:${xtls1}?path=<code>%2Fshadowsock</code>%26security=tls%26host=${domain}%26type=ws%26sni=bug.com#${user}"
+    sslink="ss://${base641}@${domain}:${xtls1}?path='%2F'shadowsock%26security=tls%26host=${domain}%26type=ws%26sni=bug.com#${user}"
     sslink1="ss://${base641}@${domain}:${xtls1}?mode=gun%26security=tls%26type=grpc%26serviceName=shadowsock-grpc%26sni=bug.com#${user}"
-    sslink2="ss://${base641}@${domain}:${none1}?path=%2Fshadowsock-none%26security=none%26host=${domain}%26type=ws%26sni=bug.com#${user}"
+    sslink2="ss://${base641}@${domain}:${none1}?path='%2F'shadowsock-none%26security=none%26host=${domain}%26type=ws%26sni=bug.com#${user}"
     
     systemctl restart xray@ss.service
       
