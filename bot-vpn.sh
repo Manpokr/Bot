@@ -3467,7 +3467,7 @@ ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🟢 STATUS SERV
 ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '👨‍🦱 RESELLER 👨‍🦱' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🏷️ VOUCHER GENERATOR 🏷️' --callback_data '_voucherGenerator'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 5 --text '🌐 PUBLIC MODE 🌐' --callback_data '_publicMode'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 6 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 5 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
