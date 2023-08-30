@@ -3827,7 +3827,7 @@ while :; do
                     echo "start trojan_public${userfree}_free_50" >$CAD_ARQ
                     create_trojan $CAD_ARQ
                     ;;
-		 '👤 Create User Shadowsock free 👤\n\n( Username ) :')
+	        '👤 Create User Shadowsock22 free 👤\n\n( Username ) :')
                     echo "${message_text[$id]}" >$CAD_ARQ
                     userfree=$(sed -n '1 p' $CAD_ARQ | cut -d' ' -f1)
                     echo "start ss_public${userfree}_free_50" >$CAD_ARQ
