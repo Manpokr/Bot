@@ -2908,10 +2908,10 @@ ss_del() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE SSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+              --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>\▪️🔹▪️DELETE SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
               --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-              --text "🗑 Remove User Trojan 🗑\n\n( Username ) :" \
+              --text "🗑 Remove User Shadowsock22 🗑\n\n( Username ) :" \
               --reply_markup "$(ShellBot.ForceReply)"
            return 0
          fi
@@ -2937,7 +2937,7 @@ ss_ext() {
      ShellBot.deleteMessage --chat_id ${callback_query_message_chat_id[$id]} \
         --message_id ${callback_query_message_message_id[$id]}
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
-        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW SSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
+        --text "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>\▪️🔹▪️RENEW SHADOWSOCK22 ACCOUNT▪️🔹▪️ </b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n$alluser\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" \
         --parse_mode html
      ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \
         --text "📅 Renew User Shadowsock 📅\n\n( Username ) :" \
@@ -3012,8 +3012,8 @@ sed -i '/#ssgrpc$/a\### '"$user $exp"'\
     
     systemctl restart xray@ss.service
       
-    local msg 
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SHADOWSOCK22 ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    local msg
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SHADOWSOCK22 ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n</code>"
@@ -3023,19 +3023,19 @@ sed -i '/#ssgrpc$/a\### '"$user $exp"'\
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${pwdr_nya}:${pwd_nya}\n"
     msg+="Method       = 2022-blake3-aes-128-gcm</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="SHADOWSOCK22 WS TLS LINK\n"
     msg+="<code>${sslink}</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="SHADOWSOCK22 WS LINK\n"
     msg+="<code>${sslink2}</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="SHADOWSOCK22 GRPC TLS LINK\n"
     msg+="<code>${sslink1}</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
@@ -3073,9 +3073,9 @@ ext_ss() {
         systemctl restart xray@ss.service
 
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+	msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️RENEW USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="User ( ${user} ) Renewed Then Expired On ( $exp4 )\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -3108,9 +3108,9 @@ del_ss() {
     systemctl restart xray@ss.service
 
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>▪️🔹▪️DELETE USER SHADOWSOCK22▪️🔹▪️</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="User (<code> ${user} ${exp} </code>) Has Been Removed !\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
@@ -3238,7 +3238,7 @@ sed -i '/#ssgrpc$/a\### '"$user $exp"'\
     systemctl restart xray@ss.service
       
     local msg 
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SHADOWSOCK22 ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SHADOWSOCK22 TRIAL ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Remarks      = $user\n"
     msg+="Myip         = $ip_nya\n"
     msg+="Subdomain    = ${domain}\n</code>"
@@ -3248,19 +3248,19 @@ sed -i '/#ssgrpc$/a\### '"$user $exp"'\
     msg+="Grpc Type    = Gun %26 Multi\n"
     msg+="User Id      = ${pwdr_nya}:${pwd_nya}\n"
     msg+="Method       = 2022-blake3-aes-128-gcm</code>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="SHADOWSOCK22 WS TLS LINK\n"
     msg+="<code>${sslink}</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="SHADOWSOCK22 WS LINK\n"
     msg+="<code>${sslink2}</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="SHADOWSOCK22 GRPC TLS LINK\n"
     msg+="<code>${sslink1}</code>\n"
     msg+="\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Expired On    = $exp</code>\n"
 
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
