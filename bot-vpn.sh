@@ -593,20 +593,21 @@ speed_test() {
         --text "🚀 TESTING VELOCIDADE DO SERVER"
     speedtest -v >speed
     isp=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
-    png=$(cat speed | sed -n '6 p' | awk -F : {'print $NF'})
-    down=$(cat speed | sed -n '7 p' | awk -F : {'print $NF'})
-    upl=$(cat speed | sed -n '8 p' | awk -F : {'print $NF'})
-    lost=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
+    png=$(cat speed | sed -n '6 p' | awk -F : {'print $2,$3'})
+    down=$(cat speed | sed -n '7 p' | awk -F : {'print $2,$3'})
+    upl=$(cat speed | sed -n '8 p' | awk -F : {'print $2,$3'})
+    lost=$(cat speed | sed -n '9 p' | awk -F : {'print $2'})
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
+   
     local msg
-    msg="=×=×=×=×=×=×=×=×=×=×=×=×=×=\n"
-    msg+="<b>🚀 VELOCIDADE DO SERVIDOR 🚀</b>\n"
-    msg+="=×=×=×=×=×=×=×=×=×=×=×=×=×=\n\n"
-    msg+="<b>ISP:</b>$isp\n"
-    msg+="<b>PING/LATENCI:</b>$png\n"
-    msg+="<b>DOWNLOAD:</b>$down\n"
-    msg+="<b>UPLOAD:</b>$upl\n"
-    msg+="<b>LOST:</b>$upl\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🚀 DELETE USER SSHVPN 🚀</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Isp         = $isp </code>\n"
+    msg+="<code>Ping/Jitter = $png </code>\n"
+    msg+="<code>Download    = $down</code>\n"
+    msg+="<code>Upload      = $upl</code>\n"
+    msg+="<code>Packet Loss = $lost</code>\n\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    
     ShellBot.sendMessage --chat_id $get_AdminID \
         --text "$(echo -e $msg)" \
         --parse_mode html
