@@ -585,7 +585,7 @@ reseller_balance() {
 speed_test() {
     [[ "${callback_query_from_id[$id]}" != "$get_AdminID" ]] && {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$(echo -e ⛔ ACESSO NEGADO ⛔)"
+            --text "$(echo -e ⛔ ACCESS DENIED ⛔)"
         return 0
     }
     rm -rf $HOME/speed >/dev/null 2>&1
@@ -600,9 +600,9 @@ speed_test() {
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="     🚀 SPEEDTEST SERVER 🚀"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<b>      🚀 SPEEDTEST SERVER 🚀</b>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>Isp         = $isp\n"
     msg+="Ping/Jitter = $png\n"
     msg+="Download    = $down\n"
