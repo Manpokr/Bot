@@ -585,27 +585,29 @@ reseller_balance() {
 speed_test() {
     [[ "${callback_query_from_id[$id]}" != "$get_AdminID" ]] && {
         ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$(echo -e 🚫 ACESSO NEGADO 🚫)"
+            --text "$(echo -e ⛔ ACESSO NEGADO ⛔)"
         return 0
     }
     rm -rf $HOME/speed >/dev/null 2>&1
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-        --text "🚀 TESTING VELOCIDADE DO SERVER"
+        --text "🚀 PLEASE WAIT IN 10 SEC 🚀"
     speedtest -v >speed
     isp=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
-    png=$(cat speed | sed -n '6 p' | awk -F : {'print $2,$3'})
+    png=$(cat speed | sed -n '6 p' | a-wk -F : {'print $2,$3'})
     down=$(cat speed | sed -n '7 p' | awk -F : {'print $2,$3'})
     upl=$(cat speed | sed -n '8 p' | awk -F : {'print $2,$3'})
     lost=$(cat speed | sed -n '9 p' | awk -F : {'print $2'})
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
    
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🚀 DELETE USER SSHVPN 🚀</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>Isp         = $isp </code>\n"
-    msg+="<code>Ping/Jitter = $png </code>\n"
-    msg+="<code>Download    = $down</code>\n"
-    msg+="<code>Upload      = $upl</code>\n"
-    msg+="<code>Packet Loss = $lost</code>\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="  🚀 SPEEDTEST SERVER 🚀"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>Isp         = $isp\n"
+    msg+="Ping/Jitter = $png\n"
+    msg+="Download    = $down\n"
+    msg+="Upload      = $upl\n"
+    msg+="Packet Loss = $lost</code>\n\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     
     ShellBot.sendMessage --chat_id $get_AdminID \
