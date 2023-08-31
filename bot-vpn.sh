@@ -590,7 +590,7 @@ speed_test() {
     }
     rm -rf $HOME/speed >/dev/null 2>&1
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-        --text "🚀 TESTANDO VELOCIDADE DO SERVIDOR"
+        --text "🚀 TESTING VELOCIDADE DO SERVER"
     speedtest --share >speed
     png=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
     down=$(cat speed | sed -n '7 p' | awk -F : {'print $NF'})
@@ -609,7 +609,7 @@ speed_test() {
     ShellBot.sendMessage --chat_id $get_AdminID \
         --text "$(echo -e $lnk)" \
         --parse_mode html
-    rm -rf $HOME/speed >/dev/null 2>&1
+    #rm -rf $HOME/speed >/dev/null 2>&1
     return 0
 }
 
