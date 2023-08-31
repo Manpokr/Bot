@@ -594,14 +594,17 @@ speed_test() {
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🚀 SPEEDTEST SERVER 🚀</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>PING LATENC   : $png\n"
-    msg+="DOWNLOAD      : $down\n"
-    msg+="UPLOAD        : $upl</code>\n\n"
+    msg+="<code>PING LATENC   : $png</code>\n"
+    msg+="<code>DOWNLOAD      : $down</code>\n"
+    msg+="<code>UPLOAD        : $upl</code>\n\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-        --text "$msg" \
-        --parse_mode html
-        rm -rf $HOME/speed >/dev/null 2>&1
+        
+    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+           --message_id ${callback_query_message_message_id[$id]} \
+           --text "$msg" \
+           --reply_markup "$keyboardsts" \
+           --parse_mode html
+	   rm -rf $HOME/speed >/dev/null 2>&1
     else
       ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
             --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
