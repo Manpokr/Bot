@@ -594,12 +594,10 @@ speed_test() {
     upl=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="<b>🚀 SPEEDTEST SERVER 🚀</b>\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<b>PING/LATENC:</b>$png\n"
-    msg+="<b>DOWNLOAD:</b>$down\n"
-    msg+="<b>UPLOAD:</b>$upl\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🚀 SPEEDTEST SERVER 🚀</b>\n"━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<code>PING/LATENC   : $png\n"
+    msg+="DOWNLOAD      : $down\n"
+    msg+="UPLOAD        : $upl</code>\n\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$msg" \
