@@ -49,7 +49,7 @@ msg_welcome() {
     cpu_usage+=" %"
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     Z 🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>     H 🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
