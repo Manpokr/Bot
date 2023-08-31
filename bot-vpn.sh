@@ -584,14 +584,10 @@ reseller_balance() {
 
 
 speed_test() {
-    [[ "${callback_querdy_from_id[$id]}" != "$get_AdminID" ]] && {
-        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
-            --text "$(echo -e ⛔ ACCESS DENIED ⛔)"
-        return 0
-    }
+    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
     rm -rf $HOME/speed >/dev/null 2>&1
-    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-        --text "🚀 TESTING SPEED SERVER"
+  #  ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+  #      --text "🚀 TESTING SPEED SERVER"
     speedtest --share >speed
     png=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
     down=$(cat speed | sed -n '7 p' | awk -F : {'print $NF'})
@@ -605,14 +601,19 @@ speed_test() {
     msg+="<b>DOWNLOAD:</b>$down\n"
     msg+="<b>UPLOAD:</b>$upl\n\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    ShellBot.sendMessage --chat_id $get_AdminID \
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \ \
         --text "$(echo -e $msg)" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id $get_AdminID \
+    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \ \
         --text "$(echo -e $lnk)" \
         --parse_mode html
     rm -rf $HOME/speed >/dev/null 2>&1
-    return 0
+    else
+      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
+            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
+            --parse_mode html
+          return 0
+      fi
 }
 
 ###############-SSH-VPN-ALL-############
