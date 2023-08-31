@@ -582,6 +582,39 @@ reseller_balance() {
     fi
 }
 
+
+speed_test() {
+    [[ "${callback_querdy_from_id[$id]}" != "$get_AdminID" ]] && {
+        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+            --text "$(echo -e ⛔ ACCESS DENIED ⛔)"
+        return 0
+    }
+    rm -rf $HOME/speed >/dev/null 2>&1
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+        --text "🚀 TESTING SPEED SERVER"
+    speedtest --share >speed
+    png=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
+    down=$(cat speed | sed -n '7 p' | awk -F : {'print $NF'})
+    upl=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
+    lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
+    local msg
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg+="<b>🚀 SPEEDTEST SERVER 🚀</b>\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg+="<b>PING/LATENC:</b>$png\n"
+    msg+="<b>DOWNLOAD:</b>$down\n"
+    msg+="<b>UPLOAD:</b>$upl\n\n"
+    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+    ShellBot.sendMessage --chat_id $get_AdminID \
+        --text "$(echo -e $msg)" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id $get_AdminID \
+        --text "$(echo -e $lnk)" \
+        --parse_mode html
+    rm -rf $HOME/speed >/dev/null 2>&1
+    return 0
+}
+
 ###############-SSH-VPN-ALL-############
 menu_ssh() {
     local msg
@@ -3402,17 +3435,19 @@ sta_tus() {
 unset menu1
 menu1=''
 ShellBot.InlineKeyboardButton --button 'menu1' --line 1 --text '❇️ OPEN SERVICE ❇️️' --callback_data '_menuser'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '🟢 STATUS SERVICE 🟢️️' --callback_data '_stsserv'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '👨‍🦱 RESELLER 👨‍🦱' --callback_data '_resellerMenu'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 5 --text '🟢 STATUS SERVICE 🟢️️' --callback_data '_stsserv'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 2 --text '👨‍🦱 RESELLER 👨‍🦱' --callback_data '_resellerMenu'
 ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🏷️ VOUCHER GENERATOR 🏷️' --callback_data '_voucherGenerator'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 5 --text '🌐 PUBLIC MODE 🌐' --callback_data '_publicMode'
-ShellBot.InlineKeyboardButton --button 'menu1' --line 5 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 3 --text '🌐 PUBLIC MODE 🌐' --callback_data '_publicMode'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 4 --text '🌡️ LIMIT FREE 🌡️' --callback_data '_freelimit'
+ShellBot.InlineKeyboardButton --button 'menu1' --line 6 --text '🚀 SPEESTEST SERVER 🚀' --callback_data '_speedtest'
 ShellBot.regHandleFunction --function menu_ser --callback_data _menuser
 ShellBot.regHandleFunction --function sta_tus --callback_data _stsserv
 ShellBot.regHandleFunction --function menuRes --callback_data _resellerMenu
 ShellBot.regHandleFunction --function generatorReq --callback_data _voucherGenerator
 ShellBot.regHandleFunction --function publicReq --callback_data _publicMode
 ShellBot.regHandleFunction --function freelimitReq --callback_data _freelimit
+ShellBot.regHandleFunction --function speed_test --callback_data _speedtest
 unset keyboard1
 keyboard1="$(ShellBot.InlineKeyboardMarkup -b 'menu1')"
 
