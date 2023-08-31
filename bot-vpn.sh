@@ -601,13 +601,10 @@ speed_test() {
     msg+="<b>DOWNLOAD:</b>$down\n"
     msg+="<b>UPLOAD:</b>$upl\n\n"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \ \
-        --text "$(echo -e $msg)" \
+    ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+        --text "$msg" \
         --parse_mode html
-    ShellBot.sendMessage --chat_id ${callback_query_from_id[$id]} \ \
-        --text "$(echo -e $lnk)" \
-        --parse_mode html
-    rm -rf $HOME/speed >/dev/null 2>&1
+        rm -rf $HOME/speed >/dev/null 2>&1
     else
       ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
             --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
