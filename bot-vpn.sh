@@ -49,7 +49,7 @@ msg_welcome() {
     cpu_usage+=" %"
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     B 🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>     Z 🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
@@ -583,31 +583,35 @@ reseller_balance() {
 }
 
 speed_test() {
-     rm -rf /root/speed
-  #  ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
-  #      --text "🚀 TESTING SPEED SERVER"
+    [[ "${callback_query_from_id[$id]}" != "$get_AdminID" ]] && {
+        ShellBot.sendMessage --chat_id ${callback_query_message_chat_id[$id]} \
+            --text "$(echo -e 🚫 ACESSO NEGADO 🚫)"
+        return 0
+    }
+    rm -rf $HOME/speed >/dev/null 2>&1
+    ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
+        --text "🚀 TESTANDO VELOCIDADE DO SERVIDOR"
     speedtest --share >speed
     png=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
     down=$(cat speed | sed -n '7 p' | awk -F : {'print $NF'})
     upl=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
     local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b> 🚀 SPEEDTEST SERVER 🚀 </b>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<code>PING LATENC       = $png\n"
-        msg+="DOWNLOAD    = $down\n"
-        msg+="UPLOAD      = $upl</code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
-	
-	ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
-           --message_id ${callback_query_message_message_id[$id]} \
-           --text "$msg" \
-           --reply_markup "$keyboardsts" \
-           --parse_mode html
-	   rm -rf /root/speed 
- }
-
+    msg="=×=×=×=×=×=×=×=×=×=×=×=×=×=\n"
+    msg+="<b>🚀 VELOCIDADE DO SERVIDOR 🚀</b>\n"
+    msg+="=×=×=×=×=×=×=×=×=×=×=×=×=×=\n\n"
+    msg+="<b>PING/LATENCIA:</b>$png\n"
+    msg+="<b>DOWNLOAD:</b>$down\n"
+    msg+="<b>UPLOAD:</b>$upl\n"
+    ShellBot.sendMessage --chat_id $get_AdminID \
+        --text "$(echo -e $msg)" \
+        --parse_mode html
+    ShellBot.sendMessage --chat_id $get_AdminID \
+        --text "$(echo -e $lnk)" \
+        --parse_mode html
+    rm -rf $HOME/speed >/dev/null 2>&1
+    return 0
+}
 
 ###############-SSH-VPN-ALL-############
 menu_ssh() {
