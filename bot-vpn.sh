@@ -594,7 +594,7 @@ speed_test() {
     upl=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🚀 SPEEDTEST SERVER 🚀</b>\n"━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🚀 SPEEDTEST SERVER 🚀</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>PING/LATENC   : $png\n"
     msg+="DOWNLOAD      : $down\n"
     msg+="UPLOAD        : $upl</code>\n\n"
