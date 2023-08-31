@@ -601,7 +601,7 @@ speed_test() {
    
     local msg
     msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-    msg+="  🚀 SPEEDTEST SERVER 🚀"
+    msg+="     🚀 SPEEDTEST SERVER 🚀"
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+="<code>Isp         = $isp\n"
     msg+="Ping/Jitter = $png\n"
