@@ -49,7 +49,7 @@ msg_welcome() {
     cpu_usage+=" %"
         local msg
 	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     N 🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>     B 🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
@@ -145,7 +145,7 @@ backReq() {
     cpu_usage+=" %"
 	local msg
         msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>     N  🌀 PANEL MENU ADMIN 🌀</b>\n"
+        msg+="<b>     B  🌀 PANEL MENU ADMIN 🌀</b>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
@@ -583,8 +583,7 @@ reseller_balance() {
 }
 
 speed_test() {
-    if [[ "${callback_query_from_id[$id]}" == "$get_AdminID" ]]; then
-    rm -rf $HOME/speed >/dev/null 2>&1
+     rm -rf /root/speed
   #  ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
   #      --text "🚀 TESTING SPEED SERVER"
     speedtest --share >speed
@@ -593,25 +592,21 @@ speed_test() {
     upl=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>🚀 SPEEDTEST SERVER 🚀</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    msg+="<code>PING LATENC   : $png</code>\n"
-    msg+="<code>DOWNLOAD      : $down</code>\n"
-    msg+="<code>UPLOAD        : $upl</code>\n\n"
-    msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        
-    ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
+        msg="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<b> 🚀 SPEEDTEST SERVER 🚀 </b>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="<code>PING LATENC       = $png\n"
+        msg+="DOWNLOAD    = $down\n"
+        msg+="UPLOAD      = $upl</code>\n"
+        msg+="━━━━━━━━━━━━━━━━━━━━━\n"
+	
+	ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
            --message_id ${callback_query_message_message_id[$id]} \
            --text "$msg" \
            --reply_markup "$keyboardsts" \
            --parse_mode html
-	   rm -rf $HOME/speed >/dev/null 2>&1
-    else
-      ShellBot.sendMessage --chat_id ${callback_query_message_message_id[$id]} \
-            --text "⛔ ACCESS DENIED ⛔\n\nTHIS IS YOUR ID: <code>${callback_query_from_id}</code>\n" \
-            --parse_mode html
-          return 0
-      fi
-}
+	   rm -rf /root/speed 
+ }
 
 
 ###############-SSH-VPN-ALL-############
