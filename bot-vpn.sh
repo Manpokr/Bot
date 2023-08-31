@@ -591,25 +591,29 @@ speed_test() {
     rm -rf $HOME/speed >/dev/null 2>&1
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
         --text "🚀 TESTING VELOCIDADE DO SERVER"
-    speedtest --share >speed
-    png=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
+    speedtest -v >speed
+    isp=$(cat speed | sed -n '5 p' | awk -F : {'print $NF'})
+    png=$(cat speed | sed -n '6 p' | awk -F : {'print $NF'})
     down=$(cat speed | sed -n '7 p' | awk -F : {'print $NF'})
-    upl=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
+    upl=$(cat speed | sed -n '8 p' | awk -F : {'print $NF'})
+    lost=$(cat speed | sed -n '9 p' | awk -F : {'print $NF'})
     lnk=$(cat speed | sed -n '10 p' | awk {'print $NF'})
     local msg
     msg="=×=×=×=×=×=×=×=×=×=×=×=×=×=\n"
     msg+="<b>🚀 VELOCIDADE DO SERVIDOR 🚀</b>\n"
     msg+="=×=×=×=×=×=×=×=×=×=×=×=×=×=\n\n"
-    msg+="<b>PING/LATENCIA:</b>$png\n"
+    msg+="<b>ISP:</b>$isp\n"
+    msg+="<b>PING/LATENCI:</b>$png\n"
     msg+="<b>DOWNLOAD:</b>$down\n"
     msg+="<b>UPLOAD:</b>$upl\n"
+    msg+="<b>LOST:</b>$upl\n"
     ShellBot.sendMessage --chat_id $get_AdminID \
         --text "$(echo -e $msg)" \
         --parse_mode html
     ShellBot.sendMessage --chat_id $get_AdminID \
         --text "$(echo -e $lnk)" \
         --parse_mode html
-    #rm -rf $HOME/speed >/dev/null 2>&1
+    rm -rf $HOME/speed >/dev/null 2>&1
     return 0
 }
 
