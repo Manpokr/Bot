@@ -28,7 +28,10 @@ function line() {
         "line2")
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         ;;
-        "line3")
+	"line3")
+        msg="──────────────────────────────\n"
+        ;;
+        "line4")
         msg+="──────────────────────────────\n"
        ;;
        esac
@@ -45,6 +48,11 @@ function logo() {
        line line1
        msg+="<b>      🌀 PANEL MENU RESELLER 🌀</b>\n"
        line line2
+       ;;
+       "logo3")
+       line line3
+       msg+="<b>  ⚡ SSHVPN ACCOUNT ⚡</b>\n"
+       line line4
        ;;
        esac
 }
@@ -805,7 +813,8 @@ input_addssh() {
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
     
     local msg
-    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SSHVPN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    logo logo3
+   # msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SSHVPN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Myip        = ${ip_nya}\n"
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
