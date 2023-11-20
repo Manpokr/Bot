@@ -811,8 +811,7 @@ input_addssh() {
     echo -e "$Pass\n$Pass\n" | passwd $Login &>/dev/null
     
     local msg
-    logo logo3
-   # msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SSHVPN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+    msg="━━━━━━━━━━━━━━━━━━━━━━━\n<b>  (✷‿✷) SSHVPN ACCOUNT (✷‿✷)</b>\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+="<code>Myip        = ${ip_nya}\n"
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
