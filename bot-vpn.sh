@@ -50,9 +50,7 @@ function logo() {
        line line2
        ;;
        "logo3")
-       line line3
-       msg+="<b>  ⚡ SSHVPN ACCOUNT ⚡</b>\n"
-       line line4
+       msg="──────────────────────────────\n<b>  ⚡ SSHVPN ACCOUNT ⚡</b>\n──────────────────────────────\n"
        ;;
        esac
 }
