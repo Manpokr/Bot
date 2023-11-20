@@ -23,32 +23,31 @@ ShellBot.init --token $get_Token --monitor --return map --flush --log_file /root
 function line() {
        case $1 in
        "line1")
-       msg="━━━━━━━━━━━━━━━━━━━━━━━\n"; ;;
+       msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
+       ;;
        "line2")
-       msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"; ;;
+       msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+       ;;
        "line3")
-       msg+="──────────────────────────────\n"; ;;
+       msg+="──────────────────────────────\n"
+       ;;
        esac
 }
 
 function logo() {
        case $1 in
        "logo1")
-       line line1;
-       msg+="<b>      🌀 PANEL MENU ADMIN 🌀</b>\n";
-       line line2; ;;
+       line line1
+       msg+="<b>      🌀 PANEL MENU ADMIN 🌀</b>\n"
+       line line2
+       ;;
        "logo2")
-       line line1;
-       msg+="<b>      🌀 PANEL MENU RESELLER 🌀</b>\n";
-       line line2; ;;
+       line line1
+       msg+="<b>      🌀 PANEL MENU RESELLER 🌀</b>\n"
+       line line2
+       ;;
        esac
 }
-
-#msg_line() {
-#}
-
-#msg_welcome() {
-#}
 
 msg_welcome() {
     if [ "${message_from_id[$id]}" == "$get_AdminID" ]; then
@@ -79,7 +78,7 @@ msg_welcome() {
     cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
     cpu_usage+=" %"
         local msg
-        logo logo1;
+        logo logo1
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -97,7 +96,7 @@ msg_welcome() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
         msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
-        line line2;
+        line line2
         msg+="     ✨ WELCOME $nameStore ✨\n"
 	line line2
  
@@ -108,7 +107,7 @@ msg_welcome() {
 	    
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-	logo logo2;
+	logo logo2
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -130,7 +129,7 @@ msg_welcome() {
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
         msg+="⚡ YOUR BALANCE IS = $oribal"
-	line line2;
+	line line2
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -172,7 +171,7 @@ backReq() {
     cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
     cpu_usage+=" %"
 	local msg
-	logo logo1;
+	logo logo1
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -190,9 +189,9 @@ backReq() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN GO    = $trgo_nya account\n"
 	msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
-        line line2;
+        line line2
         msg+="     ✨ WELCOME $nameStore ✨\n"
-	line line2;
+	line line2
 	
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -202,7 +201,7 @@ backReq() {
 	    
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        logo logo2;
+        logo logo2
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -220,11 +219,11 @@ backReq() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
         msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
-        line line2;
+        line line2
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
         msg+="⚡ YOUR BALANCE IS = $oribal"
-	line line2;
+	line line2
  
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
