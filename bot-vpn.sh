@@ -20,7 +20,7 @@ res_price=5
 
 ShellBot.init --token $get_Token --monitor --return map --flush --log_file /root/log_bot
 
-msg_line() {
+function line() {
        case $1 in
        "line1")
        msg="━━━━━━━━━━━━━━━━━━━━━━━\n"; ;;
@@ -31,7 +31,7 @@ msg_line() {
        esac
 }
 
-msg_logo() {
+function logo() {
        case $1 in
        "logo1")
        line line1;
