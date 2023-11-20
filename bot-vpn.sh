@@ -37,7 +37,8 @@ msg_welcome() {
     tr_nya=$(cat /usr/local/etc/xray/user.txt | grep "^TR " | wc -l);
     ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
     trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
-    ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
+    wg_nya=$(cat /etc/wireguard/wg0.conf | grep "^### Client" | wc -l);
+    ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)";
     # // Getting Ram Information
     total_ram="$( free -m | awk 'NR==2 {print $2}' )";
     uram_nya="$( free -m | awk 'NR==2 {print $3}' )";
@@ -68,6 +69,7 @@ msg_welcome() {
 	msg+="⚡ TROJAN       = $tr_nya account\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
+        msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="     ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -99,6 +101,7 @@ msg_welcome() {
 	msg+="⚡ TROJAN       = $tr_nya account\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
+        msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
@@ -133,8 +136,9 @@ backReq() {
     tr_nya=$(cat /usr/local/etc/xray/user.txt | grep "^TR " | wc -l);
     ss_nya=$(cat /usr/local/etc/xray/user.txt | grep "^SS " | wc -l);
     trgo_nya=$(cat /usr/local/etc/xray/user.txt | grep "^GO " | wc -l);
-    ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)"
-    # // Getting Ram Information
+    wg_nya=$(cat /etc/wireguard/wg0.conf | grep "^### Client" | wc -l);
+    ssh_nya="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)";
+    # // Getting Ram Information    # // Getting Ram Information
     total_ram="$( free -m | awk 'NR==2 {print $2}' )";
     uram_nya="$( free -m | awk 'NR==2 {print $3}' )";
     uram_nya+=" Mb";
@@ -163,7 +167,8 @@ backReq() {
         msg+="⚡ VMESS        = $vm_nya account\n"
 	msg+="⚡ TROJAN       = $tr_nya account\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
-	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
+	msg+="⚡ TROJAN GO    = $trgo_nya account\n"
+	msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="     ✨ WELCOME $nameStore ✨\n"
 	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -196,6 +201,7 @@ backReq() {
 	msg+="⚡ TROJAN       = $tr_nya account\n"
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account</code>\n"
+        msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
