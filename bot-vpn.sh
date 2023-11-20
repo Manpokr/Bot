@@ -79,9 +79,6 @@ msg_welcome() {
     cpu_usage+=" %"
         local msg
 	logo logo1
-     #   msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-	#msg+="<b>      🌀 PANEL MENU ADMIN 🌀</b>\n"
-       # msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -89,8 +86,8 @@ msg_welcome() {
         msg+="⚡ TOTAL RAM = $total_ram\n"
 	msg+="⚡ CPU USE   = $cpu_usage\n"
         msg+="⚡ IP VPS    = $ip_nya\n"
-	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
-        msg+="<code>Total Created : account\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n\n"
+        msg+="<code>Total Created : account\n\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
 	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
 	msg+="⚡ VLESS        = $vl_nya account\n"
@@ -100,11 +97,9 @@ msg_welcome() {
 	msg+="⚡ TROJAN-GO    = $trgo_nya account\n"
         msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
         line line2
-     #   msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
         msg+="     ✨ WELCOME $nameStore ✨\n"
 	line line2
-	#msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
- 
+
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
             --reply_markup "$keyboard1" \
@@ -112,9 +107,7 @@ msg_welcome() {
 	    
     elif [ "$(grep -wc ${message_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-	msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>      🌀 PANEL MENU RESELLER 🌀</b>\n"
-	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+	logo logo2
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -122,8 +115,8 @@ msg_welcome() {
         msg+="⚡ TOTAL RAM = $total_ram MB\n"
 	msg+="⚡ CPU USE   = $cpu_usage\n"
         msg+="⚡ IP VPS    = $ip_nya\n"
-	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
-        msg+="<code>Total Created : account\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n\n"
+        msg+="<code>Total Created : account\n\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
 	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
 	msg+="⚡ VLESS        = $vl_nya account\n"
@@ -132,11 +125,11 @@ msg_welcome() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account\n"
         msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        line line2
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
         msg+="⚡ YOUR BALANCE IS = $oribal"
-	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+	line line2
  
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
             --text "$msg" \
@@ -179,9 +172,6 @@ backReq() {
     cpu_usage+=" %"
 	local msg
         logo logo1
-	#msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-	#msg+="<b>      🌀 PANEL MENU ADMIN 🌀</b>\n"
-       # msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -189,8 +179,8 @@ backReq() {
         msg+="⚡ TOTAL RAM = $total_ram MB\n"
 	msg+="⚡ CPU USE   = $cpu_usage\n"
         msg+="⚡ IP VPS    = $ip_nya\n"
-	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
-        msg+="<code>Total Created : account\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n\n"
+        msg+="<code>Total Created : account\n\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
 	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
 	msg+="⚡ VLESS        = $vl_nya account\n"
@@ -211,9 +201,7 @@ backReq() {
 	    
     elif [ "$(grep -wc ${callback_query_from_id} /root/multi/reseller)" != '0' ]; then
         local msg
-        msg="━━━━━━━━━━━━━━━━━━━━━━━\n"
-        msg+="<b>      🌀 PANEL MENU RESELLER 🌀</b>\n"
-	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        logo logo2
 	msg+="<code>⚡ OS        = $tipe_nya\n"
         msg+="⚡ ISP       = $isp_nya\n"
         msg+="⚡ CITY      = $country_nya\n"
@@ -221,8 +209,8 @@ backReq() {
         msg+="⚡ TOTAL RAM = $total_ram MB\n"
 	msg+="⚡ CPU USE   = $cpu_usage\n"
         msg+="⚡ IP VPS    = $ip_nya\n"
-	msg+="⚡ DOMAIN    = $dom_nya</code>\n"
-        msg+="<code>Total Created : account\n"
+	msg+="⚡ DOMAIN    = $dom_nya</code>\n\n"
+        msg+="<code>Total Created : account\n\n"
         msg+="⚡ SSH-VPN      = $ssh_nya account\n"
 	msg+="⚡ XRAY XTLS    = $xt_nya account\n"
 	msg+="⚡ VLESS        = $vl_nya account\n"
@@ -231,11 +219,11 @@ backReq() {
         msg+="⚡ SHADOWSOCK22 = $ss_nya account\n"
 	msg+="⚡ TROJAN-GO    = $trgo_nya account\n"
         msg+="⚡ WIREGUARD    = $wg_nya account</code>\n"
-        msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+        line line2
         msg+="⚡ YOUR NAME STORE = $nameStore\n"
         msg+="⚡ YOUR ID         = <code>${message_from_id}</code>\n"
         msg+="⚡ YOUR BALANCE IS = $oribal"
-	msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+	line line2
  
         ShellBot.editMessageText --chat_id ${callback_query_message_chat_id[$id]} \
             --message_id ${callback_query_message_message_id[$id]} \
@@ -822,7 +810,7 @@ input_addssh() {
     msg+="Subdomain   = ${domain}\n"
     msg+="Username    = ${Login}\n"
     msg+="Password    = ${Pass}</code>\n"
-    msg+="──────────────────────────────\n"
+    line line3
     msg+="<code>Openssh     = ${ssh}\n"
     msg+="Dropbear    = ${drop}\n"
     msg+="Ssl-tls     =${ssl}</code>\n"
@@ -832,7 +820,7 @@ input_addssh() {
     msg+="Ssh Ws Tls  = ${wstls}\n"
     msg+="Ovpn Ws     = ${wsnone}\n"
     msg+="Ovpn Ws Tls = ${wstls}</code>\n"
-    msg+="──────────────────────────────\n"
+    line line3
     msg+="<code>Openvpn Tcp = http://${ip_nya}:85/client-tcp.ovpn</code>\n"
     msg+="$link"
     msg+="<code>Openvpn Ssl = http://${ip_nya}:85/client-ssl.ovpn</code>\n"
@@ -842,15 +830,15 @@ input_addssh() {
     msg+="Name Server   (NS)   = ${ns_nya}\n"
     msg+="Public Key    (KEY)  = ${pub_key}</code>\n"
     msg+="$udp"
-    msg+="──────────────────────────────\n"
+    line line3
     msg+="PAYLOAD WS\n"
     msg+=" <code>GET / HTTP/1.1[crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
-    msg+="──────────────────────────────\n"
+    line line3
     msg+="PAYLOAD WS TLS\n"
     msg+=" <code>GET wss://bug.com [protocol][crlf]Host: ${domain}[crlf]Upgrade: websocket[crlf][crlf]</code>\n"
     msg+="\n"
-    msg+="──────────────────────────────\n"
+    line line3
     msg+="<code>Expired On    = $exp2</code>"
  
     ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
